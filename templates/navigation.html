@@ -1,0 +1,61 @@
+<header>
+    <h1>쿠우쿠우 관리시스템<span>송천점</span></h1>
+    <ul>
+        <li><a href="">대시보드</a></li>
+        <li><a href="">레포트</a></li>
+        <li><a href="">발주관리</a></li>
+    </ul>
+</header>
+<nav>
+    <div class="top-menu">
+        <div><span>거래</span></div><div><span>직원</span></div>
+    </div>
+    <div class="navigation">
+        <ul class="items list-no-1">
+            <li>거래처
+                <ul class="sub-items">
+                    <li><a href="{% url 'trade:client' %}"> - 거래처관리</a></li>
+                    <li><a href="{% url 'trade:clientTrade' %}"> - 거래내역관리</a></li>
+                </ul>
+            </li>
+            <li>고정비
+                <ul class="sub-items">
+                    <li><a href="{% url 'trade:fix' %}"> - 고정비관리</a></li>
+                    <li><a href="{% url 'trade:fixCost' %}"> - 고정비내역관리</a></li>
+                </ul>
+            </li>
+            <li>관리비
+                <ul class="sub-items">
+                    <li><a href="{% url 'trade:manage' %}"> - 관리비관리</a></li>
+                </ul>
+            </li>
+            <li>로열티
+                <ul class="sub-items">
+                    <li><a href="{% url 'trade:royalty' %}"> - 로열티관리</a></li>
+                </ul>
+            </li>
+            <li>임대료
+                <ul class="sub-items">
+                    <li><a href="{% url 'trade:rant' %}"> - 임대차정보관리</a></li>
+                    <li><a href="{% url 'trade:rantPay' %}"> - 납부내역관리</a></li>
+                </ul>
+            </li>
+            <li>기타
+                <ul class="sub-items">
+                    <li><a href="{% url 'trade:etc' %}"> - 기타납부정보관리</a></li>
+                    <li><a href="{% url 'trade:client' %}"> - 납부내역관리</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="items list-no-2">
+            <li>근무자관리
+                <ul class="sub-items">
+                    <li>직원관리</li>
+                    <li>파트타이머관리</li>
+                    <li>직원관리</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+<main>

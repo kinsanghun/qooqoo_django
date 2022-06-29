@@ -1,0 +1,163 @@
+main {
+    display: inline-block;
+    width : 80%;
+    float : right;
+    padding : var(--default-padding);
+    box-sizing: border-box;
+}
+
+.input-area, .null-area, .view-area {
+    width : 100%;
+}
+
+.input-area {
+
+}
+.input-area .input-form {
+    display: inline-block;
+    vertical-align: top;
+    width : 80%;
+}
+.input-area .input-form div {
+    display : inline-block;
+    padding : 0.5rem;
+    margin-right : 0.5rem;
+    margin-bottom : 0.5rem;
+    border : 0.5px solid var(--sub-color);
+    border-radius: 5px;
+}
+
+.input-area .input-form div label{
+    padding : 0 0.5rem 0 0.5rem;
+    border-right : 1px solid var(--primary-color);
+}
+
+.input-area .input-form div input, .input-area .input-form div select{
+    padding : 0 0.5rem 0 0.5rem;
+    border : 0;
+}
+.input-area .input-form input[type=submit] {
+    border : 0;
+    padding : 0.5rem;
+    color : white;
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+.input-area .input-form input[type=button] {
+    border : 0;
+    padding : 0.5rem;
+    color : white;
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+.input-area .submit-form {
+    display: inline-block;
+    width : calc(20% - 1rem);
+}
+.input-area .submit-form input {
+    margin : 0 auto;
+    float : right;
+}
+.input-area .submit-form input[type=submit], .input-area .submit-form input[type=button] {
+    width : 10rem;
+    color : white;
+    font-size : 1rem;
+    padding : 0.5rem 1rem 0.5rem 1rem;
+    box-sizing: border-box;
+    border : 0;
+}
+.input-area .submit-form input[type=submit] {
+    border-radius: var(--default-padding);
+    background: var(--primary-color);
+}
+.input-area .submit-form input[type=button] {
+    margin-top : 0.5rem;
+    border-radius: var(--default-padding);
+    background: var(--sub-color);
+}
+.null-area {
+    display: block;
+    padding-top : 2rem;
+    margin-bottom : 2rem;
+    border-bottom : 1px solid var(--sub-color);
+}
+.view-area {
+}
+.view-area .view-header {
+    display: inline-block;
+    width : 100%;
+}
+.view-area .view-header h1 {
+    display: inline-block;
+    font-weight: 600;
+    font-size : var(--h2-fontsize);
+    padding : 1rem;
+}
+
+#data-fields{
+    text-align: center;
+    max-height : 35rem;
+    overflow-y: auto;
+    border : 0.5px solid rgba(0, 0, 0, 0.7);
+}
+#data-fields .data-header {
+    position : sticky;
+    top : 0;
+    color : white;
+    background: #595959;
+    z-index : 1;
+}
+#data-fields .data-body {
+    position : relative;
+    border-bottom : 0.5px solid rgba(0, 0, 0, 0.5);
+}
+#data-fields div {
+    font-size: 14px;
+    padding : 0.25rem;
+}
+#data-fields .data-body:hover {
+    background : rgba(127, 255, 212, 0.35);
+}
+
+.input-button, .batch-button {
+    float: right;
+    width : 8rem;
+    display: inline-block;
+    padding : 0.5rem;
+    color : white;
+    background: var(--primary-color);
+    border : 0;
+    border-radius: 1rem;
+}
+#filter-list {
+    width : 14%;
+    display: inline-block;
+}
+#filter-client,#filter-status {
+    width : 100%;
+    border : 1px solid black;
+}
+#filter-status {
+    margin-top : 1rem;
+}
+.filter{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}
+.filter .header {
+    color : white;
+    background: var(--sub-color);
+}
+.filter div {
+    padding : 0.45em;
+    box-sizing: border-box;
+    text-align : center;
+}
+
+.filter-data {
+    width : 85%;
+    display: inline-block;
+    float : right;
+}

@@ -1,0 +1,11 @@
+:root {
+    --primary-color : #52c8d7;
+    --sub-color : rgba(91, 91, 91, 0.6);
+    --h1-fontsize : 1.5rem;
+    --h2-fontsize : 1.2rem;
+    --normal-fontsize : 0.8rem;
+    --default-padding : 1rem;
+
+    --nav-width : 20%;
+    --minimum-height : calc(100vh - 3.5rem);
+}

@@ -1,0 +1,133 @@
+#modal.modal-overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(51, 51, 51, 0.49);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+    visibility: hidden;
+    z-index: 2;
+}
+
+#modal .modal-window {
+    background: rgb(255, 255, 255);
+    backdrop-filter: blur(13.5px);
+    -webkit-backdrop-filter: blur(13.5px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    width: 800px;
+    height: 800px;
+    position: relative;
+    padding : 2rem;
+}
+
+#modal .title {
+    padding-top : 1rem;
+    padding-left: 1rem;
+    display: inline;
+    color: #000000;
+
+}
+#modal .title h2 {
+    font-size : 2rem;
+    font-weight: 600;
+}
+#modal .title h2 {
+    display: inline;
+}
+
+#modal .close-area {
+    display: inline;
+    float: right;
+    padding-right: 10px;
+    cursor: pointer;
+    color: #000000;
+}
+
+#modal .content {
+    margin-top: 20px;
+    padding: 0px 10px;
+    color: #000000;
+}
+#modal .search-fields {
+    width : 100%;
+}
+#modal .search-fields div {
+    display: inline-block;
+    border : 1px solid rgba(128, 128, 128, 0.51);
+    padding : 0.5rem;
+    border-radius: 10px;
+    width : 26%;
+}
+#modal .search-fields div label{
+    box-sizing: border-box;
+    width : 40%;
+    padding-right : 0.5rem;
+    border-right : 1px solid var(--primary-color);
+}
+
+#modal .search-fields div input {
+    text-align: center;
+    width : auto;
+    margin-left : 0.5rem;
+    border : 0;
+    box-sizing: border-box;
+}
+#modal .search-fields div select {
+    border : 0;
+    width : 9rem;
+}
+#modal .search-fields button {
+    display: inline-block;
+    width : 10%;
+    border : 0;
+    padding : 0.6rem;
+    margin-left : 0.5rem;
+    background: var(--primary-color);
+    box-sizing: border-box;
+    border-radius: 15px;
+    color : white;
+}
+#modal .search-header {
+    margin-top : 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    text-align: center;
+}
+#modal .search-header div{
+    border : 1px solid rgba(0, 0, 0, 0.55);
+    padding : 0.5rem;
+}
+#modal .search-data {
+    height : 600px;
+    border : 1px solid rgba(0, 0, 0, 0.49);
+    overflow-y: auto;
+}
+#modal .search-data div {
+    border : 0.3px solid rgba(0, 0, 0, 0.5);
+}
+
+#modal .search-data div input {
+    border : 0;
+    width : 100%;
+    text-align: center;
+    box-sizing: border-box;
+}
+.searched {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    text-align : center;
+    box-sizing: border-box;
+    border-bottom : 1px solid black;
+}
+.searched div {
+    padding : 0.5rem;
+}
