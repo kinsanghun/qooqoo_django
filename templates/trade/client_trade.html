@@ -52,6 +52,7 @@
                     <div><label>종료</label><input type="date" name="end" value="{{ filter_end }}" required></div>
                     <input type="submit" value="검색" id="search">
                     <input type="button" value="일괄결제" id="batch-button">
+                <span style="float:right">선택된 거래처 미수금 : {{ misu|intcomma }}원 </span>
                 </div>
             </form>
         </div>

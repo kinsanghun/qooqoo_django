@@ -6,9 +6,14 @@
             <div class="input-form">
                 {% csrf_token %}
                 <input type="hidden" name="id" id="id" value="-1">
-                <div><label>날짜</label><input type="text" name="fix" id="fix"></div>
-                <div><label>금액</label><input type="text" name="event" id="event"></div>
-                <div><label>납부상태</label><input type="text" name="paytype" id="paytype"></div>
+                <div><label>날짜</label><input type="date" name="date" id="date"></div>
+                <div><label>금액</label><input type="number" name="price" id="price"></div>
+                <div><label>납부상태</label>
+                    <select name="status" id="status">
+                        <option value="납부">납부</option>
+                        <option value="미납">미납</option>
+                    </select>
+                </div>
             </div>
             <div class="submit-form">
                 <div><input type="submit" value="저장"></div>
@@ -20,10 +25,18 @@
     </div>
     <div class="view-area">
         <div class="view-header"><h1>관리비관리</h1></div>
-        <div>
+        <div style="height:400px; border:1px solid black;">
             <div id="data-fields">
 
             </div>
+        </div>
+        <div style="height:250px; border:1px solid black; margin-top:1rem; text-align : center; padding: 4rem; box-sizing: border-box">
+            &lt;납기내 미납시 가산금 부과함&gt;<br/>
+            * 납기일 : 매월 25일까지<br/>
+            * 납기일까지 미납시에는 일월에 2%의 가산금 부과됩니다.<br/>
+            * 입금계좌 : 전북은행 1013-01-1849710<br/>
+            * 예금주 : (유) 다 손 개 발<br/>
+            * 문의처 : 010-4251-1470<br/>
         </div>
     </div>
     <script type="text/javascript">
@@ -44,28 +57,34 @@
         gridSetting(dataId, 1);
         printData(1, dataId, dataHeader, datas);
 
-        $(document).on("click", ".data-header .datas", function() {
+        $(document).on("click", ".data-header .datas", function () {
             var sortkey = $(".data-header .datas").index(this);
 
-            if(sortkey == sortfix[0]){
-                if(sortfix[1] == 1){
+            if (sortkey == sortfix[0]) {
+                if (sortfix[1] == 1) {
                     console.log("desc");
-                    datas.sort(function(a, b) { return a[sortfix[0]] > b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0; });
+                    datas.sort(function (a, b) {
+                        return a[sortfix[0]] > b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0;
+                    });
                     sortfix[1] = 0;
 
                     clearlist();
                     gridSetting(dataId, 1);
                     printData(0, dataId, dataHeader, datas);
                 } else {
-                    datas.sort(function(a, b) { return a[sortfix[0]] < b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0; });
+                    datas.sort(function (a, b) {
+                        return a[sortfix[0]] < b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0;
+                    });
                     sortfix[1] = 1;
 
                     clearlist();
                     gridSetting(dataId, 1);
                     printData(0, dataId, dataHeader, datas);
                 }
-            }else {
-                datas.sort(function(a, b) { return a[sortfix[0]] < b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0; });
+            } else {
+                datas.sort(function (a, b) {
+                    return a[sortfix[0]] < b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0;
+                });
                 sortfix[0] = sortkey;
                 sortfix[1] = 0;
 

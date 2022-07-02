@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% block content %}
     <div class="input-area">
         <form method="post">
@@ -29,7 +30,7 @@
     </div>
     <div class="view-area">
         <div class="view-header"><h1>임대료 납부관리</h1></div>
-        <div>
+        <div style="height:35rem; border : 1px solid black;">
             <div id="data-fields">
 
             </div>
@@ -46,8 +47,8 @@
             line.push("{{ data.id }}");
             line.push("{{ data.date }}");
             line.push("{{ data.rant }}");
-            line.push("{{ data.price }}");
-            line.push("{{ data.pay }}");
+            line.push("{{ data.price|intcomma }}");
+            line.push("{{ data.pay|intcomma }}");
             line.push("{{ data.content }}");
             datas.push(line);
         {% endfor %}
@@ -100,7 +101,7 @@
            console.log(tmp);
             {% for rant in rants %}
                 if(tmp == {{ rant.rant }}) {
-                    $("#price").val({{ rant.pay }});
+                    $("#price").val({{ rant.pay|add:rant.surtax }});
                 }
             {% endfor %}
         });

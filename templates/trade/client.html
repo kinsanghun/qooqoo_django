@@ -45,8 +45,10 @@
                         </div>
                     </div>
             </div>
-            <div id="data-fields" class="filter-data">
+        <div class="filter-data" style="border : 1px solid black; height : 35rem;">
+            <div id="data-fields">
 
+            </div>
             </div>
         </div>
     </div>
@@ -71,11 +73,24 @@
             line.push("{{ data.client|misu_client }}")
             datas.push(line);
         {% endfor %}
-        filterdatas = datas;
 
+        var filter = [];
+        $("input[name=filter_status]:checked").each(function () {
+            var tmp = $(this).val();
+            filter.push(tmp);
+        });
+        filterdatas = filter_data(datas, filter, 7);
+
+        var filter = [];
+        $("input[name=filter]:checked").each(function () {
+            var tmp = $(this).val();
+            filter.push(tmp);
+        });
+        filterdatas = filter_data(filterdatas, filter, 1);
+
+        clearlist();
         gridSetting(dataId, 1);
         printData(1, dataId, dataHeader, filterdatas);
-
         $(document).on("click", ".data-header .datas", function() {
             var sortkey = $(".data-header .datas").index(this);
 

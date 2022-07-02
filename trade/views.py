@@ -80,26 +80,38 @@ def clientTrade(request):
 
     if filter_client == "all":
         trading = ClientTrade.objects.filter(date__range=[filter_start, filter_end]).order_by("-date")
+        misu_chk = ClientTrade.objects.all()
     else:
         trading = ClientTrade.objects.filter(client=filter_client, date__range=[filter_start, filter_end]).order_by("-date")
+        misu_chk = ClientTrade.objects.filter(client=filter_client).all()
 
+    total = 0
+
+    for trade in misu_chk:
+        total += trade.price - trade.pay
 
     client = Client.objects.values("client")
 
     context = {
-        'today':date,
-        'clients':client,
-        'datas':trading,
-        'filter_client':filter_client,
-        'filter_start':filter_start,
-        'filter_end':filter_end,
+        'today': date,
+        'clients': client,
+        'datas': trading,
+        'misu': total,
+        'filter_client': filter_client,
+        'filter_start': filter_start,
+        'filter_end': filter_end,
     }
     return render(request, "trade/client_trade.html", context)
 
 def editTrade(request):
     if request.method == "POST":
         data = getPOSTValue(request.POST)
-        model = ClientTrade.objects.get(id=data[0])
+        model = ClientTrade.objects.filter(id=data[0])
+
+        if len(model) == 0:
+            model = ClientTrade()
+        else:
+            model = ClientTrade.objects.get(id=data[0])
 
         model.date = data[1]
         model.client = data[2]
@@ -316,4 +328,12 @@ def getEtc(request):
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
 
 def manage(request):
+    if request.method == "POST":
+        return redirect("trade:manage")
     return render(request, "trade/manage.html")
+
+def getManage(request):
+    key = request.GET.get("key")
+    data = Etc.objects.filter(id=key)
+    post_list = serializers.serialize('json', data)
+    return HttpResponse(post_list, content_type="text/json-comment-filtered")
