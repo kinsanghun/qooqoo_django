@@ -1,14 +1,23 @@
 from django.shortcuts import render
 from .reporting import SQL, tradeReport
-# Create your views here.
+from datetime import datetime
 
+def month3(year, month):
+    return [f"{str(year-1)}년 {str(month+12-2)}월" if month-2 <= 0 else f"{str(year)}년 {str(month-2)}월",
+            f"{str(year-1)}년 {str(month+12-1)}월" if month-1 <= 0 else f"{str(year)}년 {str(month-1)}월",
+            f"{str(year)}년 {str(month)}월"]
 
 def index(request):
+    selected = request.GET.get("selected", "매출")
+    year = datetime.now().year
+    month = datetime.now().month
 
     context = {
-
+        'selected': selected,
+        'year': year,
+        'month': month3(year, month),
     }
-    return render(request, "main/index.html")
+    return render(request, "main/index.html", context)
 
 def report(request):
     conn = tradeReport()

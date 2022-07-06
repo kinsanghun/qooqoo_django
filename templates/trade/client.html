@@ -7,13 +7,13 @@
             <div class="input-form">
                 {% csrf_token %}
                 <input type="hidden" name="id" id="id" value="-1">
-                <div><label>거래처명</label><input type="text" name="client" id="client"></div>
-                <div><label>사업자등록번호</label><input type="text" name="regnum" id="regnum"></div>
-                <div><label>종목명</label><input type="text" name="event" id="event"></div>
-                <div><label>은행</label><input type="text" name="bank" id="bank"></div>
-                <div><label>계좌번호</label><input type="text" name="banknum" id="banknum"></div>
-                <div><label>연락처</label><input type="text" name="callnum" id="callnum"></div>
-                <div><label>계약상태</label><input type="text" name="status" id="status"></div>
+                <div><label>거래처명</label><input type="text" name="client" id="client" required></div>
+                <div><label>사업자등록번호</label><input type="text" name="regnum" id="regnum" required></div>
+                <div><label>종목명</label><input type="text" name="event" id="event" required></div>
+                <div><label>은행</label><input type="text" name="bank" id="bank" required></div>
+                <div><label>계좌번호</label><input type="text" name="banknum" id="banknum" required></div>
+                <div><label>연락처</label><input type="text" name="callnum" id="callnum" required></div>
+                <div><label>계약상태</label><input type="text" name="status" id="status" required></div>
             </div>
             <div class="submit-form">
                 <div><input type="submit" value="저장"></div>

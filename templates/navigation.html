@@ -1,7 +1,7 @@
 <header>
     <h1>쿠우쿠우 관리시스템<span>송천점</span></h1>
     <ul>
-        <li><a href="">대시보드</a></li>
+        <li><a href="{% url 'main:index' %}">대시보드</a></li>
         <li><a href="{% url 'main:report' %}">레포트</a></li>
         <li><a href="">발주관리</a></li>
     </ul>
@@ -43,7 +43,7 @@
             <li>기타
                 <ul class="sub-items">
                     <li><a href="{% url 'trade:etc' %}"> - 기타납부정보관리</a></li>
-                    <li><a href="{% url 'trade:client' %}"> - 납부내역관리</a></li>
+                    <li><a href="{% url 'trade:etcPay' %}"> - 납부내역관리</a></li>
                 </ul>
             </li>
         </ul>

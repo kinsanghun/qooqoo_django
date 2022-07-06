@@ -1,0 +1,86 @@
+.null-box {
+    border-top : 1px solid var(--sub-color);
+    font-size : 0;
+}
+.dashboard-sub-title {
+    display: inline-block;
+    font-size : 1.2rem;
+    font-weight : 600;
+}
+.sonic-graph, .misu-list {
+    display: inline-block;
+    padding : 1rem;
+    margin : 1rem;
+    box-sizing: border-box;
+    font-size : 1rem;
+    min-height: calc(100vh - 13rem);
+}
+.sonic-graph {
+    width : calc(60% - 2rem);
+    border-right : 1px solid var(--sub-color);
+}
+.misu-list {
+    float : right;
+    width : calc(40% - 2rem);
+    background: gold;
+}
+.content {
+    padding : 1rem;
+    background: white;
+    width : calc(100% - 2rem);
+    min-height : calc(70vh);
+    box-sizing: border-box;
+    margin : 1rem;
+}
+.select-box {
+    display: inline-block;
+    padding : 0.25rem;
+    margin-bottom : 0.25rem;
+    margin-right: 2rem;
+    border : 1px solid rgba(0, 0, 0, 0.38);
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size : 0.8rem;
+    float : right;
+}
+.select-box label {
+    padding-left : 0.5rem;
+    padding-right : 0.5rem;
+    border-right : 1px solid var(--primary-color);
+}
+.select-box select {
+    border : 0;
+    margin-left : 0.5rem;
+}
+#graph {
+    width :100%;
+    height : 30rem;
+    padding-bottom : 2rem;
+    border-bottom : 1px solid var(--sub-color);
+}
+#sonic-data {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    text-align : center;
+    margin-top : 2rem;
+    font-size : 0.8rem;
+}
+#sonic-data div {
+    margin : 0.5rem;
+}
+.sonic-title {
+    color : gray;
+    padding-left : -2rem;
+}
+
+#sonic-data div .sonic-pay{
+    font-weight: 600;
+    font-size : 2.8rem;
+}
+.red {
+    color : red;
+}
+.blue {
+    color : blue;
+}

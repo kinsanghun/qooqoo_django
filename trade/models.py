@@ -47,9 +47,31 @@ class RantPay(models.Model):
     content = models.TextField()
 
 class Etc(models.Model):
-    date = models.DateField()
+    summary = models.CharField(max_length=50)
     etc = models.CharField(max_length=40)
-    pay = models.CharField(max_length=20)
+    pay = models.IntegerField()
     paytype = models.CharField(max_length=20)
     content = models.TextField()
 
+class EtcPay(models.Model):
+    date = models.DateField()
+    summary = models.CharField(max_length=50)
+    etc = models.CharField(max_length=40)
+    price = models.IntegerField()
+    pay = models.IntegerField()
+    paytype = models.CharField(max_length=20)
+    content = models.TextField()
+
+
+class Royalty(models.Model):
+    date = models.DateField()
+    royalty = models.CharField(max_length=50)
+    price = models.IntegerField()
+    pay = models.IntegerField()
+    content = models.TextField()
+
+class Manage(models.Model):
+    date = models.DateField()
+    price = models.IntegerField()
+    status = models.CharField(max_length=20)
+    content = models.TextField()

@@ -1,4 +1,80 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
+{% load mathfilters %}
 {% block content %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="{% static 'css/dashboard.css' %}" type="text/css" rel="stylesheet"/>
+    <div class="view-area">
+        <div class="view-header"><h1>대시보드</h1></div>
+        <div class="null-box">
+            <div class="sonic-graph">
+                <div class="dashboard-sub-title"><span class="material-symbols-outlined" style="vertical-align: bottom; margin-left:2rem; margin-right : 0.5rem; color:var(--primary-color);">bar_chart</span>손익그래프</div>
+                <div class="select-box">
+                    <label>선택</label>
+                    <select id="selected">
+                        <option value="매출">매출</option>
+                        <option value="물류">물류</option>
+                        <option value="인건비">인건비</option>
+                        <option value="법인카드">법인카드</option>
+                    </select>
+                </div>
+                <div class="content">
+                    <canvas id="graph"></canvas>
+                    <div id="sonic-data">
+                        <div>
+                            <div class="sonic-title">전전월 손익</div>
+                            <div><span class="sonic-pay">1500</span><span class="sonic-unit">만원</span></div>
+                            <div><span class="sonic-compare">당월대비</span><span class="sonic-compare-pay red"> + 200만원</span></div>
+                        </div>
+                        <div>
+                            <div class="sonic-title">전월 손익</div>
+                            <div><span class="sonic-pay">3000</span><span class="sonic-unit">만원</span></div>
+                            <div><span class="sonic-compare">당월대비</span><span class="sonic-compare-pay red"> + 1500만원</span></div>
+                        </div>
+                        <div>
+                            <div class="sonic-title">전월 손익</div>
+                            <div><span class="sonic-pay">2800</span><span class="sonic-unit">만원</span></div>
+                            <div><span class="sonic-compare">전월대비</span><span class="sonic-compare-pay blue"> - 200만원</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="misu-list">
+                <div class="dashboard-sub-title">미납내역리스트</div>
+                <div class="content">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $("#selected").val("{{ selected }}");
+        const ctx = document.getElementById('graph');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['{{ month.0 }}', '{{ month.1 }}', '{{ month.2 }}'],
+                datasets: [{
+                    label: "{{ selected }}",
+                    data: [1200000, 1900000, 3210000],
+                    backgroundColor: ['rgb(0,215,206)'],
+                    borderColor: ['rgb(99,226,255)'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        $(document).on("change", "#selected", function () {
+            var f = $("#selected").val();
+            console.log(f);
+            location.href="{% url 'main:index' %}?selected=" + f;
+        });
+    </script>
 {% endblock %}

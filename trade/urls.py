@@ -9,7 +9,6 @@ urlpatterns = [
     path('client/trade', views.clientTrade, name="clientTrade"),
     path('client/trade/get', views.getClientTrade, name="getClientTrade"),
     path('client/trade/edit', views.editTrade, name="editTrade"),
-    path('client/trade/batch', views.clientTradeBatch, name="tradeBatch"),
     path('client/trade/gettrade', views.getTrade, name="getTrade"),
 
     path('fix/', views.fix, name="fix"),
@@ -18,7 +17,9 @@ urlpatterns = [
     path('fix/cost/getCost', views.getFixCost, name="getFixCost"),
 
     path('manage/', views.manage, name="manage"),
+
     path('royalty/', views.royalty, name="royalty"),
+    path('royalty/getRoyalty', views.getRoyalty, name="getRoyalty"),
 
     path('rant/', views.rant, name="rant"),
     path('rant/getrant', views.getRant, name="getRant"),
@@ -27,5 +28,8 @@ urlpatterns = [
 
     path('etc/', views.etc, name="etc"),
     path('client/getetc', views.getEtc, name="getEtc"),
+
+    path('etc/pay', views.etcPay, name="etcPay"),
+    path('etc/pay/getPay', views.getEtcPay, name="getEtcPay"),
 
 ]

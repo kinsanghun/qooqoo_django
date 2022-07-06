@@ -86,6 +86,9 @@ def clientTrade(request):
         misu_chk = ClientTrade.objects.filter(client=filter_client).all()
 
     total = 0
+    select_total = 0
+    for trade in trading:
+        select_total += trade.price
 
     for trade in misu_chk:
         total += trade.price - trade.pay
@@ -96,6 +99,7 @@ def clientTrade(request):
         'today': date,
         'clients': client,
         'datas': trading,
+        'select_total': select_total,
         'misu': total,
         'filter_client': filter_client,
         'filter_start': filter_start,
@@ -137,24 +141,6 @@ def getTrade(request):
     post_list = serializers.serialize('json', data)
     print(data)
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
-
-def clientTradeBatch(request):
-    if request.method == "GET":
-        client = request.GET.get("client")
-        start = request.GET.get("start")
-        end = request.GET.get("end")
-        print(client, start, end)
-
-        if client == "all":
-            datas = ClientTrade.objects.filter(date__range=[start, end])
-        else :
-            datas = ClientTrade.objects.filter(client=client, date__range=[start, end])
-
-        for data in datas:
-            data.pay = data.price
-            data.save()
-
-    return redirect("trade:clientTrade")
 
 def fix(request):
     if request.method == "POST":
@@ -223,7 +209,46 @@ def getFixCost(request):
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
 
 def royalty(request):
-    return render(request, "trade/royalty.html")
+    if request.method == "POST":
+        data = getPOSTValue(request.POST)
+        is_empty = Royalty.objects.filter(id=data[0])
+
+        if is_empty:
+            model = Royalty.objects.get(id=data[0])
+        else:
+            model = Royalty()
+
+        model.date = data[1] + "-01"
+        model.royalty = data[2]
+        model.price = data[3]
+        model.pay = data[4]
+        model.content = data[5]
+        model.save()
+
+        return redirect("trade:royalty")
+
+    start = request.GET.get("start", "-1")
+    end = request.GET.get("end", "-1")
+
+    if start != "-1" or end != "-1":
+        datas = Royalty.objects.filter(date__range=[start + "-01", end + "-02"]).all()
+    else:
+        datas = Royalty.objects.all()
+
+    context = {
+        'datas': datas,
+        "start": start,
+        "end": end,
+    }
+    return render(request, "trade/royalty.html", context)
+
+def getRoyalty(request):
+    key = request.GET.get("key")
+    data = Royalty.objects.filter(id=key)
+    post_list = serializers.serialize('json', data)
+    print(post_list)
+    return HttpResponse(post_list, content_type="text/json-comment-filtered")
+
 
 def rant(request):
     if request.method == "POST":
@@ -306,7 +331,7 @@ def etc(request):
         else:
             model = Etc()
 
-        model.date = data[1]
+        model.summary = data[1]
         model.etc = data[2]
         model.pay = data[3]
         model.paytype = data[4]
@@ -327,13 +352,77 @@ def getEtc(request):
     post_list = serializers.serialize('json', data)
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
 
+def etcPay(request):
+    if request.method == "POST":
+        id = request.POST.get("id")
+        date = request.POST.get("date")
+        summary = request.POST.get("summary")
+        content = request.POST.get("content")
+        row = Etc.objects.get(summary=summary)
+
+        if id != "-1":
+            model = EtcPay.objects.get(id=id)
+        else:
+            model = EtcPay()
+
+        model.date = date
+        model.summary = summary
+        model.etc = row.etc
+        model.price = row.pay
+        model.paytype = row.paytype
+
+        if row.paytype == "자동이체":
+            model.pay = row.pay
+        else:
+            model.pay = 0
+        model.content = content
+
+        model.save()
+
+        return redirect("trade:etcPay")
+
+    etc = Etc.objects.all()
+    datas = EtcPay.objects.all()
+
+    context = {
+        'etcs': etc,
+        'datas': datas,
+    }
+    return render(request, "trade/etcPay.html", context)
+
+def getEtcPay(request):
+    key = request.GET.get("key")
+    data = EtcPay.objects.filter(id=key)
+    post_list = serializers.serialize('json', data)
+    return HttpResponse(post_list, content_type="text/json-comment-filtered")
+
 def manage(request):
     if request.method == "POST":
+        data = getPOSTValue(request.POST)
+        is_empty = Manage.objects.filter(id=data[0])
+
+        if is_empty:
+            model = Manage.objects.get(id=data[0])
+        else:
+            model = Manage()
+
+        model.date = data[1] + "-01"
+        model.price = data[2]
+        model.status = data[3]
+        model.content = data[4]
+        model.save()
+
         return redirect("trade:manage")
-    return render(request, "trade/manage.html")
+
+    datas = Manage.objects.all()
+
+    context = {
+        'datas': datas,
+    }
+    return render(request, "trade/manage.html", context)
 
 def getManage(request):
     key = request.GET.get("key")
-    data = Etc.objects.filter(id=key)
+    data = Manage.objects.filter(id=key)
     post_list = serializers.serialize('json', data)
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
