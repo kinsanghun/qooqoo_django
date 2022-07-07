@@ -16,13 +16,12 @@
     min-height: calc(100vh - 13rem);
 }
 .sonic-graph {
-    width : calc(60% - 2rem);
+    width : calc(70% - 2rem);
     border-right : 1px solid var(--sub-color);
 }
 .misu-list {
     float : right;
-    width : calc(40% - 2rem);
-    background: gold;
+    width : calc(30% - 2rem);
 }
 .content {
     padding : 1rem;
@@ -82,5 +81,29 @@
     color : red;
 }
 .blue {
-    color : blue;
+    color: blue;
+}
+.misu {
+    width : 100%;
+    margin-bottom : 1rem;
+}
+.misu-data {
+
+}
+.misu-data .grid > .data-header {
+    background: var(--sub-color);
+}
+.misu-data .grid > div{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows : 1fr;
+    text-align : center;
+}
+
+.misu-data .grid div {
+    padding : 0.25rem;
+    box-sizing: border-box;
+}
+.misu-data .grid .data-item {
+    border-bottom : 1px solid var(--sub-color);
 }
