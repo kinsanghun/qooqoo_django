@@ -48,7 +48,10 @@
                         <div class="misu-data">
                             <div class="grid">
                                 <div class="data-header"><div>거래처</div><div>미수금</div></div>
-                                <div class="data-item"><div>1</div><div>미수금</div></div>
+                                {% for misu in client_misus %}
+
+                                <div class="data-item"><div>{{ misu.name }}</div><div>{{ misu.misu|intcomma }}</div></div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -83,8 +86,10 @@
                         <div class="misu-header"><h1>임대료</h1></div>
                         <div class="misu-data">
                             <div class="grid">
-                                <div class="data-header"><div>거래처</div><div>미수금</div></div>
-                                <div class="data-item"><div>1</div><div>미수금</div></div>
+                                <div class="data-header"><div>월</div><div>호수</div></div>
+                                {% for misu in rant_misus %}
+                                    <div><div>{{ misu.0 }}</div><div>{{ misu.1 }}</div></div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -99,10 +104,18 @@
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['{{ month.0 }}', '{{ month.1 }}', '{{ month.2 }}'],
+                labels: [
+                    {% for data in datas reversed %}
+                        '{{ data.month|date:"Y년 m월" }}',
+                    {% endfor %}
+                ],
                 datasets: [{
                     label: "{{ selected }}",
-                    data: [1200000, 1900000, 3210000],
+                    data: [
+                        {% for data in datas reversed %}
+                            {{ data.price }},
+                        {% endfor %}
+                    ],
                     backgroundColor: ['rgb(0,215,206)'],
                     borderColor: ['rgb(99,226,255)'],
                     borderWidth: 1

@@ -8,10 +8,10 @@
             <div class="input-form">
                 {% csrf_token %}
                 <input type="hidden" name="id" id="id" value="-1">
-                <div><label>일자</label><input type="month" name="date" id="date"></div>
-                <div><label>내역</label><input type="text" name="event" id="royalty"></div>
-                <div><label>금액</label><input type="text" name="price" id="price"></div>
-                <div><label>납부금액</label><input type="text" name="pay" id="pay"><button type="button" onclick="copyPrice();">전액입금</button></div>
+                <div><label>일자</label><input type="month" name="date" id="date" required></div>
+                <div><label>내역</label><input type="text" name="event" id="royalty" required></div>
+                <div><label>금액</label><input type="text" name="price" id="price" required></div>
+                <div><label>납부금액</label><input type="text" name="pay" id="pay" required><button type="button" onclick="copyPrice();">전액입금</button></div>
                 <div><label>비고</label><input type="text" name="content" id="content"></div>
             </div>
             <div class="submit-form">
@@ -28,13 +28,14 @@
             <form>
                 <div class="input-form">
                     <div>검색기능</div>
-                    <div><label>시작</label><input type="month" name="start" value="{{ start }}"></div>
-                    <div><label>종료</label><input type="month" name="end" value="{{ end }}"></div>
+                    <div><label>시작</label><input type="month" name="start" value="{{ start }}" required></div>
+                    <div><label>종료</label><input type="month" name="end" value="{{ end }}" required></div>
                     <input type="submit" value="검색">
                 </div>
             </form>
         </div>
-        <div>
+
+        <div style="border : 1px solid black; height : 35rem;">
             <div id="data-fields">
 
             </div>

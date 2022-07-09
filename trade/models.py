@@ -16,6 +16,7 @@ class ClientTrade(models.Model):
     client = models.CharField(max_length=40)
     price = models.IntegerField()
     pay = models.IntegerField()
+    card = models.IntegerField(default=0)
     content = models.TextField()
 
 class Fix(models.Model):

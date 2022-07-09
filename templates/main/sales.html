@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+{% block content %}
+    <link href="{% static 'css/sales.css' %}" type="text/css" rel="stylesheet"/>
+    <div class="view-area">
+        <div class="sales">
+
+        <div class="view-header"><h1>매출관리</h1></div>
+            <div class="crawling">
+                <form method="post">
+                    {% csrf_token %}
+                    <div><label>아이디</label><input type="text" name="id" required></div>
+                    <div><label>패스워드</label><input type="password" name="pw" required></div>
+                    <div class="submit-button"><input type="submit" value="크롤링"></div>
+                </form>
+            </div>
+            <div class="sales-table">
+                <div class="data-header"><div>날짜</div><div>매출금액</div></div>
+                {% for data in datas %}
+                    <div class="data-body"><div>{{ data.month|date:"Y년 m월" }}</div><div>{{ data.price|intcomma }}원</div></div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

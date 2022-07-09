@@ -31,7 +31,6 @@ class tradeReport(SQL):
             tmp["name"] = client.client
             tmp["misu"] = res[0][0]
             misu.append(tmp)
-            print(client.client, res[0][0])
 
         return misu
 
@@ -80,6 +79,5 @@ class tradeReport(SQL):
 
         sql = "select strftime('%Y-%m', date), rant from trade_rantpay where (price-pay) > 0"
         res = self.select(sql)
-        print(res)
 
         return res

@@ -4,6 +4,13 @@ from trade.models import *
 register = template.Library()
 
 @register.filter
+def is_card(data):
+    if data:
+        return "카드결제"
+    else:
+        return ""
+
+@register.filter
 def hello(client):
     trades = ClientTrade.objects.filter(client=client)
     totalpay = 0

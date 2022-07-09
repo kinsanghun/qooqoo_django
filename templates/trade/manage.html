@@ -7,8 +7,8 @@
             <div class="input-form">
                 {% csrf_token %}
                 <input type="hidden" name="id" id="id" value="-1">
-                <div><label>날짜</label><input type="month" name="date" id="date"></div>
-                <div><label>금액</label><input type="number" name="price" id="price"></div>
+                <div><label>날짜</label><input type="month" name="date" id="date" required></div>
+                <div><label>금액</label><input type="number" name="price" id="price" required></div>
                 <div><label>납부상태</label>
                     <select name="status" id="status">
                         <option value="납부">납부</option>

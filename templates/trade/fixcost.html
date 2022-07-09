@@ -6,9 +6,9 @@
             <div class="input-form">
                 {% csrf_token %}
                 <input type="hidden" name="id" id="id" value="-1">
-                <div><label>상호명</label><input type="text" name="fix" id="fix"></div>
-                <div><label>종목명</label><input type="text" name="event" id="event"></div>
-                <div><label>납부방식</label><input type="text" name="paytype" id="paytype"></div>
+                <div><label>상호명</label><input type="text" name="fix" id="fix" required></div>
+                <div><label>종목명</label><input type="text" name="event" id="event" required></div>
+                <div><label>납부방식</label><input type="text" name="paytype" id="paytype" required></div>
             </div>
             <div class="submit-form">
                 <div><input type="submit" value="저장"></div>
@@ -20,7 +20,8 @@
     </div>
     <div class="view-area">
         <div class="view-header"><h1>고정비관리</h1></div>
-        <div>
+
+        <div style="border : 1px solid black; height : 35rem;">
             <div id="data-fields">
 
             </div>

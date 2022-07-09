@@ -1,0 +1,49 @@
+.view-header {
+    display: inline-block !important;
+    width : 50% !important;
+    vertical-align: bottom;
+}
+.crawling {
+    display: inline-block;
+    float : right;
+    padding : 1rem;
+}
+.crawling div{
+    display: inline-block;
+    border : 1px solid var(--sub-color);
+    border-radius: 5px;
+    padding : 0.5rem;
+}
+.crawling div label {
+    padding-left : 0.5rem;
+    padding-right : 0.5rem;
+    border-right : 1px solid var(--primary-color);
+}
+.crawling div input {
+    margin-left : 0.5rem;
+    border : 0;
+}
+.crawling .submit-button{
+    background: var(--primary-color);
+    margin : 0;
+}
+.crawling .submit-button input {
+    margin : 0;
+    background: 0;
+    box-sizing: border-box;
+    color : white;
+}
+.sales-table > div {
+    clear : both;
+    display : grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    text-align : center;
+    padding : 0.5rem;
+}
+.sales-table .data-header {
+    background: var(--sub-color);
+}
+.sales-table .data-body {
+    border-bottom : 1px solid black;
+}

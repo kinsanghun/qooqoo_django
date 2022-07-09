@@ -49,10 +49,11 @@ def clientTrade(request):
         for i in range(len(date)):
             if price[i] == "" or price[i] == "0":
                 continue
-            trade = ClientTrade.objects.filter(client=client, date=date[i])
+            trade = ClientTrade.objects.filter(client=client, date=date[i], price__gt=0)
 
             if(len(trade)):
-                model = ClientTrade.objects.get(client=client, date=date[i])
+                model = ClientTrade.objects.get(client=client, date=date[i], price__gt=0)
+
                 model.content = content[i]
                 model.price = price[i]
 
@@ -122,6 +123,7 @@ def editTrade(request):
         model.price = data[3]
         model.pay = data[4]
         model.content = data[5]
+        model.card = data[6]
         model.save()
 
     return redirect("trade:clientTrade")
@@ -137,7 +139,7 @@ def getTrade(request):
     start = request.GET.get("start")
     end = request.GET.get("end")
 
-    data = ClientTrade.objects.filter(client=client, date__range=[start, end])
+    data = ClientTrade.objects.filter(client=client, date__range=[start, end], price__gt=0)
     post_list = serializers.serialize('json', data)
     print(data)
     return HttpResponse(post_list, content_type="text/json-comment-filtered")

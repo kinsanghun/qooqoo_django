@@ -9,17 +9,23 @@
             <div class="input-form">
                 {% csrf_token %}
                 <input type="hidden" name="id" id="id" value="-1">
-                <div><label>날짜</label><input type="date" name="date" id="date"></div>
+                <div><label>날짜</label><input type="date" name="date" id="date" required></div>
                 <div><label>거래처명</label>
-                    <select name="client" id="client">
+                    <select name="client" id="client" required>
                         {% for client in clients %}
                             <option value="{{ client.client }}">{{ client.client }}</option>
                         {% endfor %}
                     </select>
                 </div>
-                <div><label>거래금액</label><input type="number" name="price" id="price" required></div>
-                <div><label>납입금액</label><input type="text" name="pay" id="pay" min="0"></div>
+                <div><label>거래금액</label><input type="number" name="price" id="price" min="0" required></div>
+                <div><label>납입금액</label><input type="text" name="pay" id="pay" min="0" required></div>
                 <div><label>비고</label><input type="text" name="content" id="content"></div>
+                <div><label>납부방법</label>
+                    <select name="card" id="card">
+                        <option value="0">수기납부</option>
+                        <option value="1">카드결제</option>
+                    </select>
+                </div>
             </div>
             <div class="submit-form">
                 <div><input type="submit" value="저장"></div>
@@ -37,7 +43,7 @@
                 <div class="input-form" style="width : 100%;">
                     <div>필터기능</div>
                     <div><label>거래처</label>
-                        <select id="batch-client" name="client">
+                        <select id="batch-client" name="client" required>
                             <option value="all">전체</option>
                             {% for client in clients %}
                                 {% if filter_client == client.client %}
@@ -56,7 +62,9 @@
             </form>
         </div>
         <div>
-            <div id="data-fields">
+            <div style="border : 1px solid black; height : 35rem;">
+                <div id="data-fields">
+                </div>
             </div>
         </div>
     </div>
@@ -91,7 +99,7 @@
         </div>
     </div>
     <script type="text/javascript">
-        var dataHeader = ["UniqId", "거래일자", "상호명", "금액", "상태", "비고"];
+        var dataHeader = ["UniqId", "거래일자", "상호명", "금액", "상태", "비고", "납부방법"];
         var datas = [];
         var filterdatas = [];
         var dataId = "#data-fields";
@@ -106,6 +114,7 @@
             line.push("{{ data.price|output_pay:data.pay|intcomma }}");
             line.push("{{ data.price|output_type }}");
             line.push("{{ data.content }}");
+            line.push("{{ data.card|is_card }}");
             datas.push(line);
         {% endfor %}
 

@@ -7,7 +7,7 @@
             <div class="input-form">
                 {% csrf_token %}
                 <input type="hidden" name="id" id="id" value="-1">
-                <div><label>일자</label><input type="date" name="date" id="date"></div>
+                <div><label>일자</label><input type="date" name="date" id="date" required></div>
                 <div><label>호수</label>
                     <select name="rant" id="rant">
                         <option value="-">---</option>
@@ -16,7 +16,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div><label>금액</label><input type="text" name="price" id="price"></div>
+                <div><label>금액</label><input type="text" name="price" id="price" required></div>
                 <div><label>납부금액</label><input type="text" name="pay" id="pay" min="0" required><button type="button" onclick="copyPrice();">전액입금</button></div>
                 <div><label>비고</label><input type="text" name="content" id="content"></div>
             </div>

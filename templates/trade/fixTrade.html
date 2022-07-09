@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% block content %}
     <div class="input-area">
         <form method="post">
@@ -14,8 +15,8 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div><label>금액</label><input type="number" name="price" id="price" min="0"></div>
-                <div><label>납부금액</label><input type="number" name="pay" id="pay" min="0"></div>
+                <div><label>금액</label><input type="number" name="price" id="price" min="0" required></div>
+                <div><label>납부금액</label><input type="number" name="pay" id="pay" min="0" required></div>
                 <div><label>비고</label><input type="text" name="content" id="content"></div>
             </div>
             <div class="submit-form">
@@ -28,7 +29,7 @@
     </div>
     <div class="view-area">
         <div class="view-header"><h1>고정비내역관리</h1></div>
-        <div>
+        <div style="border : 1px solid black; height : 35rem;">
             <div id="data-fields">
 
             </div>
@@ -44,8 +45,8 @@
             var line = []
             line.push("{{ data.id }}");
             line.push("{{ data.fix }}");
-            line.push("{{ data.price }}");
-            line.push("{{ data.pay }}");
+            line.push("{{ data.price|intcomma }}");
+            line.push("{{ data.pay|intcomma }}");
             line.push("{{ data.content }}");
             datas.push(line);
         {% endfor %}
