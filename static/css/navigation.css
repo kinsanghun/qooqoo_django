@@ -5,17 +5,26 @@ header {
     box-sizing: border-box;
     padding : var(--default-padding);
 }
+#header-favicon {
+    vertical-align: middle;
+    padding-bottom: 0.5rem;
+}
 header h1 {
     display: inline-block;
     color : var(--primary-color);
     font-size : var(--h1-fontsize);
     font-weight: 600;
+    padding-left: 0.5rem;
 }
 header h1 span {
     color : var(--sub-color);
     font-size : var(--h2-fontsize);
     margin-left : 0.5rem;
 }
+    header #songcheon {
+        font-size : 1rem !important;
+        vertical-align: bottom;
+    }
 header ul {
     display: inline-block;
     color : var(--sub-color);
@@ -41,7 +50,7 @@ nav {
     display: inline-block;
     width : var(--nav-width);
     min-height: var(--minimum-height);
-    background: #595959;
+    background: var(--sub-color);
 }
 
 .top-menu div {
@@ -68,7 +77,4 @@ nav {
 .navigation a {
     color : white;
     text-decoration: none;
-}
-.navigation a span {
-    color : var(--primary-color);
 }
