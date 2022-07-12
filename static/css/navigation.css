@@ -59,8 +59,16 @@ nav {
 }
 .navigation .sub-items {
     margin-left : var(--default-padding);
+    border-left : 1px dashed var(--primary-color);
+    margin-bottom : 0.5rem;
+}
+.navigation .sub-items li {
+    padding-left : 0.8rem;
 }
 .navigation a {
     color : white;
     text-decoration: none;
+}
+.navigation a span {
+    color : var(--primary-color);
 }
