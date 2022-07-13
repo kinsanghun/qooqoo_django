@@ -72,3 +72,6 @@ def sales(request):
         'datas': datas,
     }
     return render(request, "main/sales.html", context)
+
+def tmp(request):
+    return render(request, "main/tmp..html")

@@ -5,11 +5,9 @@ main {
     padding : var(--default-padding);
     box-sizing: border-box;
 }
-
 .input-area, .null-area, .view-area {
     width : 100%;
 }
-
 .input-area {
 
 }

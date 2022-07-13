@@ -7,4 +7,6 @@ urlpatterns = [
     path('employee', views.employee, name="employee"),
     path('parttimer', views.parttimer, name="parttimer"),
     path('oneday', views.oneday, name="oneday"),
+
+    path('workemployee', views.workemployee, name="workEmployee"),
 ]

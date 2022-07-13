@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<script>
+    $(document).on("click", ".nav", function(){
+        $(".nav").index(this);
+        var tmp = $("this > ul").css("visibility");
+        if(tmp == "visible")
+            $(".nav > ul").css("visibility", "hidden");
+        else
+            $(".nav > ul").css("visibility", "visible");
+    });
+</script>
+<div class="nav">
+    tmp
+    <ul>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+    </ul>
+</div>
+<div class="nav">
+    tmp
+    <ul>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+    </ul>
+</div>
+{% endblock %}

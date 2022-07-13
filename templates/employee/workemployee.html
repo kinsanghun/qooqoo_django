@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+{% load customfilter %}
+{% block content %}
+    <link href="{% static 'css/workmodal.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/calendar.css' %}" rel="stylesheet" type="text/css"/>
+    <script src="{% static 'js/calendar.js' %}"></script>
+    <div class="employee-list">
+        <form method="get">
+            <select name="name" id="name">
+                <option value="김상훈">김상훈</option>
+            </select>
+            <input type="month" name="month" value="{{ year }}-{{ month }}">
+            <input type="submit">
+            <button type="button" style="float:right;">새로고침</button>
+        </form>
+    </div>
+    <div class="calendar">
+        <div class="header red">일</div>
+        <div class="header">월</div>
+        <div class="header">화</div>
+        <div class="header">수</div>
+        <div class="header">목</div>
+        <div class="header">금</div>
+        <div class="header blue">토</div>
+
+        {% for date in dates %}
+            {% if date|date:"m"|is_false:month %}
+                <div class="calendar-body gray">{{ date|date:"d" }}</div>
+            {% elif forloop.counter|mod:7 == 1 %}
+                <div class="calendar-body active red">{{ date|date:"d" }}</div>
+            {% elif forloop.counter|mod:7 == 0 %}
+                <div class="calendar-body active blue">{{ date|date:"d" }}</div>
+            {% else %}
+                <div class="calendar-body active">{{ date|date:"d" }}</div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div id="modal" class="modal-overlay">
+        <div class="modal_content">
+            <div class="title">
+                <h2>근태입력</h2>
+                <span class="close-area">X</span>
+            </div>
+            <div class="content">
+                <form method="post" id="formdata">
+                    <input type="hidden" name="id">
+                    <div class="line"><label>이름:</label><input type="text" id="formname" readonly></div>
+                    <div class="line"><label>근무일자:</label><input type="date" id="formdate" readonly></div>
+                    <div class="line"><label>근무스케줄</label>
+                        <select id="working">
+                            <option value="출근" selected>출근</option>
+                            <option value="조퇴">조퇴</option>
+                        </select>
+                    </div>
+                    <div class="inline">
+                        <div><label>출퇴근시간</label><input type="time" style="width:calc(49% - 3.5rem);" value="10:00"
+                                                        id="start" readonly><input type="time"
+                                                                                   style="width:calc(49% - 3.5rem);"
+                                                                                   value="22:00" id="end" readonly>
+                        </div>
+                        <div><label>추가수당</label><input></div>
+                    </div>
+                    <div class="inline">
+                        <div><label>휴무체크</label><input type="checkbox" id="dayoff"></div>
+                        <div><label>연차사용</label><input type="checkbox" id="annual"></div>
+                    </div>
+                    <div class="line"><label>특이사항:</label><input></div>
+                    <div class="button-list">
+                        <input type="button" value="확인">
+                        <input type="button" value="삭제">
+                        <input type="button" value="취소">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script>
+            $(document).on("click", ".active", function () {
+                var name = $("#name").val();
+                var year = "{{ year }}";
+                var month = "{{ month }}";
+                var day = this.innerText;
+                var date = year + "-" + month + "-" + day;
+                console.log(name, date);
+                settingModal(name, date);
+                $("#data-fields .data-header").css("z-index", "0");
+                $("#modal.modal-overlay").css("visibility", "visible");
+            });
+
+            $(document).on("click", ".close-area", function () {
+                //init
+                $("#working").val("출근")
+                $("#start").attr("readonly", true);
+                $("#end").attr("readonly", true);
+
+                $("#modal.modal-overlay").css("visibility", "hidden");
+                $("#data-fields .data-header").css("z-index", "1");
+            });
+            $(document).on("click", "#annual", function () {
+                var tmp = $('#annual').is(':checked');
+                if (tmp) $("#dayoff").prop("checked", true);
+                else $("#dayoff").prop("checked", false);
+            });
+            $(document).on("change", "#working", function () {
+                var tmp = $("#working").val()
+                if (tmp == "조퇴") {
+                    $("#start").attr("readonly", false);
+                    $("#end").attr("readonly", false);
+                } else {
+                    $("#start").attr("readonly", true);
+                    $("#end").attr("readonly", true);
+                }
+            })
+        </script>
+{% endblock %}

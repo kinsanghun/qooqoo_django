@@ -3,6 +3,21 @@ from trade.models import *
 
 register = template.Library()
 
+#calendar
+@register.filter
+def is_true(a, b):
+    if int(a) == int(b):
+        return 1
+    else:
+        return 0
+
+@register.filter
+def is_false(a, b):
+    if int(a) != int(b):
+        return 1
+    else:
+        return 0
+
 @register.filter
 def is_card(data):
     if data:

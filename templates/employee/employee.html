@@ -7,11 +7,20 @@
             <div class="input-form">
                 {% csrf_token %}
                 <input type="hidden" name="id" id="id" value="-1">
-                <div><label>적요</label><input type="text" name="summary" id="summary" required></div>
-                <div><label>항목명</label><input type="text" name="etc" id="etc" required></div>
-                <div><label>금액</label><input type="text" name="pay" id="pay" required></div>
-                <div><label>납부타입</label><input type="text" name="paytype" id="paytype" required></div>
-                <div><label>비고</label><input type="text" name="content" id="content"></div>
+                <div><label>이름</label><input type="text" name="name" id="name" required></div>
+                <div><label>주민등록번호</label><input type="text" name="reg_num" id="reg_num" required></div>
+                <div><label>연락처</label><input type="text" name="contect" id="contect" required></div>
+                <div><label>성별</label><input type="text" name="gender" id="gender" required></div>
+                <div><label>은행</label><input type="text" name="bank" id="bank" required></div>
+                <div><label>계좌번호</label><input type="text" name="bank_num" id="bank_num" required></div>
+                <div><label>입사일</label><input type="date" name="inwork" id="inwork" required></div>
+                <div><label>부서</label><input type="text" name="department" id="department" required></div>
+                <div><label>직급</label><input type="text" name="rank" id="rank" required></div>
+                <div><label>근무제</label><input type="text" name="worksystem" id="worksystem" required></div>
+                <div><label>계약임금</label><input type="number" name="pay" id="pay" required></div>
+                <div><label>4대보험</label><input type="text" name="insurance" id="insurance" required></div>
+                <div><label>보건증발급일</label><input type="date" name="health" id="health" required></div>
+                <div><label>메모</label><input type="text" name="content" id="content" required></div>
             </div>
             <div class="submit-form">
                 <div><input type="submit" value="저장"></div>
@@ -24,7 +33,7 @@
     <div class="view-area">
         <div class="view-header"><h1>직원관리</h1></div>
 
-        <div style="border : 1px solid black; height : 35rem;">
+        <div style="border : 1px solid black; height : 35rem; overflow: auto;">
             <div id="data-fields">
 
             </div>
@@ -32,7 +41,7 @@
     </div>
     <script type="text/javascript">
         var dataHeader = ["id", "이름", "주민등록번호", "연락처", "성별", "은행", "계좌번호",
-                        "부서", "직급", "근무제", "근무시간", "근속기간", "계약임금", "4대보험", "보건증발급"];
+                        "부서", "직급", "근무제", "근속기간", "계약임금", "4대보험", "보건증발급", "메모"];
         var datas = [];
         var dataId = "#data-fields";
         var sortfix = [0, 1];

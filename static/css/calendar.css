@@ -1,0 +1,27 @@
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: 1fr;
+}
+.header {
+    text-align : center;
+    padding : 0.8rem;
+}
+.calendar-body {
+    border : 0.2px solid rgba(87, 86, 86, 0.32);
+    padding : 0.5rem;
+    height: calc((100vh - 10rem)/6);
+}
+.active:hover {
+    animation-name: change-color;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+}
+@keyframes change-color {
+  from {background-color: white;}
+  to {background-color: rgba(250, 128, 114, 0.25);}
+}
+
+.red {color : red;}
+.blue {color : blue;}
+.gray {color:gray;}
