@@ -1,5 +1,6 @@
+{% load static %}
 <header>
-    <h1>쿠우쿠우 관리시스템<span>송천점</span></h1>
+   <img id="header-favicon" src="{% static 'img/favicon.png' %}" width="25px"><h1>쿠우쿠우 관리시스템<span id="h1-sub">송천점</span></h1>
     <ul>
         <li><a href="{% url 'main:index' %}">대시보드</a></li>
         <li><a href="{% url 'main:sales' %}">매출관리</a></li>
@@ -7,55 +8,135 @@
     </ul>
 </header>
 <nav>
-    <div class="top-menu">
-        <div><span>거래</span></div><div><span>직원</span></div>
-    </div>
-    <div class="navigation">
-        <ul class="items list-no-1">
-            <li>거래처
-                <ul class="sub-items">
-                    <li><a href="{% url 'trade:client' %}">거래처관리</a></li>
-                    <li><a href="{% url 'trade:clientTrade' %}">거래내역관리</a></li>
-                </ul>
-            </li>
-            <li>고정비
-                <ul class="sub-items">
-                    <li><a href="{% url 'trade:fix' %}"> - 고정비관리</a></li>
-                    <li><a href="{% url 'trade:fixCost' %}"> - 고정비내역관리</a></li>
-                </ul>
-            </li>
-            <li>관리비
-                <ul class="sub-items">
-                    <li><a href="{% url 'trade:manage' %}"> - 관리비관리</a></li>
-                </ul>
-            </li>
-            <li>로열티
-                <ul class="sub-items">
-                    <li><a href="{% url 'trade:royalty' %}"> - 로열티관리</a></li>
-                </ul>
-            </li>
-            <li>임대료
-                <ul class="sub-items">
-                    <li><a href="{% url 'trade:rant' %}"> - 임대차정보관리</a></li>
-                    <li><a href="{% url 'trade:rantPay' %}"> - 납부내역관리</a></li>
-                </ul>
-            </li>
-            <li>기타
-                <ul class="sub-items">
-                    <li><a href="{% url 'trade:etc' %}"> - 기타납부정보관리</a></li>
-                    <li><a href="{% url 'trade:etcPay' %}"> - 납부내역관리</a></li>
-                </ul>
-            </li>
+    <div class="scroll-wrap">
+        <!-- 최상위 카테고리-->
+        <ul class="first-view"> 
+            <div class="ml-1">
+                    <em class="ic16 ic-close"></em>
+                    <em class="ic16 ic-folder"></em>
+                    <span class="menu-name">거래처</span>
+            </div>
+            <ul class="second-view">
+                <li> <!-- 하위 카테고리 -->
+                    <div class="ml-1" onclick='location.href="{% url 'trade:client' %}";'>
+                        <em class="ic16 ic-star-on"></em>
+                        <span class="menu-name">거래처관리</span>
+                    </div>
+                </li>
+                <li> <!-- 하위 카테고리 -->
+                    <div class="ml-1" onclick='location.href="{% url 'trade:clientTrade' %}";'>
+                        <em class="ic16 ic-star-on"></em>
+                        <span class="menu-name">거래내역</span>
+                    </div>
+                </li>
+            </ul>
         </ul>
-        <ul class="items list-no-2">
-            <li>근무자관리
-                <ul class="sub-items">
-                    <li><a href="{% url 'employee:employee' %}"><span>--</span> 직원관리</a></li>
-                    <li><a href="{% url 'employee:parttimer' %}"><span>--</span> 파트타이머관리</a></li>
-                    <li><a href="{% url 'employee:oneday' %}"><span>--</span> 직원관리</a></li>
-                </ul>
-            </li>
+        <!-- 최상위 카테고리-->
+        <ul class="first-view"> 
+            <div class="ml-1">
+                    <em class="ic16 ic-close"></em>
+                    <em class="ic16 ic-folder"></em>
+                    <span class="menu-name">고정비</span>
+            </div>
+            <ul class="second-view">
+                <!-- 하위 카테고리 -->
+                <li> 
+                    <div class="ml-1" onclick='location.href="{% url 'trade:fix' %}";'>
+                        <em class="ic16 ic-star-on"></em>
+                        <span class="menu-name">목록관리</span>
+                    </div>
+                </li>
+                <!-- 하위 카테고리 -->
+                <li> 
+                    <div class="ml-1">
+                        <em class="ic16 ic-star-on" onclick='location.href="{% url 'trade:fixCost' %}";'></em>
+                        <span class="menu-name">납부내역</span>
+                    </div>
+                </li>
+            </ul>
         </ul>
+        <!-- 최상위 카테고리-->
+        <ul class="first-view"> 
+            <div class="ml-1">
+                    <em class="ic16 ic-close"></em>
+                    <em class="ic16 ic-folder"></em>
+                    <span class="menu-name">관리비</span>
+            </div>
+            <ul class="second-view">
+                <!-- 하위 카테고리 -->
+                <li> 
+                    <div class="ml-1" onclick='location.href="{% url 'trade:manage' %}";'>
+                        <em class="ic16 ic-star-on"></em>
+                        <span class="menu-name">관리비관리</span>
+                    </div>
+                </li>
+            </ul>
+        </ul>
+        <!-- 최상위 카테고리-->
+        <ul class="first-view"> 
+            <div class="ml-1">
+                    <em class="ic16 ic-close"></em>
+                    <em class="ic16 ic-folder"></em>
+                    <span class="menu-name">로열티</span>
+            </div>
+            <ul class="second-view">
+                <!-- 하위 카테고리 -->
+                <li> 
+                    <div class="ml-1" onclick='location.href="{% url 'trade:royalty' %}";'>
+                        <em class="ic16 ic-star-on"></em>
+                        <span class="menu-name">로열티관리</span>
+                    </div>
+                </li>
+            </ul>
+        </ul>
+        <!-- 최상위 카테고리-->
+        <ul class="first-view"> 
+            <div class="ml-1">
+                    <em class="ic16 ic-close"></em>
+                    <em class="ic16 ic-folder"></em>
+                    <span class="menu-name">임대료</span>
+            </div>
+            <ul class="second-view">
+                <!-- 하위 카테고리 -->
+                <li> 
+                    <div class="ml-1" onclick='location.href="{% url 'trade:rant' %}";'>
+                        <em class="ic16 ic-star-on"></em>
+                        <span class="menu-name">임대차정보</span>
+                    </div>
+                </li>
+                <!-- 하위 카테고리 -->
+                <li> 
+                    <div class="ml-1">
+                        <em class="ic16 ic-star-on" onclick='location.href="{% url 'trade:rantPay' %}";'></em>
+                        <span class="menu-name">납부내역</span>
+                    </div>
+                </li>
+            </ul>
+        </ul>
+        <!-- 최상위 카테고리-->
+        <ul class="first-view"> 
+            <div class="ml-1">
+                    <em class="ic16 ic-close"></em>
+                    <em class="ic16 ic-folder"></em>
+                    <span class="menu-name">기타</span>
+            </div>
+            <ul class="second-view">
+                <!-- 하위 카테고리 -->
+                <li> 
+                    <div class="ml-1" onclick='location.href="{% url 'trade:etc' %}";'>
+                        <em class="ic16 ic-star-on"></em>
+                        <span class="menu-name">기타목록</span>
+                    </div>
+                </li>
+                <!-- 하위 카테고리 -->
+                <li> 
+                    <div class="ml-1">
+                        <em class="ic16 ic-star-on" onclick='location.href="{% url 'trade:etcPay' %}";'></em>
+                        <span class="menu-name">납부내역</span>
+                    </div>
+                </li>
+            </ul>
+        </ul>                        
     </div>
 </nav>
 <main>
