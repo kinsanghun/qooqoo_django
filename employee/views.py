@@ -1,14 +1,42 @@
 from django.shortcuts import render, redirect
 from main.editdate import *
 from datetime import datetime
+from main.utils import *
+from .models import *
 # Create your views here.
 
 
 def employee(request):
     if request.method == "POST":
-        return redirect("employee:employee")
+        data = getPOSTValue(request.POST)
+        model = Employee.objects.filter(id=data[0])
 
+        if len(model) == 0:
+            model = Employee()
+        else:
+            model = Employee.objects.get(id=data[0])
+
+        model.name = data[1]
+        model.reg_num = data[2]
+        model.contact = data[3]
+        model.gender =  data[4]
+        model.bank =  data[5]
+        model.bank_num = data[6]
+        model.inwork = data[7]
+        model.department = data[8]
+        model.rank = data[9]
+        model.worksystem = data[10]
+        model.pay = data[11]
+        model.insurance = data[12]
+        model.health = data[13]
+        model.content = data[14]
+
+        model.save()
+
+        return redirect("employee:employee")
+    datas = Employee.objects.all()
     context = {
+        'datas': datas,
     }
     return render(request, "employee/employee.html", context)
 

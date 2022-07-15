@@ -9,7 +9,7 @@
                 <input type="hidden" name="id" id="id" value="-1">
                 <div><label>이름</label><input type="text" name="name" id="name" required></div>
                 <div><label>주민등록번호</label><input type="text" name="reg_num" id="reg_num" required></div>
-                <div><label>연락처</label><input type="text" name="contect" id="contect" required></div>
+                <div><label>연락처</label><input type="text" name="contact" id="contact" required></div>
                 <div><label>성별</label><input type="text" name="gender" id="gender" required></div>
                 <div><label>은행</label><input type="text" name="bank" id="bank" required></div>
                 <div><label>계좌번호</label><input type="text" name="bank_num" id="bank_num" required></div>
@@ -49,10 +49,19 @@
         {% for data in datas %}
             var line = []
             line.push("{{ data.id }}");
-            line.push("{{ data.summary }}");
-            line.push("{{ data.etc }}");
-            line.push("{{ data.pay|intcomma }}");
-            line.push("{{ data.paytype }}");
+            line.push("{{ data.name }}");
+            line.push("{{ data.reg_num }}");
+            line.push("{{ data.contact }}");
+            line.push("{{ data.gender }}");
+            line.push("{{ data.bank }}");
+            line.push("{{ data.bank_num }}");
+            line.push("{{ data.inwork }}");
+            line.push("{{ data.department }}");
+            line.push("{{ data.rank }}");
+            line.push("{{ data.worksystem }}");
+            line.push("{{ data.pay }}");
+            line.push("{{ data.insurance }}");
+            line.push("{{ data.health }}");
             line.push("{{ data.content }}");
             datas.push(line);
         {% endfor %}
