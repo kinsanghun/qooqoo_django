@@ -1,0 +1,52 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <style>
+        nav > .root {
+            background : grey;
+            color : white;
+            padding : 1rem;
+        }
+        .root span:hover {
+            background : #b68b8b;
+        }
+    </style>
+    <script src="../../static/js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<nav>
+
+    <ul class="root">
+        <li class="items one">
+            <span class="title">메뉴1</span>
+            <ul>
+                <li class="items two"><span class="title">서브메뉴1</span></li>
+                <li class="items two"><span class="title">서브메뉴2</span></li>
+            </ul>
+        </li>
+        <li class="items one">메뉴2</li>
+        <li class="items one">
+            <span class="title">메뉴3</span>
+            <ul>
+                <li class="items two"><span class="title">서브메뉴1</span></li>
+                <li class="items two"><span class="title">서브메뉴2</span></li>
+            </ul>
+        </li>
+        <li class="items one">메뉴4</li>
+    </ul>
+</nav>
+<script>
+    var navStatue = [[1],[0],[1],[0]];
+    var cnt = 1;
+    for(nav of navStatue){
+        if(nav[0] == 0) {
+            $(".root li:nth-child("+cnt+") > ul").css("display", "none");
+        }else {
+            $(".root li:nth-child("+cnt+") > ul").css("display", "block");
+        }
+        cnt++;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+{% load customfilter %}
+{% block content %}
+    <link href="{% static 'css/workmodal.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/calendar.css' %}" rel="stylesheet" type="text/css"/>
+    <script src="{% static 'js/calendar.js' %}"></script>
+    <div class="employee-list">
+        <form method="get">
+            <select name="name" id="name">
+                {% for employee in employees %}
+                    <option value="{{ employee.name }}">{{ employee.name }}</option>
+                {% endfor %}
+            </select>
+            <input type="month" name="month" value="{{ year }}-{{ month }}">
+            <input type="submit">
+            <button type="button" style="float:right;">새로고침</button>
+        </form>
+    </div>
+    <div class="calendar">
+        <div class="header red">일</div>
+        <div class="header">월</div>
+        <div class="header">화</div>
+        <div class="header">수</div>
+        <div class="header">목</div>
+        <div class="header">금</div>
+        <div class="header blue">토</div>
+
+        {% for date in dates %}
+            {% if date|date:"m"|is_false:month %}
+                <div class="calendar-body gray"><div class="date-title">{{ date|date:"d" }}</div>
+                {% for work in works %}
+                    {% if work.date == date %}
+                        <div>{{ work.working }}</div>
+                        <div>{{ work.content }}</div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+            {% elif forloop.counter|mod:7 == 1 %}
+                <div class="calendar-body active red"><div class="date-title">{{ date|date:"d" }}</div>
+                {% for work in works %}
+                    {% if work.date == date %}
+                        <div>{{ work.working }}</div>
+                        <div>{{ work.content }}</div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+            {% elif forloop.counter|mod:7 == 0 %}
+                <div class="calendar-body active blue"><div class="date-title">{{ date|date:"d" }}</div>
+                {% for work in works %}
+                    {% if work.date == date %}
+                        <div>{{ work.working }}</div>
+                        <div>{{ work.content }}</div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+            {% else %}
+                <div class="calendar-body active"><div class="date-title">{{ date|date:"d" }}</div>
+                {% for work in works %}
+                    {% if work == date %}
+                        <div>{{ work.working }}</div>
+                        <div>{{ work.content }}</div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div id="modal" class="modal-overlay">
+        <div class="modal_content">
+            <div class="title">
+                <h2>근태입력</h2>
+                <span class="close-area">X</span>
+            </div>
+            <div class="content">
+                <form method="post" id="formdata">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="-1">
+                    <div class="line"><label>이름:</label><input type="text" name="name" id="formname" readonly></div>
+                    <div class="line"><label>근무일자:</label><input type="date" name="date" id="formdate" readonly></div>
+                    <div class="line"><label>근무스케줄</label>
+                        <select id="working" name="working">
+                            <option value="출근" selected>출근</option>
+                            <option value="조퇴">조퇴</option>
+                        </select>
+                    </div>
+                    <div class="inline">
+                        <div><label>출퇴근시간</label>
+                            <input type="time" style="width:calc(49% - 3.5rem);" value="10:00" name="start" id="start" readonly>
+                            <input type="time" style="width:calc(49% - 3.5rem);" value="22:00" name="end" id="end" readonly>
+                        </div>
+                        <div><label>추가수당</label>
+                            <select style="width:calc(49% - 3.5rem);" name="extra-type">
+                                <option value="시간">시간</option>
+                                <option value="수기">수기</option>
+                            </select>
+                            <input type="number" name="extra" style="width:calc(49% - 3.5rem);"></div>
+                    </div>
+                    <div class="inline">
+                        <div><label>휴무체크</label>
+                        <select name="dayoff" id="dayoff">
+                            <option value="0" selected>사용안함</option>
+                            <option value="1">사용</option>
+                        </select>
+                        </div>
+                        <div><label>연차사용</label>
+                        <select name="annual" id="annual">
+                            <option value="0" selected>사용안함</option>
+                            <option value="1">사용</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="line"><label>특이사항:</label><input type="text" name="content" id="content"></div>
+                    <div class="button-list">
+                        <input type="submit" value="확인" onclick="$('#dayoff').removeAttr('disabled'); ">
+                        <input type="button" value="삭제">
+                        <input type="button" value="취소">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script>
+            $(document).on("click", ".active", function () {
+                var name = $("#name").val();
+                var year = "{{ year }}";
+                var month = "{{ month }}";
+                var day = this.innerText;
+                var date = year + "-" + month + "-" + day;
+                settingModal(name, date);
+                $("#data-fields .data-header").css("z-index", "0");
+                $("#modal.modal-overlay").css("visibility", "visible");
+            });
+
+            $(document).on("click", ".close-area", function () {
+                //init
+                $("#working").val("출근")
+                $("#start").attr("readonly", true);
+                $("#end").attr("readonly", true);
+                $("#dayoff").attr("disabled", false);
+                $("#dayoff").val(0);
+                $("#annual").attr("disabled", false);
+                $("#annual").val(0);
+                $("#content").val("");
+
+                $("#modal.modal-overlay").css("visibility", "hidden");
+                $("#data-fields .data-header").css("z-index", "1");
+            });
+            $(document).on("change", "#annual", function () {
+                var tmp = $('#annual').val();
+
+                if (tmp == "1") {
+                    $("#dayoff").val(0);
+                    $("#dayoff").attr("disabled", true);
+                }
+                else {
+                    $("#dayoff").attr("disabled", false);
+                }
+            });
+            $(document).on("change", "#working", function () {
+                var tmp = $("#working").val()
+                if (tmp == "조퇴") {
+                    $("#start").attr("readonly", false);
+                    $("#end").attr("readonly", false);
+                } else {
+                    $("#start").attr("readonly", true);
+                    $("#end").attr("readonly", true);
+                }
+            });
+
+            $(document).on("click", ".active", function(){
+                var year = "{{ year }}";
+                var month = "{{ month }}";
+                var day = $("> .date-title", this).text();
+                var date = year +"-"+ month +"-"+day;
+
+                var getValue = getData(date, "{% url 'trade:getEtcPay' %}");
+                console.log(getValue);
+
+            });
+        </script>
+{% endblock %}

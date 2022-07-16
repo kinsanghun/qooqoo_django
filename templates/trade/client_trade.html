@@ -4,6 +4,7 @@
 {% load humanize %}
 {% load customfilter %}
 {% block content %}
+    <link href="{% static 'css/modal.css' %}" rel="stylesheet" type="text/css">
     <div class="input-area">
         <form method="post" action="{% url 'trade:editTrade' %}">
             <div class="input-form">
