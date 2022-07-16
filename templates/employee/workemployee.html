@@ -59,7 +59,7 @@
             {% else %}
                 <div class="calendar-body active"><div class="date-title">{{ date|date:"d" }}</div>
                 {% for work in works %}
-                    {% if work == date %}
+                    {% if work.date == date %}
                         <div>{{ work.working }}</div>
                         <div>{{ work.content }}</div>
                     {% endif %}
@@ -123,12 +123,13 @@
         </div>
         <script>
             $(document).on("click", ".active", function () {
-                var name = $("#name").val();
                 var year = "{{ year }}";
                 var month = "{{ month }}";
-                var day = this.innerText;
-                var date = year + "-" + month + "-" + day;
-                settingModal(name, date);
+                var day = $("> .date-title", this).text();
+                var date = year +"-"+ month +"-"+day;
+                var name = $("#name").val();
+
+                getDate(name, date, "{% url 'employee:getWorkEmployee' %}");
                 $("#data-fields .data-header").css("z-index", "0");
                 $("#modal.modal-overlay").css("visibility", "visible");
             });
@@ -167,17 +168,6 @@
                     $("#start").attr("readonly", true);
                     $("#end").attr("readonly", true);
                 }
-            });
-
-            $(document).on("click", ".active", function(){
-                var year = "{{ year }}";
-                var month = "{{ month }}";
-                var day = $("> .date-title", this).text();
-                var date = year +"-"+ month +"-"+day;
-
-                var getValue = getData(date, "{% url 'trade:getEtcPay' %}");
-                console.log(getValue);
-
             });
         </script>
 {% endblock %}

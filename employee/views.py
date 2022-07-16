@@ -111,12 +111,12 @@ def retired(request):
 def workemployee(request):
     if request.method == "POST":
         data = getPOSTValue(request.POST)
-        model = WorkEmployee.objects.filter(id=data[0])
+        model = WorkEmployee.objects.filter(name=data[1], date=data[2])
 
         if len(model) == 0:
             model = WorkEmployee()
         else:
-            model = WorkEmployee.objects.get(id=data[0])
+            model = WorkEmployee.objects.get(name=data[1], date=data[2])
 
         model.name = data[1]
         model.date = data[2]
@@ -134,10 +134,11 @@ def workemployee(request):
         model.save()
 
         return redirect("employee:workEmployee")
+
     employees = Employee.objects.all()
-    print(employees[0].name)
     name = request.GET.get("name", employees[0].name)
     d = request.GET.get("month", False)
+
     if d:
         year = d.split("-")[0]
         month = d.split("-")[1]
@@ -148,6 +149,7 @@ def workemployee(request):
     dates = getCalender(year, month)
     #employee work table 불러오기
     work = WorkEmployee.objects.filter(date__year=year, date__month=month).all()
+    print(work)
     context = {
         'works': work,
         'name': name,
@@ -159,8 +161,9 @@ def workemployee(request):
     return render(request, "employee/workemployee.html", context)
 
 def getWorkEmployee(request):
-    key = request.GET.get("key")
-    data = Parttimer.objects.filter(id=key)
+    name = request.GET.get("name")
+    date = request.GET.get("date")
+    data = WorkEmployee.objects.filter(name=name, date=date)
     post_list = serializers.serialize('json', data)
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
 
