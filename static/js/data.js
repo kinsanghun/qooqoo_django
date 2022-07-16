@@ -1,3 +1,5 @@
+
+//
 function clearlist() {
     $(".data-body").remove();
 }
@@ -91,3 +93,4 @@ function filter_data(datas, filter, index) {
     }
     return filtered_data;
 }
+

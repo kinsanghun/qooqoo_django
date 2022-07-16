@@ -1,5 +1,5 @@
-//Treeview 구현
-extend: $(document).ready(function(event){
+//Treeview 
+$(document).ready(function(event){
     $('.first-view').on('click', function(){
         //Bubble-Up 방지
         $('.second-view').click(function(event){
@@ -18,4 +18,3 @@ extend: $(document).ready(function(event){
         }
     })
 })
-
