@@ -10,7 +10,7 @@
 .calendar-body {
     border : 0.2px solid rgba(87, 86, 86, 0.32);
     padding : 0.5rem;
-    height: calc((100vh - 10rem)/6);
+    height: calc((100vh - 10rem)/7);
 }
 .active:hover {
     animation-name: change-color;
@@ -25,3 +25,4 @@
 .red {color : red;}
 .blue {color : blue;}
 .gray {color:gray;}
+

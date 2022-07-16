@@ -24,7 +24,7 @@
             </div>
             <div class="submit-form">
                 <div><input type="submit" value="저장"></div>
-                <div><input type="button" value="초기화"></div>
+                <div><input type="button" value="초기화" onclick="location.href='';"></div>
             </div>
         </form>
     </div>
@@ -106,7 +106,7 @@
             var findkey = $(this).children("div:eq(0)");
             var key = findkey.get()[0].innerText;
             console.log(key);
-            var getValue = getData(key, "{% url 'trade:getEtc' %}");
+            var getValue = getData(key, "{% url 'employee:getEmployee' %}");
             console.log(getValue);
             formSetData(getValue, key);
         });
