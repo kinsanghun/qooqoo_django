@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+    <form method="get">
+        <select name="parttimer" id="parttimers">
+    {% for parttimer in parttimers %}
+            <option value="">{{ parttimer.name }}</option>
+    {% endfor %}
+        </select>
+    <input type="month" name="month" value="{{ year }}-{{ month }}">
+    <input type="submit">
+    </form>
+    <form method="post">
+    <input type="hidden" name="name" value="{{ name }}">
+    <div id="workparttimers">
+        <div class="items header"><div>날짜</div><div>시간</div><div>비고</div></div>
+    {% csrf_token %}
+    {% for date in dates %}
+        {% for work in works %}
+            {% if work.date == date %}
+            <div class="items"><div><input type="date" name="dates[]" value="{{ date|date:'Y-m-d' }}" tabindex="-1" readonly></div><div><input type="text" name="times[]" placeholder="근무시간" value="{{ work.time }}"></div><div><input type="text" name="contents[]" value="{{ work.content }}" tabindex="-1"></div></div>
+                {% else %}
+        <div class="items"><div><input type="date" name="dates[]" value="{{ date|date:'Y-m-d' }}" tabindex="-1" readonly></div><div><input type="text" name="times[]" placeholder="근무시간"></div><div><input type="text" name="contents[]" tabindex="-1"></div></div>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    </div>
+    <input type="submit">
+    </form>
+{% endblock %}

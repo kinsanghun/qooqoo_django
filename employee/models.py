@@ -43,3 +43,9 @@ class WorkEmployee(models.Model):
     dayoff = models.IntegerField()
     annual = models.IntegerField()
     content = models.TextField()
+
+class WorkParttimer(models.Model):
+    name = models.CharField(max_length=30)
+    date = models.DateField()
+    time = models.IntegerField()
+    content = models.TextField()

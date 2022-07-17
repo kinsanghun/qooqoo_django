@@ -4,6 +4,9 @@
 {% load mathfilters %}
 {% load customfilter %}
 {% block content %}
+    {% if request == "POST" %}
+        <script>location.href="{% url 'employee:workEmployee' %}?name={{ name }}&month={{ year }}-{{ month }}";</script>
+    {% endif %}
     <link href="{% static 'css/workmodal.css' %}" rel="stylesheet" type="text/css"/>
     <link href="{% static 'css/calendar.css' %}" rel="stylesheet" type="text/css"/>
     <script src="{% static 'js/calendar.js' %}"></script>
@@ -61,6 +64,15 @@
                 {% for work in works %}
                     {% if work.date == date %}
                         <div>{{ work.working }}</div>
+                        <div><span>{{ work.start }}</span>~<span>{{ work.end }}</span></div>
+                        {% if work.extra %}
+                            <div><span>{{ work.extra_type }}</span> : <span>{{ work.extra }}</span></div>
+                        {% endif %}
+                        {% if work.annual %}
+                            <div>연차</div>
+                        {% elif work.dayoff %}
+                            <div>휴무</div>
+                        {% endif %}
                         <div>{{ work.content }}</div>
                     {% endif %}
                 {% endfor %}
@@ -92,11 +104,11 @@
                             <input type="time" style="width:calc(49% - 3.5rem);" value="22:00" name="end" id="end" readonly>
                         </div>
                         <div><label>추가수당</label>
-                            <select style="width:calc(49% - 3.5rem);" name="extra-type">
+                            <select style="width:calc(49% - 3.5rem);" name="extra-type" id="extra-type">
                                 <option value="시간">시간</option>
                                 <option value="수기">수기</option>
                             </select>
-                            <input type="number" name="extra" style="width:calc(49% - 3.5rem);"></div>
+                            <input type="number" name="extra" id="extra" style="width:calc(49% - 3.5rem);"></div>
                     </div>
                     <div class="inline">
                         <div><label>휴무체크</label>

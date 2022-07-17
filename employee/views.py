@@ -5,6 +5,7 @@ from django.core import serializers
 from django.http import HttpResponse
 from main.utils import *
 from .models import *
+
 # Create your views here.
 
 def employee(request):
@@ -109,6 +110,7 @@ def retired(request):
     return render(request, "employee/retired.html", context)
 
 def workemployee(request):
+    url = "employee/workemployee.html"
     if request.method == "POST":
         data = getPOSTValue(request.POST)
         model = WorkEmployee.objects.filter(name=data[1], date=data[2])
@@ -133,8 +135,6 @@ def workemployee(request):
 
         model.save()
 
-        return redirect("employee:workEmployee")
-
     employees = Employee.objects.all()
     name = request.GET.get("name", employees[0].name)
     d = request.GET.get("month", False)
@@ -146,11 +146,12 @@ def workemployee(request):
         year = datetime.now().year
         month = datetime.now().month
 
-    dates = getCalender(year, month)
+    dates = getCalendar(year, month)
     #employee work table 불러오기
     work = WorkEmployee.objects.filter(date__year=year, date__month=month).all()
-    print(work)
+
     context = {
+        'request':request.method,
         'works': work,
         'name': name,
         'year': year,
@@ -158,7 +159,7 @@ def workemployee(request):
         'dates': dates,
         'employees': employees,
     }
-    return render(request, "employee/workemployee.html", context)
+    return render(request, url, context)
 
 def getWorkEmployee(request):
     name = request.GET.get("name")
@@ -168,7 +169,53 @@ def getWorkEmployee(request):
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
 
 def workparttimer(request):
-    return
+    if request.method == "POST":
+        name = request.POST.get("name")
+
+        dates = request.POST.getlist("dates[]")
+        times = request.POST.getlist("times[]")
+        contents = request.POST.getlist("contents[]")
+
+        for i, date in enumerate(dates):
+            if times[i]:
+                works = WorkParttimer.objects.filter(name=name, date=date)
+                if works:
+                    model = WorkParttimer.objects.get(name=name, date=date)
+                else:
+                    model = WorkParttimer()
+
+                model.name = name
+                model.date = date
+                model.time = times[i]
+                model.content = contents[i]
+
+                model.save()
+
+                print(name, i, date, times[i])
+
+        return redirect("employee:workParttimer")
+
+    parttimers = Parttimer.objects.all()
+    if len(parttimers):
+        name = request.GET.get("name", parttimers[0].name)
+    else:
+        name = ""
+    year = request.GET.get("year", datetime.now().year)
+    month = request.GET.get("month", datetime.now().month)
+    dates = list()
+    for date in getCalendar(year, month):
+        if month == date.month:dates.append(date)
+
+    works = WorkParttimer.objects.filter(name=name, date__month=month)
+    context = {
+        'works':works,
+        'name':name,
+        'dates': dates,
+        'year': year,
+        'month': str(month).rjust(2, "0"),
+        'parttimers': parttimers,
+    }
+    return render(request, "employee/workparttimer.html", context)
 
 def workonday(request):
     return

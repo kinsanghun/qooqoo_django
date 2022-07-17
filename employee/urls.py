@@ -14,4 +14,6 @@ urlpatterns = [
 
     path('workemployee', views.workemployee, name="workEmployee"),
     path('workemployee/getWork', views.getWorkEmployee, name="getWorkEmployee"),
+
+    path('workparttimer', views.workparttimer, name="workParttimer"),
 ]
