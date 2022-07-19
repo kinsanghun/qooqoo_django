@@ -32,6 +32,11 @@ class Parttimer(models.Model):
     health = models.CharField(max_length=30)
     content = models.TextField()
 
+class Oneday(models.Model):
+    name = models.CharField(max_length=30)
+    reg_num = models.CharField(max_length=30)
+    contact = models.CharField(max_length=30)
+
 class WorkEmployee(models.Model):
     name = models.CharField(max_length=30)
     date = models.DateField()
@@ -48,4 +53,11 @@ class WorkParttimer(models.Model):
     name = models.CharField(max_length=30)
     date = models.DateField()
     time = models.IntegerField()
+    content = models.TextField()
+
+class WorkOneday(models.Model):
+    date = models.DateField()
+    name = models.CharField(max_length=30)
+    reg_num = models.CharField(max_length=30)
+    pay = models.IntegerField()
     content = models.TextField()

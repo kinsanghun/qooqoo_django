@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+{% block content %}
+    <div class="view-area">
+    <div class="view-header"><h1>연차관리대장</h1></div>
+    <div>
+        <div id="data-fields annuals">
+            {% for annual in annuals %}
+                <div><span>직원명 : {{ annual.name }}</span> <span>총 연차 : {{ annual.annual }}</span> <span>사용 : {{ annual.used }}</span> <span>잔여 : {{ annual.annual|sub:annual.used }}</span></div>
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+{% endblock %}

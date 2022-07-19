@@ -5,6 +5,7 @@ from django.core import serializers
 from django.http import HttpResponse
 from main.utils import *
 from .models import *
+from .annual import *
 
 # Create your views here.
 
@@ -91,15 +92,49 @@ def getparttimer(request):
 
 def oneday(request):
     if request.method == "POST":
+        data = getPOSTValue(request.POST)
+        model = Oneday.objects.filter(id=data[0])
+
+        if len(model) == 0:
+            model = Oneday()
+        else:
+            model = Oneday.objects.get(id=data[0])
+
+        model.name = data[1]
+        model.reg_name = data[2]
+        model.contact = data[3]
+        model.save()
+
         return redirect("employee:oneday")
 
+    datas = Oneday.objects.all()
     context = {
+        'datas': datas,
     }
     return render(request, "employee/oneday.html", context)
 
-def manageAnnual(request):
-    context = {
 
+def getOneday(request):
+    key = request.GET.get("key")
+    data = Oneday.objects.filter(id=key)
+    post_list = serializers.serialize('json', data)
+    return HttpResponse(post_list, content_type="text/json-comment-filtered")
+
+def manageAnnual(request):
+    employee_list = list()
+    employees = Employee.objects.all()
+    for employee in employees:
+        employee_list.append(Annual(employee.id))
+
+    annuals = []
+
+    for l in employee_list:
+        annuals.append({"name":l.get_name(), "annual":l.get_annual(),
+                        "used":len(WorkEmployee.objects.filter(name=l.get_name(), annual=1))})
+
+    print(annuals)
+    context = {
+        'annuals':annuals,
     }
     return render(request, "employee/manageAnnual.html", context)
 
@@ -217,8 +252,41 @@ def workparttimer(request):
     }
     return render(request, "employee/workparttimer.html", context)
 
-def workonday(request):
-    return
+def workoneday(request):
+    if request.method == "POST":
+        data = getPOSTValue(request.POST)
+        model = WorkOneday.objects.filter(id=data[0])
+
+        if len(model) == 0:
+            model = WorkOneday()
+            target = Oneday.objects.get(id=data [2])
+            model.name = target.name
+            model.reg_num = target.reg_name
+        else:
+            model = WorkOneday.objects.get(id=data[0])
+
+        model.date = data[1]
+        model.pay = data[3]
+        model.content = data[4]
+
+        model.save()
+
+        return redirect("employee:workoneday")
+
+    oneday = Oneday.objects.all()
+    datas = WorkOneday.objects.all()
+    context = {
+        'onedays':oneday,
+        'datas':datas,
+    }
+    return render(request, "employee/workOneday.html",context)
+
+
+def getWorkOneday(request):
+    key = request.GET.get("key")
+    data = WorkOneday.objects.filter(id=key)
+    post_list = serializers.serialize('json', data)
+    return HttpResponse(post_list, content_type="text/json-comment-filtered")
 
 def managePay(request):
     return
