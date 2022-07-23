@@ -61,3 +61,6 @@ class WorkOneday(models.Model):
     reg_num = models.CharField(max_length=30)
     pay = models.IntegerField()
     content = models.TextField()
+
+class Document(models.Model):
+    uploadFile = models.FileField(upload_to="")

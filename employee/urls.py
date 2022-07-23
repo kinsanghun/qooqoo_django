@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 app_name = "employee"
 
@@ -22,4 +24,6 @@ urlpatterns = [
     path('workoneday/getWork', views.getWorkOneday, name="getworkoneday"),
 
     path('manageAnnual', views.manageAnnual, name="manageAnnual"),
-]
+
+    path('laborCost', views.laborCost, name="laborCost")
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
