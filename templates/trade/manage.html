@@ -24,7 +24,7 @@
         </form>
     </div>
     <div class="null-area">
-    </div>리
+    </div>
     <div class="view-area">
         <div class="view-header"><h1>관리비관리</h1></div>
         <div style="height:400px; border:1px solid black;">
@@ -42,7 +42,7 @@
         </div>
     </div>
     <script type="text/javascript">
-        var dataHeader = ["UniqId", "", "금액", "납부상태", "비고"];
+        var dataHeader = ["Id", "날", "금액", "납부상태", "비고"];
         var datas = [];
         var dataId = "#data-fields";
         var sortfix = [0, 1];
@@ -50,7 +50,7 @@
         {% for data in datas %}
             var line = []
             line.push("{{ data.id }}");
-            line.push("{{ data.date }}");
+            line.push("{{ data.date|date:'Y년 m월' }}");
             line.push("{{ data.price|intcomma }}");
             line.push("{{ data.status }}");
             line.push("{{ data.content }}");

@@ -15,7 +15,7 @@ def index(request):
 
     if selected == "매출":
         datas = Sales.objects.all().order_by("-month")[:3]
-    else:
+    elif selected == "물류":
         datas = Sales.objects.all().order_by("-month")[:3]
 
     conn = tradeReport()
