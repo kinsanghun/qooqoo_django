@@ -9,7 +9,6 @@ def client(request):
     if request.method == "POST":
         data = getPOSTValue(request.POST)
         is_empty = Client.objects.filter(id=data[0])
-        print(len(is_empty))
 
         if is_empty:
             model = Client.objects.get(id=data[0])

@@ -4,4 +4,5 @@ class Sales(models.Model):
     month = models.DateField()
     price = models.IntegerField()
 
-# Create your models here.
+class Banks(models.Model):
+    bank = models.CharField(max_length=30)

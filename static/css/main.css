@@ -183,3 +183,10 @@ main {
     text-align :center;
     border : 0;
 }
+#filter-client {
+    height : 27.8rem;
+    overflow-y: auto;
+}
+#filter-client .filter div{
+    border-bottom : 0.5px solid gray;
+}

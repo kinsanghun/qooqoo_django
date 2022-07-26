@@ -22,7 +22,7 @@
             </div>
             <div class="submit-form">
                 <div><input type="submit" value="저장"></div>
-                <div><input type="button" value="초기화"></div>
+                <div><input type="button" value="초기화" onclick="location.href='';"></div>
             </div>
         </form>
     </div>
@@ -34,11 +34,11 @@
             <div id="filter-list">
                 <div id="filter-client">
                     <div class="filter">
-                        <div class="header">거래처 필터</div>
+                        <div class="header">종목 필터</div>
                         {% for data in datas %}
-                            <div><input type="checkbox" name="filter" value="{{ data.client }}"
-                                        id="{{ data.client }}">
-                                <label for="{{ data.client }}">{{ data.client }}</label>
+                            <div><input type="checkbox" name="filter" value="{{ data.event }}"
+                                        id="{{ data.event }}">
+                                <label for="{{ data.event }}">{{ data.event }}</label>
                             </div>
                         {% endfor %}
                     </div>
@@ -92,7 +92,7 @@
             var tmp = $(this).val();
             filter.push(tmp);
         });
-        filterdatas = filter_data(filterdatas, filter, 1);
+        filterdatas = filter_data(filterdatas, filter, 3);
 
         clearlist();
         gridSetting(dataId, 1);
@@ -142,7 +142,7 @@
                 var tmp = $(this).val();
                 filter.push(tmp);
             });
-            filterdatas = filter_data(datas, filter, 1);
+            filterdatas = filter_data(datas, filter, 3);
 
             var filter = [];
             $("input[name=filter_status]:checked").each(function(){
@@ -168,7 +168,7 @@
                 var tmp = $(this).val();
                 filter.push(tmp);
             });
-            filterdatas = filter_data(filterdatas, filter, 1);
+            filterdatas = filter_data(filterdatas, filter, 3);
 
             clearlist();
             gridSetting(dataId, 1);

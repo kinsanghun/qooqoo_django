@@ -128,10 +128,10 @@
         });
 
         $(document).on("click", ".data-body", function () {
-            var findkey = $(this).children("div:eq(0)");
-            var key = findkey.get()[0].innerText;
-            var getValue = getData(key, "{% url 'trade:getClientTrade' %}");
-            formSetData(getValue, key);
+            //var findkey = $(this).children("div:eq(0)");
+            //var key = findkey.get()[0].innerText;
+            //var getValue = getData(key, "{% url 'trade:getClientTrade' %}");
+            //formSetData(getValue, key);
         });
 
         $(document).on("click", ".input-button", function(){
