@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from .reporting import tradeReport
+from .reporting import tradeReport, SQL
 from datetime import datetime
 from .crawling import *
 from .models import *
-import hashlib
+from trade.models import *
+
 
 def month3(year, month):
     return [f"{str(year-1)}년 {str(month+12-2)}월" if month-2 <= 0 else f"{str(year)}년 {str(month-2)}월",
@@ -12,12 +13,18 @@ def month3(year, month):
 
 def index(request):
     selected = request.GET.get("selected", "매출")
-
+    sql = SQL()
     if selected == "매출":
         datas = Sales.objects.all().order_by("-month")[:3]
+        print(datas)
     elif selected == "물류":
-        datas = Sales.objects.all().order_by("-month")[:3]
-
+        query = "select  strftime('%Y-%m', date) as month, sum(price) as price from trade_clientTrade group by month";
+        res = sql.select(query)
+        datas = list()
+        if res:
+            for r in res:
+                datas.append({'month':r[0]+"-01", 'price':r[1]})
+        print(datas)
     conn = tradeReport()
     client_misu = conn.client_misu()
     fix_misu = conn.fix_misu()
@@ -26,8 +33,6 @@ def index(request):
     context = {
         #graph
         'selected': selected,
-        #'year': year,
-        #'month': dates,
         'datas':datas,
 
         #misu
