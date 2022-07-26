@@ -9,6 +9,7 @@ class Employee(models.Model):
     bank = models.CharField(max_length=20)
     bank_num = models.CharField(max_length=30)
     inwork = models.DateField()
+    outwork = models.DateField(null=True, blank=True)
     department = models.CharField(max_length=30)
     rank = models.CharField(max_length=30)
     worksystem = models.IntegerField()

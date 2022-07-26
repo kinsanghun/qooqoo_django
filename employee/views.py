@@ -302,17 +302,10 @@ def turnover(request):
 
 def laborCost(request):
     if request.method == "POST":
-        for d in Document.objects.all():
-            os.remove(os.path.join(settings.MEDIA_ROOT, str(d.uploadFile)))
-            d.delete()
-        uploadedFile = request.FILES.get("uploadedFile")
-        document = Document(uploadFile=uploadedFile)
-        document.save()
+        return redirect('employee:laborCost')
 
-        file = Document.objects.all().order_by("-id")[:1]
-        f = pandas.read_excel(settings.MEDIA_ROOT+"/"+str(file[0].uploadFile), sheet_name=1)
-        print(f)
+    employees = Employee.objects.filter(outwork__isnull=True)
     context = {
-
+        'employees':employees,
     }
     return render(request, "employee/laborcost.html", context)
