@@ -300,6 +300,8 @@ def schedule(request):
 def turnover(request):
     return
 
+
+#인건비 
 def laborCost(request):
     if request.method == "POST":
         return redirect('employee:laborCost')

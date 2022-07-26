@@ -1,24 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="uploadedFile" id="fileUpload">
-        <input type="submit">
-    </form>
-    <div>
-        <div></div>
-    <div>
-        <div>
-            <form>
-                {% for employee in employees %}
-                    <div>
-                        <div><input type="text" value="{{ employee.name }}" readonly></div>
-                        <div><input type="number"></div>
-                    </div>
-                {% endfor %}
-                </div>
-            </form>
-        </div>
-    </div>
+<div>
+    
+
+</div>
 {% endblock %}

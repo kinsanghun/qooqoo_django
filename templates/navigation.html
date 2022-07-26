@@ -48,8 +48,8 @@
                 </li>
                 <!-- 하위 카테고리 -->
                 <li> 
-                    <div class="ml-1">
-                        <em class="ic16 ic-star-on" onclick='location.href="{% url 'trade:fixCost' %}";'></em>
+                    <div class="ml-1" onclick='location.href="{% url 'trade:fixCost' %}";'>
+                        <em class="ic16 ic-star-on"></em>
                         <span class="menu-name">납부내역</span>
                     </div>
                 </li>
@@ -106,8 +106,8 @@
                 </li>
                 <!-- 하위 카테고리 -->
                 <li> 
-                    <div class="ml-1">
-                        <em class="ic16 ic-star-on" onclick='location.href="{% url 'trade:rantPay' %}";'></em>
+                    <div class="ml-1" onclick='location.href="{% url 'trade:rantPay' %}";'>
+                        <em class="ic16 ic-star-on" ></em>
                         <span class="menu-name">납부내역</span>
                     </div>
                 </li>
@@ -130,13 +130,81 @@
                 </li>
                 <!-- 하위 카테고리 -->
                 <li> 
-                    <div class="ml-1">
-                        <em class="ic16 ic-star-on" onclick='location.href="{% url 'trade:etcPay' %}";'></em>
+                    <div class="ml-1" onclick='location.href="{% url 'trade:etcPay' %}";'>
+                        <em class="ic16 ic-star-on"></em>
                         <span class="menu-name">납부내역</span>
                     </div>
                 </li>
             </ul>
-        </ul>                        
+        </ul>
+        <!-- 최상위 카테고리-->
+        <ul class="first-view"> 
+            <div class="ml-1">
+                    <em class="ic16 ic-close"></em>
+                    <em class="ic16 ic-folder"></em>
+                    <span class="menu-name">근로자정보</span>
+            </div>
+            <ul class="second-view">
+                <!-- 하위 카테고리 -->
+                <li> 
+                    <div class="ml-1" onclick='location.href="{% url 'employee:employee' %}";'>
+                        <em class="ic16 ic-star-on"></em>
+                        <span class="menu-name">직원</span>
+                    </div>
+                </li>
+                <!-- 하위 카테고리 -->
+                <li> 
+                    <div class="ml-1" onclick='location.href="{% url 'employee:parttimer' %}";'>
+                        <em class="ic16 ic-star-on"></em>
+                        <span class="menu-name">파트타이머</span>
+                    </div>
+                </li>
+                <!-- 하위 카테고리 -->
+                <li> 
+                    <div class="ml-1" onclick='location.href="{% url 'employee:oneday' %}";'>
+                        <em class="ic16 ic-star-on"></em>
+                        <span class="menu-name">일용직</span>
+                    </div>
+                </li>                
+            </ul>
+        </ul>                           
+        <ul class="first-view"> 
+            <div class="ml-1">
+                    <em class="ic16 ic-close"></em>
+                    <em class="ic16 ic-folder"></em>
+                    <span class="menu-name">근태관리</span>
+            </div>
+            <ul class="second-view">
+                <!-- 하위 카테고리 -->
+                <li> 
+                    <div class="ml-1" onclick='location.href="{% url 'employee:workEmployee' %}";'>
+                        <em class="ic16 ic-star-on"></em>
+                        <span class="menu-name">직원</span>
+                    </div>
+                </li>
+                <!-- 하위 카테고리 -->
+                <li> 
+                    <div class="ml-1" onclick='location.href="{% url 'employee:workParttimer' %}";'>
+                        <em class="ic16 ic-star-on"></em>
+                        <span class="menu-name">파트타이머</span>
+                    </div>
+                </li>
+                <!-- 하위 카테고리 -->
+                <li> 
+                    <div class="ml-1" onclick='location.href="{% url 'employee:workoneday' %}";'>
+                        <em class="ic16 ic-star-on"></em>
+                        <span class="menu-name">일용직</span>
+                    </div>
+                </li>
+            </ul>
+        </ul>
+        <ul class="first-view">
+            <!-- 하위 카테고리 -->
+            <div class="ml-1" onclick='location.href="{% url 'employee:manageAnnual' %}";'>
+                <em class="ic16 ic-star-on"></em>
+                <span class="menu-name">연차관리대장</span>
+            </div>
+        </ul>
     </div>
 </nav>
 <main>
