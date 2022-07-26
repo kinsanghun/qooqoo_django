@@ -3,6 +3,13 @@
 {% block content %}
 <div>
     <!-- 부서별 인건비 기입해서 대쉬보드로 넣을거임 -->
-    <div><label>날짜</label><input type="date" name="date" id="date" required></div>
+    <!--날짜(년,월), 부서 필터 -->
+    <!-- 이름 금액 -->
+    <div class="input-area">
+        <div class="input-form">
+            <div><label>날짜</label><input type="month" data-placeholder="날짜선택" name="date" id="date" required></div>
+            <div><label>부서</label><input type="text" name="text" id="text" required></div>
+        </div>
+    </div>
 </div>
 {% endblock %}

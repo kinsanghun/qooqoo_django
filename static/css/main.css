@@ -80,6 +80,12 @@ main {
     margin-bottom : 2rem;
     border-bottom : 1px solid var(--sub-color);
 }
+
+input {
+    outline-width:0;
+}
+
+
 .view-area {
 }
 .view-area .view-header {
