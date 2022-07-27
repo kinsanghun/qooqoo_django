@@ -18,13 +18,17 @@ def index(request):
         datas = Sales.objects.all().order_by("-month")[:3]
         print(datas)
     elif selected == "물류":
-        query = "select  strftime('%Y-%m', date) as month, sum(price) as price from trade_clientTrade group by month";
+        query = "select strftime('%Y-%m', date) as month, sum(price) as price from trade_clientTrade group by month limit 3";
         res = sql.select(query)
         datas = list()
         if res:
-            for r in res:
-                datas.append({'month':r[0]+"-01", 'price':r[1]})
-        print(datas)
+            for r in reversed(res):
+                datas.append({'month':datetime.strptime(r[0]+"-01", "%Y-%m-%d"), 'price':r[1]})
+    elif selected == "인건비":
+        datas = list()
+    elif selected == "법인카드":
+        datas = list()
+        
     conn = tradeReport()
     client_misu = conn.client_misu()
     fix_misu = conn.fix_misu()

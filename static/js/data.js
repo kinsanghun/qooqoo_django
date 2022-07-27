@@ -25,7 +25,15 @@ function getData(keyValue, url) {
         dataType : "json",
         contentType : "application/json",
         success : function(datas) {
-            result =  datas[0]["fields"];
+            if(datas) {
+
+                result =  datas[0]["fields"];
+            }else {
+
+            }
+        },
+        error : function() {
+            console.log('error');
         }
     });
     return result;
