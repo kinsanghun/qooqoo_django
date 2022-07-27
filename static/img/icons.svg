@@ -170,9 +170,12 @@
 <mask id="mask1" mask-type="alpha" maskUnits="userSpaceOnUse" x="4" y="126" width="24" height="24">
 <rect x="4" y="126" width="24" height="24" fill="white"/>
 </mask>
+<<<<<<< HEAD
 <g mask="url(#mask1)">
 <path d="M19 130.5L11.5 138L19 145.5" stroke="#EE7700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
+=======
+>>>>>>> e5f6314bc538a23bef8b49dea7c59cc9eac898d4
 <rect x="32" y="122" width="32" height="32" rx="3" fill="white"/>
 <mask id="mask2" mask-type="alpha" maskUnits="userSpaceOnUse" x="36" y="126" width="24" height="24">
 <rect x="36" y="126" width="24" height="24" fill="white"/>

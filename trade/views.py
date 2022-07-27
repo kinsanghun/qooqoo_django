@@ -130,6 +130,8 @@ def editTrade(request):
 def getClientTrade(request):
     key = request.GET.get("key")
     data = ClientTrade.objects.filter(id=key)
+    if data[0].pay == 0 and data[0].price != 0:return HttpResponse("")
+
     post_list = serializers.serialize('json', data)
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
 
