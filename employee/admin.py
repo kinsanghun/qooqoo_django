@@ -6,3 +6,4 @@ from .models import *
 admin.site.register(Employee)
 admin.site.register(WorkEmployee)
 admin.site.register(Document)
+admin.site.register(LaborCost)

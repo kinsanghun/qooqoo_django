@@ -81,7 +81,7 @@ main {
     border-bottom : 1px solid var(--sub-color);
 }
 
-input {
+input, select{
     outline-width:0;
 }
 

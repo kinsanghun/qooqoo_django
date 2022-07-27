@@ -65,3 +65,10 @@ class WorkOneday(models.Model):
 
 class Document(models.Model):
     uploadFile = models.FileField(upload_to="")
+
+class LaborCost(models.Model):
+    date = models.DateField()
+    department = models.CharField(max_length=10)
+    rank = models.CharField(max_length=10)
+    cost = models.IntegerField()
+    

@@ -52,12 +52,13 @@ nav {
     background : var(--sub-color);
     font-size : 14px;
     color: white;
+    font-weight: 100;
 }
     .scroll-wrap {
         margin: 20px;
     }
         li > div {
-            margin-left : 19px;
+            margin-left : 9px;
         }
             .menu-name {
                 margin-left : 6px;
@@ -72,11 +73,11 @@ nav {
             .ml-1:hover{
                 background-color: var(--nav-hover-color);
             }
-
         .second-view {
             display: none;
+            border-left : dashed 1px var(--primary-color);
+            margin-left : 10px;
         }
-
     /* Navigation Icon  */
     .ic16 {
         display: inline-block;
