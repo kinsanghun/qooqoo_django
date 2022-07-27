@@ -307,6 +307,7 @@ def laborCost(request):
         return redirect('employee:laborCost')
 
     employees = Employee.objects.filter(outwork__isnull=True)
+
     context = {
         'employees':employees,
     }
