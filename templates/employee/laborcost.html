@@ -1,54 +1,73 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 {% block content %}
-<div>
-    <!-- 부서별 인건비 기입해서 대쉬보드로 넣을거임 -->
-    <!--날짜(년,월), 부서 필터 -->
-    <!-- 이름 금액 -->
-    <div class="input-area">
-        <div class="input-form">
-            <div><label>날짜</label><input type="month" data-placeholder="날짜선택" name="date" id="date" required></div>
-            <div><label>부서</label><input type="text" name="text" id="text" required></div>
-            <div><label>직급</label>
-                <select name="text" id="text">
-                    <option value="직원">직원</option>
-                    <option value="파트">파트타이머</option>
-                </select>
+    <div>
+        <!-- 부서별 인건비 기입해서 대쉬보드로 넣을거임 -->
+        <!--날짜(년,월), 부서 필터 -->
+        <!-- 이름 금액 -->
+        <div class="input-area">
+            <form method="post">
+                {% csrf_token %}
+                <div class="input-form">
+                    <input type="hidden" id="id" name="id" value="-1">
+                    <div><label>날짜</label><input type="month" data-placeholder="날짜선택" name="date" id="date" required>
+                    </div>
+                    <div><label>부서</label><input type="text" name="department" id="department" required></div>
+                    <div><label>직급</label>
+                        <select name="rank" id="rank">
+                            <option value="직원">직원</option>
+                            <option value="파트">파트타이머</option>
+                        </select>
+                    </div>
+                    <div><label>금액</label><input type="text" name="cost" id="cost" required></div>
+                </div>
+                <div class="submit-form">
+                    <input type="submit" value="저장">
+                </div>
+            </form>
+        </div>
+        <div class="null-area">
+        </div>
+        <div class="view-area">
+            <div class="view-header">
+                <h1>부서별 인건비 입력</h1>
             </div>
-            <div><label>금액</label><input type="text" name="text" id="text" required></div>
-        </div>
-    </div>
-    <div class="null-area">
-    </div>
-    <div class="view-area">
-        <div class="view-header">
-            <h1>부서별 인건비 입력</h1>
-        </div>
 
-        <div style="border : 1px solid black; height : 35rem; overflow: auto;">
-            <div id="data-fields">
+            <div style="border : 1px solid black; height : 35rem; overflow: auto;">
+                <div id="data-fields">
 
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script type="text/javascript">
-    var dataHeader = ["No", "날짜", "부서", "직급", "금액"];
-    var datas = []
-    var dataId = "#data-fields";
+    <script type="text/javascript">
+        var dataHeader = ["No", "날짜", "부서", "직급", "금액"];
+        var datas = []
+        var dataId = "#data-fields";
 
-    {% for data in datas %} 
-        var line = [];
-        
-        line.push("{{ data.id }}");
-        line.push("{{ data.date }}");
-        line.push("{{ data.department }}");
-        line.push("{{ data.rank }}");
-        line.push("{{ data.cost }}");
-        datas.push(line)
-    {% endfor %}
-    
-    gridSetting(dataId, 1);
-    printData(1, dataId, dataHeader, datas);
-</script>
+        {% for data in datas %}
+            var line = [];
+
+            line.push("{{ data.id }}");
+            line.push("{{ data.date|date:'Y년 m월' }}");
+            line.push("{{ data.department }}");
+            line.push("{{ data.rank }}");
+            line.push("{{ data.cost|intcomma }}");
+            datas.push(line)
+        {% endfor %}
+
+        gridSetting(dataId, 1);
+        printData(1, dataId, dataHeader, datas);
+
+        $(document).on("click", ".data-body", function () {
+            var findkey = $(this).children("div:eq(0)");
+            var key = findkey.get()[0].innerText;
+            console.log(key);
+            var getValue = getData(key, "{% url 'employee:getLaborCost' %}");
+            console.log(getValue);
+            getValue["date"] = getValue["date"].slice(0,7)
+            formSetData(getValue, key);
+        });
+    </script>
 {% endblock %}

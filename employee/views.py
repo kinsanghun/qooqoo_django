@@ -304,6 +304,21 @@ def turnover(request):
 #인건비 
 def laborCost(request):
     if request.method == "POST":
+        data = getPOSTValue(request.POST)
+        print(data[0])
+        model = LaborCost.objects.filter(id=data[0])
+
+        if len(model) == 0:
+            model = LaborCost()
+        else:
+            model = LaborCost.objects.get(id=data[0])
+
+        model.date = data[1] + "-01"
+        model.department = data[2]
+        model.rank = data[3]
+        model.cost = data[4]
+        model.save()
+
         return redirect('employee:laborCost')
 
     employees = Employee.objects.filter(outwork__isnull=True)
@@ -314,3 +329,9 @@ def laborCost(request):
         'datas' : datas,
     }
     return render(request, "employee/laborcost.html", context)
+
+def getLaborCost(request):
+    key = request.GET.get("key")
+    data = LaborCost.objects.filter(id=key)
+    post_list = serializers.serialize('json', data)
+    return HttpResponse(post_list, content_type="text/json-comment-filtered")

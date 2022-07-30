@@ -120,7 +120,7 @@ input, select{
     padding : 0.25rem;
 }
 #data-fields .data-body:hover {
-    background : rgba(127, 255, 212, 0.35);
+    background : rgba(231, 168, 73, 0.35);
 }
 
 .input-button, .batch-button {
