@@ -323,7 +323,6 @@ def laborCost(request):
 
     employees = Employee.objects.filter(outwork__isnull=True)
     datas = LaborCost.objects.all()
-
     context = {
         'employees':employees,
         'datas' : datas,
