@@ -11,7 +11,6 @@ class SQL:
             self.cursor.execute(query)
             result = self.cursor.fetchall()
 
-            #connection.commit()
             connection.close()
             return result
 

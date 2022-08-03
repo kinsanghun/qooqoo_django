@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+    <div>
+        <div class="input-area">
+            <form method="post">
+                {% csrf_token %}
+                <div class="input-form">
+                    <input type="hidden" id="id" name="id" value="-1">
+                    <div><label>날짜</label><input type="month" data-placeholder="날짜선택" name="date" id="date" required></div>
+                    <div><label>카드사</label><input type="text" name="card" id="card" required></div>
+                    <div><label>금액</label><input type="text" name="cost" id="cost" required></div>
+                    <div><label>비고</label><input type="text" name="content" id="content"> </div>
+                </div>
+                <div class="submit-form">
+                    <input type="submit" value="저장">
+                </div>
+            </form>
+        </div>
+        <div class="null-area">
+        </div>
+        <div class="view-area">
+            <div class="view-header">
+                <h1>카드대금 입력</h1>
+            </div>
+
+            <div style="border : 1px solid black; height : 35rem; overflow: auto;">
+                <div id="data-fields">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var dataHeader = ["No", "날짜", "카드사", "금액", "비고"];
+        var datas = []
+        var dataId = "#data-fields";
+
+        {% for data in datas %}
+            var line = [];
+
+            line.push("{{ data.id }}");
+            line.push("{{ data.date|date:'Y년 m월' }}");
+            line.push("{{ data.card }}");
+            line.push("{{ data.cost|intcomma }}");
+            line.push("{{ data.content }}");
+            datas.push(line)
+        {% endfor %}
+
+        gridSetting(dataId, 1);
+        printData(1, dataId, dataHeader, datas);
+
+        $(document).on("click", ".data-body", function () {
+            var findkey = $(this).children("div:eq(0)");
+            var key = findkey.get()[0].innerText;
+            console.log(key);
+            var getValue = getData(key, "{% url 'trade:getcardcost' %}");
+            console.log(getValue);
+            getValue["date"] = getValue["date"].slice(0, 7)
+            formSetData(getValue, key);
+        });
+    </script>
+{% endblock %}

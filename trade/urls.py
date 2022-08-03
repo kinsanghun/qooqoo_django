@@ -32,4 +32,6 @@ urlpatterns = [
     path('etc/pay', views.etcPay, name="etcPay"),
     path('etc/pay/getPay', views.getEtcPay, name="getEtcPay"),
 
+    path('card', views.cardcost, name='cardcost'),
+    path('card/getCost', views.getCardCost, name='getcardcost'),
 ]

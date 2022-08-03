@@ -76,3 +76,9 @@ class Manage(models.Model):
     price = models.IntegerField()
     status = models.CharField(max_length=20)
     content = models.TextField()
+
+class CardCost(models.Model):
+    date = models.DateField()
+    card = models.CharField(max_length=30)
+    cost = models.IntegerField()
+    content = models.TextField()

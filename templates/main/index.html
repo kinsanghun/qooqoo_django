@@ -2,6 +2,7 @@
 {% load static %}
 {% load humanize %}
 {% load mathfilters %}
+{% load customfilter %}
 {% block content %}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="{% static 'css/dashboard.css' %}" type="text/css" rel="stylesheet"/>
@@ -24,18 +25,66 @@
                     <div id="sonic-data">
                         <div>
                             <div class="sonic-title">전전월 손익</div>
-                            <div><span class="sonic-pay">1500</span><span class="sonic-unit">만원</span></div>
-                            <div><span class="sonic-compare">당월대비</span><span class="sonic-compare-pay red"> + 200만원</span></div>
+                            <div>
+                                {% if profitorloss.2|div:100_000_000 %}
+                                    <span class="sonic-pay">{{ profitorloss.2|is_uk }}</span><span class="sonic-unit">억</span>
+                                {% endif %}
+                                <span class="sonic-pay">{{ profitorloss.2|convert_pay }}</span><span class="sonic-unit">만원</span></div>
+                            <div><span class="sonic-compare">당월대비</span>
+                                {% if profitorloss.2|sub:profitorloss.0 > 0 %}
+                                    <span class="sonic-compare-pay red"> +
+                                    {% if profitorloss.2|sub:profitorloss.0|div:100_000_000 >= 1 %}
+                                        {{ profitorloss.2|sub:profitorloss.0|is_uk }}억
+                                    {% endif %}
+                                {% else %}
+                                    <span class="sonic-compare-pay blue"> -
+                                    {% if profitorloss.2|sub:profitorloss.0|div:100_000_000 >= 1 %}
+                                        {{ profitorloss.2|sub:profitorloss.0|is_uk }}억
+                                    {% endif %}
+                                {% endif %}
+                                {{ profitorloss.2|sub:profitorloss.0|convert_pay }}만원</span></div>
                         </div>
                         <div>
                             <div class="sonic-title">전월 손익</div>
-                            <div><span class="sonic-pay">3000</span><span class="sonic-unit">만원</span></div>
-                            <div><span class="sonic-compare">당월대비</span><span class="sonic-compare-pay red"> + 1500만원</span></div>
+                            <div>
+                                {% if profitorloss.1|div:100_000_000 > 0 %}
+                                    <span class="sonic-pay">{{ profitorloss.1|is_uk }}</span><span class="sonic-unit">억</span>
+                                {% endif %}
+                                <span class="sonic-pay">{{ profitorloss.1|convert_pay }}</span><span class="sonic-unit">만원</span></div>
+                            <div><span class="sonic-compare">당월대비</span>
+                                {% if profitorloss.1|sub:profitorloss.0 > 0 %}
+                                    <span class="sonic-compare-pay red"> +
+                                    {% if profitorloss.1|sub:profitorloss.0|div:100_000_000 >= 1 %}
+                                        {{ profitorloss.1|sub:profitorloss.0|is_uk }}억
+                                    {% endif %}
+                                {% else %}
+                                    <span class="sonic-compare-pay blue"> -
+                                    {% if profitorloss.1|sub:profitorloss.0|div:100_000_000 > 0 %}
+                                        {{ profitorloss.1|sub:profitorloss.0|is_uk }}억
+                                    {% endif %}
+                                {% endif %}
+                                {{ profitorloss.0|sub:profitorloss.1|convert_pay }}만원</span></div>
                         </div>
                         <div>
-                            <div class="sonic-title">전월 손익</div>
-                            <div><span class="sonic-pay">2800</span><span class="sonic-unit">만원</span></div>
-                            <div><span class="sonic-compare">전월대비</span><span class="sonic-compare-pay blue"> - 200만원</span></div>
+                            <div class="sonic-title">당월 손익</div>
+                            <div>
+                                {% if profitorloss.0|div:100_000_000 > 0 %}
+                                    <span class="sonic-pay">{{ profitorloss.0|is_uk }}</span><span class="sonic-unit">억</span>
+                                {% endif %}
+                                <span class="sonic-pay">{{ profitorloss.0|convert_pay }}</span><span class="sonic-unit">만원</span></div>
+                            <div><span class="sonic-compare">전월대비</span>
+                                {% if profitorloss.0|sub:profitorloss.1 > 0 %}
+                                    <span class="sonic-compare-pay red"> +
+                                    {% if profitorloss.0|sub:profitorloss.1|div:100_000_000 >= 1 %}
+                                        {{ profitorloss.0|sub:profitorloss.1|is_uk }}억
+                                    {% endif %}
+                                {% else %}
+                                    <span class="sonic-compare-pay blue"> -
+                                    {% if profitorloss.0|sub:profitorloss.1|div:100_000_000 >= 1 %}
+                                        {{ profitorloss.0|sub:profitorloss.1|is_uk }}억
+                                    {% endif %}
+                                {% endif %}
+                                {{ profitorloss.0|sub:profitorloss.1|convert_pay }}만원</span></div>
                         </div>
                     </div>
                 </div>

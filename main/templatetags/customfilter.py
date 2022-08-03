@@ -70,3 +70,13 @@ def royalty_status(p1, p2):
     elif p1 > 0: return "부분납부"
     else: return "미납"
 
+@register.filter
+def convert_pay(pay):
+    return str(int(pay % 100_000_000) // 10000)
+
+@register.filter
+def is_uk(pay):
+    uk = ""
+    if pay // 100_000_000:
+        uk = str(pay // 100_000_000)
+    return uk

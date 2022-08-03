@@ -429,3 +429,33 @@ def getManage(request):
     data = Manage.objects.filter(id=key)
     post_list = serializers.serialize('json', data)
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
+
+def cardcost(request):
+    if request.method == "POST":
+        data = getPOSTValue(request.POST)
+        is_empty = CardCost.objects.filter(id=data[0])
+
+        if is_empty:
+            model = CardCost.objects.get(id=data[0])
+        else:
+            model = CardCost()
+
+        model.date = data[1] + "-01"
+        model.card = data[2]
+        model.cost = data[3]
+        model.content = data[4]
+        model.save()
+        return redirect("trade:cardcost")
+
+    datas = CardCost.objects.all()
+    context = {
+        'datas': datas,
+    }
+    return render(request, "trade/cardcost.html", context)
+
+
+def getCardCost(request):
+    key = request.GET.get("key")
+    data = CardCost.objects.filter(id=key)
+    post_list = serializers.serialize('json', data)
+    return HttpResponse(post_list, content_type="text/json-comment-filtered")
