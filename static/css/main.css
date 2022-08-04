@@ -1,3 +1,6 @@
+body {
+    overflow-y: hidden;
+}
 main {
     display: inline-block;
     width : 80%;

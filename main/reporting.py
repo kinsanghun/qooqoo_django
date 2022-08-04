@@ -19,64 +19,68 @@ class SQL:
             return e
 
 class tradeReport(SQL):
+    def misu_select_sql(self, table_name, name, target):
+        sql = f"select {name}, sum(price - pay) as misu from {table_name} where {name}='{target}'"
+        res = self.select(sql)
+        return res[0]
+
+    def misu(self, table_name, name, target):
+        misu = dict()
+        res = self.misu_select_sql(table_name, name, target)
+        if res[1]:
+            misu["name"] = res[0]
+            misu["misu"] = res[1]
+
+        return misu
+
     def client_misu(self):
         misu = list()
         clients = Client.objects.all()
 
         for client in clients:
-            tmp = dict()
-            sql = f"select sum(price - pay) from trade_clientTrade where client = '{client.client}'"
-            res = self.select(sql)
-            tmp["name"] = client.client
-            tmp["misu"] = res[0][0]
-            misu.append(tmp)
+            res = self.misu("trade_clientTrade", "client", client.client)
+            if res:
+                misu.append(res)
 
         return misu
 
     def fix_misu(self):
         misu = list()
-        fixs = Fix.objects.filter(paytype="수기납부")
+        fixs = FixCost.objects.all()
 
         for fix in fixs:
-            tmp = dict()
-            sql = f"select sum(price - pay) from trade_fixCost where fix='{fix.fix}'"
-            res = self.select(sql)
-            tmp["name"] = fix.fix
-            tmp["misu"] = res[0][0]
-            misu.append(tmp)
+            res = self.misu("trade_fixCost", "fix", fix.fix)
+            if res:
+                misu.append(res)
+
         return misu
 
     def royal_misu(self):
         misu = list()
-        fixs = Fix.objects.filter(paytype="수기납부")
+        royals = Royalty.objects.all()
+        for royal in royals:
+            res = self.misu("trade_royalty", "royalty", royal.royalty)
+            if res:
+                misu.append(res)
 
-        for fix in fixs:
-            tmp = dict()
-            sql = f"select sum(price - pay) from trade_fixCost where fix='{fix.fix}'"
-            res = self.select(sql)
-            tmp["name"] = fix.fix
-            tmp["misu"] = res[0][0]
-            misu.append(tmp)
         return misu
 
     def manage_misu(self):
         misu = list()
-        fixs = Fix.objects.filter(paytype="수기납부")
-
-        for fix in fixs:
-            tmp = dict()
-            sql = f"select sum(price - pay) from trade_fixCost where fix='{fix.fix}'"
-            res = self.select(sql)
-            tmp["name"] = fix.fix
-            tmp["misu"] = res[0][0]
-            misu.append(tmp)
+        manages = Manage.objects.all()
+        sql = "select date, price from trade_manage where status='미납'"
+        res = self.select(sql)
+        for r in res:
+            print(r)
+            misu.append({'name': r[0], 'misu': r[1]})
         return misu
 
     def rant_misu(self):
         misu = list()
-        rants = Rant.objects.all()
+        rants = RantPay.objects.all()
+        for rant in rants:
+            res = self.misu("trade_rantpay", "rant", rant.rant)
+            if res:
+                misu.append(res)
 
-        sql = "select strftime('%Y-%m', date), rant from trade_rantpay where (price-pay) > 0"
-        res = self.select(sql)
-
-        return res
+        return misu
