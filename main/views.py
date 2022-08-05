@@ -117,7 +117,6 @@ def profit_or_loss():
         for i, d in enumerate([m_0, m_1, m_2]):
             result[i] = profit[d] - dist[d] - labor[d] - card[d] - rant[d] - manage[d] - etc[d] - fix[d] - royalty[d]
 
-    print(result)
     return result
 
 def month3(year, month):

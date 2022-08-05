@@ -10,9 +10,13 @@
                 <div><label>적요</label><input type="text" name="summary" id="summary" required></div>
                 <div><label>항목명</label><input type="text" name="etc" id="etc" required></div>
                 <div><label>금액</label><input type="text" name="pay" id="pay" required></div>
-                <div><label>납부타입</label><input type="text" name="paytype" id="paytype" required></div>
+                <div><label>납부타입</label>
+                    <select name="paytype" id="paytype">
+                        <option value="수기납부">수기납부</option>
+                        <option value="자동이체">자동이체</option>
+                        <option value="카드결제">카드결제</option>
+                    </select></div>
                 <div><label>비고</label><input type="text" name="content" id="content"></div>
-                <span> * 법인카드의 경우 항목명에 정확하게 '법인카드'로 명시해주세요.</span>
             </div>
             <div class="submit-form">
                 <div><input type="submit" value="저장"></div>

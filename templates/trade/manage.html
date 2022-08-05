@@ -101,7 +101,7 @@
             var findkey = $(this).children("div:eq(0)");
             var key = findkey.get()[0].innerText;
             console.log(key);
-            var getValue = getData(key, "{% url 'trade:getFix' %}");
+            var getValue = getData(key, "{% url 'trade:getmanage' %}");
             console.log(getValue);
             getValue["date"] = getValue["date"].slice(0,7)
             formSetData(getValue, key);

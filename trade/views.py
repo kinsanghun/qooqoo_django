@@ -43,7 +43,7 @@ def clientTrade(request):
         date = request.POST.getlist("date[]")
         price = request.POST.getlist("price[]")
         content = request.POST.getlist("content[]")
-        print(date, price, content)
+
 
         for i in range(len(date)):
             if price[i] == "" or price[i] == "0":
@@ -66,7 +66,6 @@ def clientTrade(request):
                 model.content = content[i]
 
             model.save()
-            print(trade)
 
         return redirect("trade:clientTrade")
 
@@ -142,14 +141,12 @@ def getTrade(request):
 
     data = ClientTrade.objects.filter(client=client, date__range=[start, end], price__gt=0)
     post_list = serializers.serialize('json', data)
-    print(data)
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
 
 def fix(request):
     if request.method == "POST":
         data = getPOSTValue(request.POST)
         is_empty = Fix.objects.filter(id=data[0])
-        print(len(is_empty))
 
         if is_empty:
             model = Fix.objects.get(id=data[0])
@@ -253,7 +250,6 @@ def getRoyalty(request):
     key = request.GET.get("key")
     data = Royalty.objects.filter(id=key)
     post_list = serializers.serialize('json', data)
-    print(post_list)
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
 
 
@@ -261,7 +257,6 @@ def rant(request):
     if request.method == "POST":
         data = getPOSTValue(request.POST)
         is_empty = Rant.objects.filter(id=data[0])
-        print(len(is_empty))
 
         if is_empty:
             model = Rant.objects.get(id=data[0])
@@ -296,7 +291,6 @@ def rantPay(request):
     if request.method == "POST":
         data = getPOSTValue(request.POST)
         is_empty = RantPay.objects.filter(id=data[0])
-        print(len(is_empty))
 
         if is_empty:
             model = RantPay.objects.get(id=data[0])
@@ -331,7 +325,6 @@ def etc(request):
     if request.method == "POST":
         data = getPOSTValue(request.POST)
         is_empty = Etc.objects.filter(id=data[0])
-        print(len(is_empty))
 
         if is_empty:
             model = Etc.objects.get(id=data[0])

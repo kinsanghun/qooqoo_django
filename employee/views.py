@@ -136,7 +136,6 @@ def manageAnnual(request):
         annuals.append({"name":l.get_name(), "annual":l.get_annual(),
                         "used":len(WorkEmployee.objects.filter(name=l.get_name(), annual=1))})
 
-    print(annuals)
     context = {
         'annuals':annuals,
     }
@@ -159,7 +158,6 @@ def workemployee(request):
         else:
             model = WorkEmployee.objects.get(name=data[1], date=data[2])
 
-        print(len(data))
         model.name = data[1]
         model.date = data[2]
         model.working = data[3]
@@ -241,8 +239,6 @@ def workparttimer(request):
                 model.content = contents[i]
 
                 model.save()
-
-                print(name, i, date, times[i])
 
         return redirect("employee:workParttimer")
 
@@ -331,7 +327,6 @@ def turnover(request):
 def laborCost(request):
     if request.method == "POST":
         data = getPOSTValue(request.POST)
-        print(data[0])
         model = LaborCost.objects.filter(id=data[0])
 
         if len(model) == 0:

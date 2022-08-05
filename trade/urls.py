@@ -17,6 +17,7 @@ urlpatterns = [
     path('fix/cost/getCost', views.getFixCost, name="getFixCost"),
 
     path('manage/', views.manage, name="manage"),
+    path('manage/getmanage', views.getManage, name="getmanage"),
 
     path('royalty/', views.royalty, name="royalty"),
     path('royalty/getRoyalty', views.getRoyalty, name="getRoyalty"),
