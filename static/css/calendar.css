@@ -1,3 +1,17 @@
+input, select {
+    box-sizing: border-box;
+    border-radius : 5px;
+    border : 0.5px solid rgba(31, 29, 29, 0.63);
+    padding : 0.25rem;
+}
+button, input[type=submit], input[type=button] {
+    width : 3rem;
+    padding : 0.35rem;
+    background: var(--primary-color);
+    border-radius: 5px;
+    color : white;
+    border : 0;
+}
 .calendar {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -11,6 +25,12 @@
     border : 0.2px solid rgba(87, 86, 86, 0.32);
     padding : 0.5rem;
     height: calc((100vh - 10rem)/7);
+}
+.calendar-body > div {
+    background: rgba(128, 128, 128, 0.26);
+    padding : 0.2rem;
+    margin-bottom : 0.2rem;
+    border-radius: 5px;
 }
 .active:hover {
     animation-name: change-color;

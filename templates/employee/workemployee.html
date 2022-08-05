@@ -19,7 +19,6 @@
             </select>
             <input type="month" name="month" value="{{ year }}-{{ month }}">
             <input type="submit">
-            <button type="button" style="float:right;">새로고침</button>
         </form>
     </div>
     <div class="calendar">
@@ -37,7 +36,18 @@
                 {% for work in works %}
                     {% if work.date == date %}
                         <div>{{ work.working }}</div>
-                        <div>{{ work.content }}</div>
+                        <div><span>{{ work.start }}</span>~<span>{{ work.end }}</span></div>
+                        {% if work.extra %}
+                            <div><span>{{ work.extra_type }}</span> : <span>{{ work.extra }}</span></div>
+                        {% endif %}
+                        {% if work.annual %}
+                            <div>연차</div>
+                        {% elif work.dayoff %}
+                            <div>휴무</div>
+                        {% endif %}
+                        {% if work.content %}
+                            <div>{{ work.content }}</div>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
                 </div>
@@ -46,7 +56,18 @@
                 {% for work in works %}
                     {% if work.date == date %}
                         <div>{{ work.working }}</div>
-                        <div>{{ work.content }}</div>
+                        <div><span>{{ work.start }}</span>~<span>{{ work.end }}</span></div>
+                        {% if work.extra %}
+                            <div><span>{{ work.extra_type }}</span> : <span>{{ work.extra }}</span></div>
+                        {% endif %}
+                        {% if work.annual %}
+                            <div>연차</div>
+                        {% elif work.dayoff %}
+                            <div>휴무</div>
+                        {% endif %}
+                        {% if work.content %}
+                            <div>{{ work.content }}</div>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
                 </div>
@@ -55,7 +76,18 @@
                 {% for work in works %}
                     {% if work.date == date %}
                         <div>{{ work.working }}</div>
-                        <div>{{ work.content }}</div>
+                        <div><span>{{ work.start }}</span>~<span>{{ work.end }}</span></div>
+                        {% if work.extra %}
+                            <div><span>{{ work.extra_type }}</span> : <span>{{ work.extra }}</span></div>
+                        {% endif %}
+                        {% if work.annual %}
+                            <div>연차</div>
+                        {% elif work.dayoff %}
+                            <div>휴무</div>
+                        {% endif %}
+                        {% if work.content %}
+                            <div>{{ work.content }}</div>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
                 </div>
@@ -73,7 +105,9 @@
                         {% elif work.dayoff %}
                             <div>휴무</div>
                         {% endif %}
-                        <div>{{ work.content }}</div>
+                        {% if work.content %}
+                            <div>{{ work.content }}</div>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
                 </div>
@@ -105,7 +139,7 @@
                         </div>
                         <div><label>추가수당</label>
                             <select style="width:calc(49% - 3.5rem);" name="extra-type" id="extra-type">
-                                <option value="시간">시간</option>
+                                <option value="시간" selected>시간</option>
                                 <option value="수기">수기</option>
                             </select>
                             <input type="number" name="extra" id="extra" style="width:calc(49% - 3.5rem);"></div>
@@ -127,7 +161,7 @@
                     <div class="line"><label>특이사항:</label><input type="text" name="content" id="content"></div>
                     <div class="button-list">
                         <input type="submit" value="확인" onclick="$('#dayoff').removeAttr('disabled'); ">
-                        <input type="button" value="삭제">
+                        <input type="button" value="삭제" onclick="del_working();">
                         <input type="button" value="취소">
                     </div>
                 </form>
@@ -181,5 +215,10 @@
                     $("#end").attr("readonly", true);
                 }
             });
+            function del_working(){
+                var date = $("#formdate").val();
+                var name = $("#formname").val();
+                location.href="{% url 'employee:delWorkEmployee' %}?name="+name+"&date="+date;
+            }
         </script>
 {% endblock %}

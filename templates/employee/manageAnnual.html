@@ -4,11 +4,12 @@
 {% load mathfilters %}
 {% block content %}
     <div class="view-area">
-    <div class="view-header"><h1>연차관리대장</h1></div>
+    <div class="view-header"><h1>연차관리대장 (직원용)</h1></div>
     <div>
-        <div id="data-fields annuals">
+        <div class="data-fields annuals">
+            <div class="annuals-header"><span>직원명</span><span>총 연차</span><span>사용 연차</span><span>잔여 연차</span></div>
             {% for annual in annuals %}
-                <div><span>직원명 : {{ annual.name }}</span> <span>총 연차 : {{ annual.annual }}</span> <span>사용 : {{ annual.used }}</span> <span>잔여 : {{ annual.annual|sub:annual.used }}</span></div>
+                <div><span>{{ annual.name }}</span> <span>{{ annual.annual }}</span> <span>{{ annual.used }}</span> <span>{{ annual.annual|sub:annual.used }}</span></div>
             {% endfor %}
         </div>
     </div>

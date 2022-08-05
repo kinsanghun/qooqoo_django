@@ -72,11 +72,30 @@ def royalty_status(p1, p2):
 
 @register.filter
 def convert_pay(pay):
-    return str(int(pay % 100_000_000) // 10000)
+    if pay < 0:
+        return str((int((pay*-1) % 100_000_000) * -1) // 10000)
+    else:
+        return str(int(pay % 100_000_000) // 10000)
 
 @register.filter
 def is_uk(pay):
     uk = ""
+    if pay < 0:
+        pay *= -1
     if pay // 100_000_000:
         uk = str(pay // 100_000_000)
     return uk
+
+@register.filter
+def print_pay(pay):
+    if pay < 0:
+        pay *= -1
+        if pay >= 100_000_000:
+            return f" - {is_uk(pay)}억 {str(int(pay % 100_000_000) // 10000)}"
+        else:
+            return f" - {str(int(pay % 100_000_000) // 10000)}"
+    else:
+        if pay >= 100_000_000:
+            return f"{is_uk(pay)}억 {str(int(pay % 100_000_000) // 10000)}"
+        else:
+            return f"{str(int(pay % 100_000_000) // 10000)}"

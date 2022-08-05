@@ -31,8 +31,10 @@ function getDate(name, date, url){
                 $("#start").val(d["start"]);
 
                 $("#content").val(d["content"]);
-                $("#extra").val(d["extra"]);
-                $("#extra-type").val(d["extra_type"]);
+                if(d["extra"]){
+                    $("#extra").val(d["extra"]);
+                    $("#extra-type").val(d["extra_type"]);
+                }
             }
         }
     });

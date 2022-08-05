@@ -39,17 +39,12 @@
                                 <div><span class="sonic-compare">당월대비</span>
                                     {% if profitorloss.2|sub:profitorloss.0 > 0 %}
                                         <span class="sonic-compare-pay red"> +
-                                            {% if profitorloss.2|sub:profitorloss.0|div:100_000_000 >= 1 %}
-                                                {{ profitorloss.2|sub:profitorloss.0|is_uk }}억
-                                                {{ profitorloss.2|sub:profitorloss.0|convert_pay }}만원</span></div>
-                                            {% endif %}
+                                            {{ profitorloss.2|sub:profitorloss.0|print_pay }}만원</span>
                                     {% else %}
-                                        <span class="sonic-compare-pay blue"> -
-                                            {% if profitorloss.0|sub:profitorloss.2|div:100_000_000 >= 1 %}
-                                                {{ profitorloss.0|sub:profitorloss.2|is_uk }}억
-                                                {{ profitorloss.0|sub:profitorloss.2|convert_pay }}만원</span></div>
-                                            {% endif %}
+                                        <span class="sonic-compare-pay blue">
+                                            {{ profitorloss.2|sub:profitorloss.0|print_pay }}만원</span>
                                     {% endif %}
+                        </div>
                         </div>
                         <div>
                             <div class="sonic-title">전월 손익</div>
@@ -63,17 +58,12 @@
                             <div><span class="sonic-compare">당월대비</span>
                                 {% if profitorloss.1|sub:profitorloss.0 > 0 %}
                                     <span class="sonic-compare-pay red"> +
-                                        {% if profitorloss.1|sub:profitorloss.0|div:100_000_000 >= 1 %}
-                                            {{ profitorloss.1|sub:profitorloss.0|is_uk }}억
-                                            {{ profitorloss.1|sub:profitorloss.0|convert_pay }}만원</span></div>
-                                        {% endif %}
+                                        {{ profitorloss.1|sub:profitorloss.0|print_pay }}만원</span>
                                 {% else %}
-                                    <span class="sonic-compare-pay blue"> -
-                                        {% if profitorloss.0|sub:profitorloss.1|div:100_000_000 >= 1 %}
-                                            {{ profitorloss.0|sub:profitorloss.1|is_uk }}억
-                                            {{ profitorloss.0|sub:profitorloss.1|convert_pay }}만원</span></div>
-                                        {% endif %}
+                                    <span class="sonic-compare-pay blue">
+                                        {{ profitorloss.0|sub:profitorloss.1|print_pay }}만원</span>
                                 {% endif %}
+                    </div>
                     </div>
                     <div>
                         <div class="sonic-title">당월 손익</div>
@@ -87,17 +77,12 @@
                         <div><span class="sonic-compare">전월대비</span>
                             {% if profitorloss.0|sub:profitorloss.1 > 0 %}
                                 <span class="sonic-compare-pay red"> +
-                                    {% if profitorloss.0|sub:profitorloss.1|div:100_000_000 >= 1 %}
-                                        {{ profitorloss.0|sub:profitorloss.1|is_uk }}억
-                                        {{ profitorloss.0|sub:profitorloss.1|convert_pay }}만원</span></div>
-                                    {% endif %}
+                                    {{ profitorloss.0|sub:profitorloss.1|print_pay }}만원</span>
                             {% else %}
-                                <span class="sonic-compare-pay blue"> -
-                                    {% if profitorloss.1|sub:profitorloss.0|div:100_000_000 >= 1 %}
-                                        {{ profitorloss.1|sub:profitorloss.0|is_uk }}억
-                                        {{ profitorloss.1|sub:profitorloss.0|convert_pay }}만원</span></div>
-                                    {% endif %}
+                                <span class="sonic-compare-pay blue">
+                                    {{ profitorloss.0|sub:profitorloss.1|print_pay }}만원</span>
                             {% endif %}
+                    </div>
                 </div>
             </div>
 
@@ -105,7 +90,7 @@
                 <h1><span class="material-symbols-outlined" style="vertical-align: bottom; margin-right : 0.5rem; color:var(--primary-color);">bar_chart</span>미납내역</h1>
                 <div class="misu-content">
                     <div class="misu-list">
-                        <h3>거래처<span class="export">내보내기</span></h3>
+                        <h3>거래처<span class="export" onclick="downloadExcel('client');">내보내기</span></h3>
                         <div class="data-column column-2"><div>거래처명</div><div>미수금</div></div>
                         <div class="datas">
                             {% for misu in misu_clients %}
@@ -115,7 +100,7 @@
                     </div>
 
                     <div class="misu-list">
-                        <h3>고정비<span class="export">내보내기</span></h3>
+                        <h3>고정비<span class="export" onclick="downloadExcel('fix');">내보내기</span></h3>
                         <div class="data-column column-2"><div>고정비명</div><div>미수금</div></div>
                         <div class="datas">
                             {% if misu_fixs %}
@@ -129,7 +114,7 @@
                     </div>
 
                     <div class="misu-list">
-                        <h3>로열티<span class="export">내보내기</span></h3>
+                        <h3>로열티<span class="export" onclick="downloadExcel('royalty');">내보내기</span></h3>
                         <div class="data-column column-2"><div>날짜</div><div>미수금</div></div>
                         <div class="datas">
                             {% if misu_royals %}
@@ -143,7 +128,7 @@
                     </div>
 
                     <div class="misu-list">
-                        <h3>관리비<span class="export">내보내기</span></h3>
+                        <h3>관리비<span class="export" onclick="downloadExcel('manage');">내보내기</span></h3>
                         <div class="data-column column-2"><div>날짜</div><div>미수금</div></div>
                         <div class="datas">
                             {% if misu_manages %}
@@ -157,7 +142,7 @@
                     </div>
 
                     <div class="misu-list">
-                        <h3>임대료<span class="export">내보내기</span></h3>
+                        <h3>임대료<span class="export" onclick="downloadExcel('rant');">내보내기</span></h3>
                         <div class="data-column column-2"><div>호수</div><div>미수금</div></div>
                         <div class="datas">
                             {% if misu_rants %}
@@ -210,5 +195,9 @@
             console.log(f);
             location.href = "{% url 'main:index' %}?selected=" + f;
         });
+        function downloadExcel(target) {
+            console.log(target);
+            location.href="{% url 'main:misu_download' %}?target="+target;
+        }
     </script>
 {% endblock %}

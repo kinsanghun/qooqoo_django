@@ -16,6 +16,7 @@ urlpatterns = [
                   path('oneday/getOneday', views.getOneday, name="getOneday"),
 
                   path('workemployee', views.workemployee, name="workEmployee"),
+                  path('workemployee/del', views.del_workemployee, name="delWorkEmployee"),
                   path('workemployee/getWork', views.getWorkEmployee, name="getWorkEmployee"),
 
                   path('workparttimer', views.workparttimer, name="workParttimer"),

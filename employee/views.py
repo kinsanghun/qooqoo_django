@@ -40,6 +40,7 @@ def employee(request):
         model.save()
 
         return redirect("employee:employee")
+
     datas = Employee.objects.all()
     context = {
         'datas': datas,
@@ -158,11 +159,13 @@ def workemployee(request):
         else:
             model = WorkEmployee.objects.get(name=data[1], date=data[2])
 
+        print(len(data))
         model.name = data[1]
         model.date = data[2]
         model.working = data[3]
         model.start = data[4]
         model.end = data[5]
+
         if len(data[7]) > 0:
             model.extra_type = data[6]
             model.extra = data[7]
@@ -206,6 +209,16 @@ def getWorkEmployee(request):
     post_list = serializers.serialize('json', data)
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
 
+def del_workemployee(request):
+    name = request.GET.get("name")
+    date = request.GET.get("date")
+    try:
+        target = WorkEmployee.objects.get(name=name, date=date)
+        target.delete()
+
+    finally:
+        return redirect("employee:workEmployee")
+
 def workparttimer(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -234,20 +247,33 @@ def workparttimer(request):
         return redirect("employee:workParttimer")
 
     parttimers = Parttimer.objects.all()
+
     if len(parttimers):
         name = request.GET.get("name", parttimers[0].name)
     else:
         name = ""
-    year = request.GET.get("year", datetime.now().year)
-    month = request.GET.get("month", datetime.now().month)
-    dates = list()
-    for date in getCalendar(year, month):
-        if month == date.month:dates.append(date)
 
-    works = WorkParttimer.objects.filter(name=name, date__month=month)
+    date = request.GET.get("month", datetime.now().strftime("%Y-%m"))
+    year, month = date.split("-")
+
+    dates = list()
+
+    for date in getCalendar(year, month):
+        if int(month) == date.month:
+            dates.append({'date':date, 'time':'', 'content':''})
+
+    works = WorkParttimer.objects.filter(name=name, date__year=year, date__month=month)
+
+    for work in works:
+        for i in range(len(dates)):
+            if work.date.strftime("%Y-%m-%d") == dates[i]['date'].strftime("%Y-%m-%d"):
+                dates[i]['time'] = work.time if work.time else ''
+                dates[i]['content'] = work.content
+                break
+
     context = {
-        'works':works,
-        'name':name,
+        'works': works,
+        'name': name,
         'dates': dates,
         'year': year,
         'month': str(month).rjust(2, "0"),

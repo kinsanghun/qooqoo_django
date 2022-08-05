@@ -4,7 +4,6 @@
     <ul>
         <li><a href="{% url 'main:index' %}">대시보드</a></li>
         <li><a href="{% url 'main:sales' %}">매출관리</a></li>
-        <li><a href="">발주관리</a></li>
     </ul>
 </header>
 <nav>
@@ -199,6 +198,29 @@
             </ul>
         </ul>
         <ul class="first-view">
+            <div class="ml-1">
+                    <em class="ic16 ic-close"></em>
+                    <em class="ic16 ic-folder"></em>
+                    <span class="menu-name">카드관리</span>
+            </div>
+            <ul class="second-view">
+                <!-- 하위 카테고리 -->
+                <li>
+                    <div class="ml-1" onclick='location.href="{% url 'trade:cardinfo' %}";'>
+                        <em class="ic16 ic-star-on"></em>
+                        <span class="menu-name">카드정보관리</span>
+                    </div>
+                </li>
+                <!-- 하위 카테고리 -->
+                <li>
+                    <div class="ml-1" onclick='location.href="{% url 'trade:cardcost' %}";'>
+                        <em class="ic16 ic-star-on"></em>
+                        <span class="menu-name">카드내역롼리</span>
+                    </div>
+                </li>
+            </ul>
+        </ul>
+        <ul class="first-view">
             <!-- 하위 카테고리 -->
             <div class="ml-1" onclick='location.href="{% url 'employee:laborCost' %}";'>
                 <em class="ic16 ic-star-on"></em>
@@ -210,13 +232,6 @@
             <div class="ml-1" onclick='location.href="{% url 'employee:manageAnnual' %}";'>
                 <em class="ic16 ic-star-on"></em>
                 <span class="menu-name">연차관리대장</span>
-            </div>
-        </ul>
-        <ul class="first-view">
-            <!-- 하위 카테고리 -->
-            <div class="ml-1" onclick='location.href="{% url 'trade:cardcost' %}";'>
-                <em class="ic16 ic-star-on"></em>
-                <span class="menu-name">카드내역관리</span>
             </div>
         </ul>
     </div>

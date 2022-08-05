@@ -42,8 +42,10 @@
     padding : 0.5rem;
 }
 .sales-table .data-header {
+    margin-top : 2rem;
     background: var(--sub-color);
+    color : white;
 }
 .sales-table .data-body {
-    border-bottom : 1px solid black;
+    border-bottom : 0.5px solid rgba(136, 136, 136, 0.6);
 }

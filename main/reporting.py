@@ -84,3 +84,4 @@ class tradeReport(SQL):
                 misu.append(res)
 
         return misu
+

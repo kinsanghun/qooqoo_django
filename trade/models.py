@@ -63,7 +63,6 @@ class EtcPay(models.Model):
     paytype = models.CharField(max_length=20)
     content = models.TextField()
 
-
 class Royalty(models.Model):
     date = models.DateField()
     royalty = models.CharField(max_length=50)
@@ -75,6 +74,10 @@ class Manage(models.Model):
     date = models.DateField()
     price = models.IntegerField()
     status = models.CharField(max_length=20)
+    content = models.TextField()
+
+class CardInfo(models.Model):
+    card = models.CharField(max_length=30)
     content = models.TextField()
 
 class CardCost(models.Model):

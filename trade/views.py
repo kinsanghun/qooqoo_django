@@ -180,8 +180,7 @@ def fixCost(request):
     if request.method == "POST":
         data = getPOSTValue(request.POST)
         is_empty = FixCost.objects.filter(id=data[0])
-        print(len(is_empty))
-
+        target = Fix.objects.get(fix=data[2])
         if is_empty:
             model = FixCost.objects.get(id=data[0])
         else:
@@ -189,8 +188,13 @@ def fixCost(request):
 
         model.date = data[1]
         model.fix = data[2]
-        model.price = data[3]
-        model.pay = data[4]
+        if target.paytype == "자동이체":
+            model.price = data[3]
+            model.pay = data[3]
+        else:
+            model.price = data[3]
+            model.pay = data[4]
+
         model.content = data[5]
         model.save()
 
@@ -427,6 +431,35 @@ def manage(request):
 def getManage(request):
     key = request.GET.get("key")
     data = Manage.objects.filter(id=key)
+    post_list = serializers.serialize('json', data)
+    return HttpResponse(post_list, content_type="text/json-comment-filtered")
+
+def cardinfo(request):
+    if request.method == "POST":
+        data = getPOSTValue(request.POST)
+        is_empty = CardInfo.objects.filter(id=data[0])
+
+        if is_empty:
+            model = CardInfo.objects.get(id=data[0])
+        else:
+            model = CardInfo()
+
+        model.card = data[1]
+        model.content = data[2]
+        model.save()
+
+        return redirect("trade:cardinfo")
+
+    datas = CardInfo.objects.all()
+
+    context = {
+        'datas': datas,
+    }
+    return render(request, "trade/cardinfo.html", context)
+
+def getCardInfo(request):
+    key = request.GET.get("key")
+    data = CardInfo.objects.filter(id=key)
     post_list = serializers.serialize('json', data)
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
 
