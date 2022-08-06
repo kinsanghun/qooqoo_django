@@ -9,6 +9,7 @@ class Client(models.Model):
     bank = models.CharField(max_length=20)
     banknum = models.CharField(max_length=20)
     callnum = models.CharField(max_length=20)
+    is_card = models.IntegerField()
     status = models.CharField(max_length=10)
 
 class ClientTrade(models.Model):

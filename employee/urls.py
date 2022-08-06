@@ -14,6 +14,7 @@ urlpatterns = [
 
                   path('oneday', views.oneday, name="oneday"),
                   path('oneday/getOneday', views.getOneday, name="getOneday"),
+                  path('retired', views.retired, name="retired"),
 
                   path('workemployee', views.workemployee, name="workEmployee"),
                   path('workemployee/del', views.del_workemployee, name="delWorkEmployee"),

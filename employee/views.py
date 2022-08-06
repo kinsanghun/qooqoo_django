@@ -1,16 +1,9 @@
 from django.shortcuts import render, redirect
-from main.editdate import *
-from datetime import datetime
 from django.core import serializers
 from django.http import HttpResponse
-from django.conf import settings
+from main.editdate import *
 from main.utils import *
-from .models import *
 from .annual import *
-
-import os
-import pandas, openpyxl
-# Create your views here.
 
 def employee(request):
     if request.method == "POST":
@@ -29,19 +22,22 @@ def employee(request):
         model.bank =  data[5]
         model.bank_num = data[6]
         model.inwork = data[7]
-        model.department = data[8]
-        model.rank = data[9]
-        model.worksystem = data[10]
-        model.pay = data[11]
-        model.insurance = data[12]
-        model.health = data[13]
-        model.content = data[14]
+
+        if data[8]:
+            model.outwork = data[8]
+        model.department = data[9]
+        model.rank = data[10]
+        model.worksystem = data[11]
+        model.pay = data[12]
+        model.insurance = data[13]
+        model.health = data[14]
+        model.content = data[15]
 
         model.save()
 
         return redirect("employee:employee")
 
-    datas = Employee.objects.all()
+    datas = Employee.objects.filter(outwork__isnull=True).all()
     context = {
         'datas': datas,
     }
@@ -142,8 +138,16 @@ def manageAnnual(request):
     return render(request, "employee/manageAnnual.html", context)
 
 def retired(request):
-    context = {
+    target = request.GET.get("target", "employee")
 
+    if target == "employee":
+        datas = Employee.objects.filter(outwork__isnull=False).all()
+    else:
+        datas = Parttimer.objects.filter(outwork__isnull=False).all()
+
+    context = {
+        'target': target,
+        'datas': datas,
     }
     return render(request, "employee/retired.html", context)
 

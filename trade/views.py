@@ -21,7 +21,8 @@ def client(request):
         model.bank = data[4]
         model.banknum = data[5]
         model.callnum = data[6]
-        model.status = data[7]
+        model.is_card = data[7]
+        model.status = data[8]
         model.save()
 
         return redirect("trade:client")
@@ -359,6 +360,7 @@ def etcPay(request):
         summary = request.POST.get("summary")
         content = request.POST.get("content")
         row = Etc.objects.get(summary=summary)
+        pay = request.POST.get("pay")
 
         if id != "-1":
             model = EtcPay.objects.get(id=id)
@@ -371,10 +373,13 @@ def etcPay(request):
         model.price = row.pay
         model.paytype = row.paytype
 
-        if row.paytype == "자동이체":
+        if row.paytype == "자동이체" or row.paytype == "카드결제":
             model.pay = row.pay
         else:
-            model.pay = 0
+            if pay == "":
+                pay = 0
+            model.pay = pay
+
         model.content = content
 
         model.save()

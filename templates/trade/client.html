@@ -13,6 +13,12 @@
                 <div><label>은행</label><input type="text" name="bank" id="bank" required></div>
                 <div><label>계좌번호</label><input type="text" name="banknum" id="banknum" required></div>
                 <div><label>연락처</label><input type="text" name="callnum" id="callnum" required></div>
+                <div><label>납부방법</label>
+                    <select name="is_card" id="is_card">
+                        <option value="0">수기납부</option>
+                        <option value="1">카드결제</option>
+                    </select>
+                </div>
                 <div><label>계약상태</label>
                     <select name="status" id="status" required>
                         <option value="계약">계약</option>

@@ -36,6 +36,7 @@ def profit_or_loss():
     m_2 = a_few_months_ago(datetime.now().year, datetime.now().month, 2)
     m_1 = a_few_months_ago(datetime.now().year, datetime.now().month, 1)
     m_0 = a_few_months_ago(datetime.now().year, datetime.now().month, 0)
+
     dist = {m_2: 0, m_1: 0, m_0: 0}
     labor = {m_2: 0, m_1: 0, m_0: 0}
     card = {m_2: 0, m_1: 0, m_0: 0}
@@ -56,7 +57,7 @@ def profit_or_loss():
             profit[r[0]+"-01"] = r[1]
 
     #물류
-    query = f"select strftime('%Y-%m', date) as month, sum(price) as price from trade_clientTrade where date >= '{two_month_ago}' group by month order by month desc limit 3";
+    query = f"select strftime('%Y-%m', trade.date) as month, sum(trade.price) as price from trade_client client, trade_clientTrade trade where client.client = trade.client and client.is_card = 0 and trade.date >= '{two_month_ago}' group by month order by month desc limit 3";
     res = sql.select(query)
     if res:
         for r in res:
@@ -84,7 +85,7 @@ def profit_or_loss():
             royalty[r[0]+"-01"] = r[1]
 
     #기타
-    query = f"select strftime('%Y-%m', date) as month, sum(price) as price from trade_etcPay where date >= '{two_month_ago}' group by month order by month desc limit 3";
+    query = f"select strftime('%Y-%m', etcpay.date) as month, sum(etcpay.price) as price from trade_etc etc, trade_etcPay etcpay where etcpay.date >= '{two_month_ago}' and etc.paytype = '수기납부' group by month order by month desc limit 3";
     res = sql.select(query)
     if res:
         for r in res:
@@ -224,7 +225,8 @@ def model_to_cecel(model):
                " sum(trade.price-trade.pay) as '미수금'"
                " from trade_client client, trade_clientTrade trade"
                " where client.client = trade.client and"
-               " trade.price - trade.pay > 0"
+               " trade.price - trade.pay > 0 and"
+               " client.is_card = 0"
                " group by client.client")
 
     elif model == "fix":

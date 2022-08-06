@@ -38,6 +38,8 @@ class tradeReport(SQL):
         clients = Client.objects.all()
 
         for client in clients:
+            if client.is_card:
+                continue
             res = self.misu("trade_clientTrade", "client", client.client)
             if res:
                 misu.append(res)

@@ -1,10 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="view-area">
+        <div class="view-header"><h1>퇴사자 관리</h1></div>
+        <div class="data-fields">
+            <div>
+                <button onclick="location.href='{% url 'employee:retired' %}?target=employee';">직원</button>
+                <button onclick="location.href='{% url 'employee:retired' %}?target=parttimer';">파트타이머</button>
+            </div>
+            <div>
+                {% if target == "employee" %}
+                    {% if datas %}
+                        {% for data in datas %}
+                            <div>
+                                <div>{{ data.name }}</div>
+                                <div>{{ data.reg_num }}</div>
+                                <div>{{ data.contact }}</div>
+                                <div>{{ data.gender }}</div>
+                                <div>{{ data.bank }}</div>
+                                <div>{{ data.bank_num }}</div>
+                                <div>{{ data.inwork }}</div>
+                                <div>{{ data.outwork }}</div>
+                                <div>{{ data.department }}</div>
+                                <div>{{ data.rank }}</div>
+                                <div>{{ data.worksystem }}</div>
+                                <div>{{ data.pay }}</div>
+                                <div>{{ data.insurance }}</div>
+                                <div>{{ data.content }}</div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div>No data</div>
+                    {% endif %}
 
-</body>
-</html>
+                {% else %}
+                    {% if datas %}
+                        {% for data in datas %}
+                            <div>
+                                <div>{{ data.name }}</div>
+                                <div>{{ data.reg_num }}</div>
+                                <div>{{ data.contact }}</div>
+                                <div>{{ data.gender }}</div>
+                                <div>{{ data.bank }}</div>
+                                <div>{{ data.bank_num }}</div>
+                                <div>{{ data.inwork }}</div>
+                                <div>{{ data.outwork }}</div>
+                                <div>{{ data.department }}</div>
+                                <div>{{ data.part }}</div>
+                                <div>{{ data.worksystem }}</div>
+                                <div>{{ data.content }}</div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div>No data</div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
