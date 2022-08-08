@@ -174,6 +174,7 @@ def workemployee(request):
 
         model.dayoff = data[8]
         model.annual = data[9]
+
         model.content = data[10]
 
         model.save()
