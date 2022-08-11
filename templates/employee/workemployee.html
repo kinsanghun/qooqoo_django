@@ -14,7 +14,7 @@
         <form method="get">
             <select name="name" id="name">
                 {% for employee in employees %}
-                    <option value="{{ employee.name }}">{{ employee.name }}</option>
+                    <option value="{{ employee.name }}" {% if name == employee.name %}selected{% endif %}>{{ employee.name }}</option>
                 {% endfor %}
             </select>
             <input type="month" name="month" value="{{ year }}-{{ month }}">

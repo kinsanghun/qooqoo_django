@@ -192,7 +192,7 @@ def workemployee(request):
 
     dates = getCalendar(year, month)
     #employee work table 불러오기
-    work = WorkEmployee.objects.filter(date__year=year, date__month=month).all()
+    work = WorkEmployee.objects.filter(name=name, date__year=year, date__month=month).all()
 
     context = {
         'request':request.method,
