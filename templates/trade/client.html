@@ -64,9 +64,10 @@
             </div>
         </div>
     </div>
+    <button onclick="SelectAll();">전체선택</button>
     <script type="text/javascript">
         $("input[name=filter]:checkbox").prop("checked", true);
-        var dataHeader = ["Id", "거래처명", "사업자등록번호", "종목", "은행", "계좌번호", "연락처", "계약상태", "미수상태"];
+        var dataHeader = ["거래처명", "사업자등록번호", "종목", "은행", "계좌번호", "연락처", "계약상태", "미수상태"];
         var datas = [];
         var filterdatas = [];
         var dataId = "#data-fields";
@@ -122,7 +123,8 @@
                     gridSetting(dataId, 1);
                     printData(0, dataId, dataHeader, filterdatas);
                 }
-            }else {
+            }
+            else {
                 filterdatas.sort(function(a, b) { return a[sortfix[0]] < b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0; });
                 sortfix[0] = sortkey;
                 sortfix[1] = 0;
@@ -142,6 +144,7 @@
             console.log(getValue);
             formSetData(getValue, key);
         });
+
         $(document).on("change", "input[name=filter]", function(){
             var filter = [];
             $("input[name=filter]:checked").each(function(){
@@ -161,6 +164,7 @@
             gridSetting(dataId, 1);
             printData(0, dataId, dataHeader, filterdatas);
         });
+
         $(document).on("change", "input[name=filter_status]", function(){
             var filter = [];
             $("input[name=filter_status]:checked").each(function(){
@@ -180,5 +184,28 @@
             gridSetting(dataId, 1);
             printData(0, dataId, dataHeader, filterdatas);
         });
+
+        function SelectAll() {
+            $("input[name='filter']").prop("checked", true);
+
+
+            var filter = [];
+            $("input[name=filter]:checked").each(function(){
+                var tmp = $(this).val();
+                filter.push(tmp);
+            });
+            filterdatas = filter_data(datas, filter, 3);
+
+            var filter = [];
+            $("input[name=filter_status]:checked").each(function(){
+                var tmp = $(this).val();
+                filter.push(tmp);
+            });
+            filterdatas = filter_data(filterdatas, filter, 7);
+
+            clearlist();
+            gridSetting(dataId, 1);
+            printData(0, dataId, dataHeader, filterdatas);
+        }
     </script>
 {% endblock %}

@@ -17,6 +17,7 @@ class Employee(models.Model):
     insurance = models.CharField(max_length=20)
     health = models.CharField(max_length=30)
     content = models.TextField()
+    notreport = models.IntegerField()
 
 class Parttimer(models.Model):
     name = models.CharField(max_length=30)
@@ -32,6 +33,7 @@ class Parttimer(models.Model):
     outwork = models.DateField(null=True, blank=True)
     health = models.CharField(max_length=30)
     content = models.TextField()
+    notreport = models.IntegerField()
 
 class Oneday(models.Model):
     name = models.CharField(max_length=30)

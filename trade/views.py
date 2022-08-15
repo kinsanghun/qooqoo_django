@@ -3,7 +3,9 @@ from .models import *
 from django.core import serializers
 from django.http import HttpResponse
 from main.utils import *
+from main.editdate import *
 import datetime
+
 
 def client(request):
     if request.method == "POST":
@@ -45,7 +47,6 @@ def clientTrade(request):
         price = request.POST.getlist("price[]")
         content = request.POST.getlist("content[]")
 
-
         for i in range(len(date)):
             if price[i] == "" or price[i] == "0":
                 continue
@@ -72,11 +73,12 @@ def clientTrade(request):
 
 
     date = datetime.datetime.now().strftime("%Y-%m-%d")
-    s = date.split("-")
-    s[2] = "01"
+
     filter_client = request.GET.get("client", "all")
-    filter_start = request.GET.get("start", "-".join(s))
-    filter_end = request.GET.get("end", date)
+    filter_start = request.GET.get("start", "1000-01") + "-01"
+    filter_end = request.GET.get("end", "9999-12")
+
+    filter_end += f"-{str(getLastDatOfTheMonth(int(filter_end.split('-')[0]), int(filter_end.split('-')[1])))}"
 
     if filter_client == "all":
         trading = ClientTrade.objects.filter(date__range=[filter_start, filter_end]).order_by("-date")
@@ -96,15 +98,19 @@ def clientTrade(request):
     client = Client.objects.values("client")
 
     context = {
-        'today': date,
+        'today': datetime.datetime.strptime(date, "%Y-%m-%d"),
         'clients': client,
         'datas': trading,
         'select_total': select_total,
         'misu': total,
         'filter_client': filter_client,
-        'filter_start': filter_start,
-        'filter_end': filter_end,
     }
+    if filter_start.split("-")[0] != "1000":
+        context["filter_start"] = datetime.datetime.strptime(filter_start, "%Y-%m-%d")
+        context["filter_end"] = datetime.datetime.strptime(filter_end, "%Y-%m-%d")
+
+    print(date, context["today"])
+
     return render(request, "trade/client_trade.html", context)
 
 def editTrade(request):
@@ -137,9 +143,10 @@ def getClientTrade(request):
 
 def getTrade(request):
     client = request.GET.get("client")
-    start = request.GET.get("start")
-    end = request.GET.get("end")
-
+    month = request.GET.get("month")
+    input = month.split("-")
+    start = f"{input[0]}-{input[1]}-01"
+    end = f"{input[0]}-{input[1]}-{getLastDatOfTheMonth(int(input[0]), int(input[1]))}"
     data = ClientTrade.objects.filter(client=client, date__range=[start, end], price__gt=0)
     post_list = serializers.serialize('json', data)
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
@@ -179,19 +186,26 @@ def fixCost(request):
         data = getPOSTValue(request.POST)
         is_empty = FixCost.objects.filter(id=data[0])
         target = Fix.objects.get(fix=data[2])
+
         if is_empty:
             model = FixCost.objects.get(id=data[0])
         else:
             model = FixCost()
 
-        model.date = data[1]
+        model.date = data[1] + "-01"
         model.fix = data[2]
+
         if target.paytype == "자동이체":
             model.price = data[3]
             model.pay = data[3]
         else:
-            model.price = data[3]
-            model.pay = data[4]
+            print(data[4])
+            if data[4] == "1":
+                model.price = data[3]
+                model.pay = data[3]
+            else:
+                model.price = data[3]
+                model.pay = 0
 
         model.content = data[5]
         model.save()
@@ -233,17 +247,15 @@ def royalty(request):
         return redirect("trade:royalty")
 
     start = request.GET.get("start", "-1")
-    end = request.GET.get("end", "-1")
 
-    if start != "-1" or end != "-1":
-        datas = Royalty.objects.filter(date__range=[start + "-01", end + "-02"]).all()
+    if start != "-1":
+        datas = Royalty.objects.filter(date__year=start).all()
     else:
         datas = Royalty.objects.all()
 
     context = {
         'datas': datas,
         "start": start,
-        "end": end,
     }
     return render(request, "trade/royalty.html", context)
 
@@ -332,11 +344,11 @@ def etc(request):
         else:
             model = Etc()
 
-        model.summary = data[1]
-        model.etc = data[2]
-        model.pay = data[3]
-        model.paytype = data[4]
-        model.content = data[5]
+        model.etc = data[1]
+        model.pay = data[2]
+        model.paytype = data[3]
+        model.summary = data[4]
+        model.content = "-"
         model.save()
 
         return redirect("trade:etc")
@@ -357,9 +369,9 @@ def etcPay(request):
     if request.method == "POST":
         id = request.POST.get("id")
         date = request.POST.get("date")
+        etc = request.POST.get("etc")
         summary = request.POST.get("summary")
-        content = request.POST.get("content")
-        row = Etc.objects.get(summary=summary)
+        row = Etc.objects.get(etc=etc)
         pay = request.POST.get("pay")
 
         if id != "-1":
@@ -380,7 +392,7 @@ def etcPay(request):
                 pay = 0
             model.pay = pay
 
-        model.content = content
+        model.content = ""
 
         model.save()
 

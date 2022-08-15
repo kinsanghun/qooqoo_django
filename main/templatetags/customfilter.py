@@ -67,8 +67,8 @@ def misu_client(client):
 @register.filter
 def royalty_status(p1, p2):
     if p1 == p2: return "완납"
-    elif p1 > 0: return "부분납부"
-    else: return "미납"
+    elif p1 > 0 : return "부분납부"
+    else : return "미납"
 
 @register.filter
 def convert_pay(pay):

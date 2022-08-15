@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
+{% load customfilter %}
 {% block content %}
     <div class="input-area">
         <form method="post">
             <div class="input-form">
                 {% csrf_token %}
                 <input type="hidden" name="id" id="id" value="-1">
-                <div><label>날짜</label><input type="date" name="date" id="date" required></div>
+                <div><label>날짜</label><input type="month" name="date" id="date" required></div>
                 <div><label>상호명</label>
                     <select name="fix" id="fix">
                         {% for f in fix %}
@@ -16,7 +17,12 @@
                     </select>
                 </div>
                 <div><label>금액</label><input type="number" name="price" id="price" min="0" required></div>
-                <div><label>납부금액</label><input type="number" name="pay" id="pay" min="0" required><button type="button" onclick="copyPrice();">전액입금</button></div>
+                <div><label>납부여부</label>
+                    <select name="pay" id="pay">
+                        <option value="1">납부완료</option>
+                        <option value="0">미납</option>
+                    </select>
+                </div>
                 <div><label>비고</label><input type="text" name="content" id="content"></div>
             </div>
             <div class="submit-form">
@@ -36,7 +42,7 @@
         </div>
     </div>
     <script type="text/javascript">
-        var dataHeader = ["No.","날짜", "고정비", "금액", "납부금액", "비고"];
+        var dataHeader = ["날짜", "고정비", "금액", "납부상태", "비고"];
         var datas = [];
         var dataId = "#data-fields";
         var sortfix = [0, 1];
@@ -44,10 +50,10 @@
         {% for data in datas %}
             var line = []
             line.push("{{ data.id }}");
-            line.push("{{ data.date }}");
+            line.push("{{ data.date|date:'Y-m' }}");
             line.push("{{ data.fix }}");
             line.push("{{ data.price|intcomma }}");
-            line.push("{{ data.pay|intcomma }}");
+            line.push("{{ data.pay|royalty_status:data.price }}");
             line.push("{{ data.content }}");
             datas.push(line);
         {% endfor %}
@@ -89,9 +95,13 @@
         $(document).on("click", ".data-body", function () {
             var findkey = $(this).children("div:eq(0)");
             var key = findkey.get()[0].innerText;
-            console.log(key);
+            //console.log(key);
             var getValue = getData(key, "{% url 'trade:getFixCost' %}");
-            console.log(getValue);
+            console.log(getValue["pay"]);
+            if(getValue["pay"] > 0) {
+                getValue["pay"] = 1
+            }
+            getValue["date"] = getValue["date"].slice(0,7)
             formSetData(getValue, key);
         });
     </script>

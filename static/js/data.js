@@ -54,6 +54,37 @@ function printData(hc, id, headers, datas){
     } gridSetting('.data-body', headers.length);
 }
 
+function printDataImportColor(hc, id, headers, datas){
+    if(hc){
+        var h = "";
+        for(header of headers) { h += "<div class='datas'>" + header + "</div>"; }
+        $(id).append("<div id='data-header' class='data-header'>" + h + "</div>");
+        gridSetting('#data-header', headers.length);
+    }
+    var count = 1;
+    for(data of datas) {
+        var d = "";
+        for(items of data)
+        {
+            d += "<div class='datas'>" + items + "</div>";
+        }
+        data[data.length-2].split("-")[0]
+        var y = new Date();
+        console.log(y.getFullYear());
+        if(parseInt(data[data.length-2].split("-")[0]) < y.getFullYear())
+            $(id).append("<div id='data-body' class='data-body bg-red'>" + d + "</div>");
+        else if(data[data.length-1] == 1)
+            $(id).append("<div id='data-body' class='data-body bg-gray'>" + d + "</div>");
+        else
+            $(id).append("<div id='data-body' class='data-body'>" + d + "</div>");
+
+        count++;
+    }
+    gridSetting('.data-body', headers.length);
+}
+
+
+
 function getDatesStartToLast(startDate, lastDate) {
 	var regex = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
 	if(!(regex.test(startDate) && regex.test(lastDate))) return "Not Date Format";
@@ -66,15 +97,14 @@ function getDatesStartToLast(startDate, lastDate) {
 	return result;
 }
 
-function getTradeValue(client, start, end, url){
+function getTradeValue(client, month, url){
     $.ajax({
         url : url,
         type : "GET",
         async : false,
         data : {
             "client" : client,
-            "start" : start,
-            "end" : end,
+            "month" : month,
         },
         dataType : "json",
         contentType : "application/json",

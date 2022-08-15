@@ -18,8 +18,10 @@ def employee(request):
         model.name = data[1]
         model.reg_num = data[2]
         model.contact = data[3]
-        model.gender =  data[4]
-        model.bank =  data[5]
+        if data[2].split("-")[1][0] == "1" or data[2].split("-")[1][0] == "3":model.gender = "남"
+        else:model.gender = "여"
+
+        model.bank = data[5]
         model.bank_num = data[6]
         model.inwork = data[7]
 
@@ -32,6 +34,7 @@ def employee(request):
         model.insurance = data[13]
         model.health = data[14]
         model.content = data[15]
+        model.notreport = data[16]
 
         model.save()
 
@@ -63,7 +66,10 @@ def parttimer(request):
         model.name = data[1]
         model.reg_num = data[2]
         model.contact = data[3]
-        model.gender = data[4]
+
+        if data[2].split("-")[1][0] == "1" or data[2].split("-")[1][0] == "3":model.gender = "남"
+        else:model.gender = "여"
+
         model.pay = data[5]
         model.bank = data[6]
         model.bank_num = data[7]
@@ -74,6 +80,7 @@ def parttimer(request):
             model.outwork = data[11]
         model.health = data[12]
         model.content = data[13]
+        model.notreport = data[14]
 
         model.save()
 
@@ -250,7 +257,7 @@ def workparttimer(request):
     parttimers = Parttimer.objects.all()
 
     if len(parttimers):
-        name = request.GET.get("name", parttimers[0].name)
+        name = request.GET.get("parttimer", parttimers[0].name)
     else:
         name = ""
 
@@ -289,9 +296,9 @@ def workoneday(request):
 
         if len(model) == 0:
             model = WorkOneday()
-            target = Oneday.objects.get(id=data [2])
+            target = Oneday.objects.get(id=data[2])
             model.name = target.name
-            model.reg_num = target.reg_name
+            model.reg_num = target.reg_num
         else:
             model = WorkOneday.objects.get(id=data[0])
 

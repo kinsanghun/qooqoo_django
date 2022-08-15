@@ -1,9 +1,11 @@
+.bg-gray {background: rgba(189, 189, 189, 0.5);}
+.bg-red {background: rgba(255, 96, 96, 0.43);}
 body {
     overflow-y: hidden;
 }
 main {
     display: inline-block;
-    width : 80%;
+    width : 84%;
     float : right;
     padding : var(--default-padding);
     box-sizing: border-box;
@@ -106,13 +108,25 @@ input, select{
     text-align: center;
     max-height : 35rem;
     overflow-y: auto;
+    overflow-x : auto;
+}
+
+#data-fields::-webkit-scrollbar{
+    display : none;
 }
 #data-fields .data-header {
     position : sticky;
     top : 0;
-    color : white;
-    background: #595959;
     z-index : 1;
+    border-bottom : 1px solid black;
+    background: #fff;
+}
+
+#data-fields .data-header .datas {
+    border-right : 0.5px solid rgba(128, 128, 128, 0.47);
+}
+#data-fields .data-header .datas:last-child {
+    border-right : 0;
 }
 #data-fields .data-body {
     position : relative;
@@ -125,7 +139,18 @@ input, select{
 #data-fields .data-body:hover {
     background : rgba(231, 168, 73, 0.35);
 }
+#data-fields .data-body .datas {
+    min-width : 120px;
+    border-right : 0.5px solid rgba(128, 128, 128, 0.47);
+    white-space: nowrap;
+}
+#data-fields .data-body .datas:first-child {
+    display: none;
+}
 
+#data-fields .data-body .datas:last-child {
+    border-right : 0;
+}
 .input-button, .batch-button {
     float: right;
     width : 8rem;
@@ -153,8 +178,7 @@ input, select{
     grid-template-rows: 1fr;
 }
 .filter .header {
-    color : white;
-    background: var(--sub-color);
+    border-bottom : 1px solid black !important;
 }
 .filter div {
     padding : 0.45em;
@@ -177,7 +201,8 @@ input, select{
 #workparttimers .header {
     position : sticky;
     top : 0;
-    background: #595959;
+    border-bottom : 1px solid black;
+    background: white;
     color : white;
 }
 #workparttimers .items

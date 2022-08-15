@@ -21,6 +21,8 @@
             <input type="submit" value="확인">
         </form>
     </div>
+    <div class="holidays"><span class="days">1</span><span class="days">2</span></div>
+    <div class="nowmonth">8월</div>
     <div class="calendar">
         <div class="header red">일</div>
         <div class="header">월</div>
@@ -32,7 +34,7 @@
 
         {% for date in dates %}
             {% if date|date:"m"|is_false:month %}
-                <div class="calendar-body gray"><div class="date-title">{{ date|date:"d" }}</div>
+                <div class="calendar-body gray"><div class="date-title">{{ date|date:"j" }}</div>
                 {% for work in works %}
                     {% if work.date == date %}
                         <div>{{ work.working }}</div>
@@ -52,7 +54,7 @@
                 {% endfor %}
                 </div>
             {% elif forloop.counter|mod:7 == 1 %}
-                <div class="calendar-body active red"><div class="date-title">{{ date|date:"d" }}</div>
+                <div class="calendar-body active red"><div class="date-title">{{ date|date:"j" }}</div>
                 {% for work in works %}
                     {% if work.date == date %}
                         <div>{{ work.working }}</div>
@@ -72,7 +74,7 @@
                 {% endfor %}
                 </div>
             {% elif forloop.counter|mod:7 == 0 %}
-                <div class="calendar-body active blue"><div class="date-title">{{ date|date:"d" }}</div>
+                <div class="calendar-body active blue"><div class="date-title">{{ date|date:"j" }}</div>
                 {% for work in works %}
                     {% if work.date == date %}
                         <div>{{ work.working }}</div>
@@ -92,7 +94,7 @@
                 {% endfor %}
                 </div>
             {% else %}
-                <div class="calendar-body active"><div class="date-title">{{ date|date:"d" }}</div>
+                <div class="calendar-body active"><div class="date-title">{{ date|date:"j" }}</div>
                 {% for work in works %}
                     {% if work.date == date %}
                         {% if work.working == '결근' %}

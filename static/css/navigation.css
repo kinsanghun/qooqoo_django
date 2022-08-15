@@ -1,94 +1,121 @@
 header {
     display: inline-block;
-    width : 100%;
-    border-bottom : 1px solid black;
+    width: 100%;
+    border-bottom: 1px solid black;
     box-sizing: border-box;
-    padding : var(--default-padding);
+    padding: var(--default-padding);
 }
-    #header-favicon {
-        vertical-align: middle;
-        padding-bottom: 0.5rem;
-    }
-    header h1 {
-        display: inline-block;
-        color : var(--primary-color);
-        font-size : var(--h1-fontsize);
-        font-weight: 600;
-        padding-left: 0.5rem;
-    }
-        header h1 span {
-            color : var(--sub-color);
-            font-size : var(--h2-fontsize);
-            margin-left : 0.5rem;
-            font-size : 1rem !important;
-            vertical-align: bottom;
-        }
 
-    header ul {
-        display: inline-block;
-        color : var(--sub-color);
-        margin-left : 3rem;
-    }
-        header ul li {
-            padding : 0.25rem;
-            margin-left : 0.5rem;
-            margin-right : 0.5rem;
-            display : inline-block;
-            font-size : calc(var(--h2-fontsize) - 3px);
-        }
-            header ul li a {
-                color : var(--sub-color);
-                font-weight: 600;
-                text-decoration: none;
-            }
-            header ul li a:hover {
-                color : var(--primary-color);
-            }
+#header-favicon {
+    vertical-align: middle;
+    padding-bottom: 0.5rem;
+}
+
+header h1 {
+    display: inline-block;
+    color: var(--primary-color);
+    font-size: var(--h1-fontsize);
+    font-weight: 600;
+    padding-left: 0.5rem;
+}
+
+header h1 span {
+    color: var(--sub-color);
+    font-size: var(--h2-fontsize);
+    margin-left: 0.5rem;
+    font-size: 1rem !important;
+    vertical-align: bottom;
+}
+
+header ul {
+    display: inline-block;
+    color: var(--sub-color);
+    margin-left: 3rem;
+}
+
+header ul li {
+    padding: 0.25rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    display: inline-block;
+    font-size: calc(var(--h2-fontsize) - 3px);
+}
+
+header ul li a {
+    color: var(--sub-color);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+header ul li a:hover {
+    color: var(--primary-color);
+}
 
 nav {
-    display : inline-block;
-    width : var(--nav-width);
-    min-height : var(--minimum-height);
-    background : var(--sub-color);
-    font-size : 14px;
+    display: inline-block;
+    width: var(--nav-width);
+    min-height: var(--minimum-height);
+    background: var(--sub-color);
+    font-size: 14px;
     color: white;
     font-weight: 100;
 }
-    .scroll-wrap {
-        margin: 20px;
-    }
-        li > div {
-            margin-left : 9px;
-        }
-            .menu-name {
-                margin-left : 6px;
-            }
-            
-        .ml-1 {
-            border-radius: 5px;
-            padding: 2px;
-            cursor : pointer;
-            margin-bottom : 6px;
-        }
-            .ml-1:hover{
-                background-color: var(--nav-hover-color);
-            }
-        .second-view {
-            display: none;
-            border-left : dashed 1px var(--primary-color);
-            margin-left : 10px;
-        }
-    /* Navigation Icon  */
-    .ic16 {
-        display: inline-block;
-        vertical-align: middle;
-        width: 16px;
-        height: 16px; 
-        background-size: 16px 16px;
-        background: url(../img/icons.svg) 0 0 no-repeat;
-    }
-        .ic16.ic-open { background-position: -176px 0; /* Drop Down Arrow */ }
-        .ic16.ic-close { background-position: -160px 0px; /* Right Arrow*/ }
-        .ic16.ic-folder { background-position: -96px 0; /* Folder Closed */ }
-        .ic16.ic-folder-open { background-position: -112px 0; /* Floder Opened */ }
-        .ic16.ic-star-on { background-position: -496px 0px; }
+
+.scroll-wrap {
+    margin: 20px;
+}
+
+li > div {
+    margin-left: 9px;
+}
+
+.menu-name {
+    margin-left: 6px;
+}
+
+.ml-1 {
+    border-radius: 5px;
+    padding: 2px;
+    cursor: pointer;
+    margin-bottom: 6px;
+}
+
+.ml-1:hover {
+    background-color: var(--nav-hover-color);
+}
+
+.second-view {
+    display: none;
+    border-left: dashed 1px var(--primary-color);
+    margin-left: 10px;
+}
+
+/* Navigation Icon  */
+.ic16 {
+    display: inline-block;
+    vertical-align: middle;
+    width: 16px;
+    height: 16px;
+    background-size: 16px 16px;
+    background: url(../img/icons.svg) 0 0 no-repeat;
+}
+
+.ic16.ic-open {
+    background-position: -176px 0; /* Drop Down Arrow */
+}
+
+.ic16.ic-close {
+    background-position: -160px 0px; /* Right Arrow*/
+}
+
+.ic16.ic-folder {
+    background-position: -96px 0; /* Folder Closed */
+}
+
+.ic16.ic-folder-open {
+    background-position: -112px 0; /* Floder Opened */
+}
+
+.ic16.ic-star-on {
+    background-position: -496px 0px;
+}

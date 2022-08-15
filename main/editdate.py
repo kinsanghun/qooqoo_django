@@ -6,3 +6,16 @@ def getCalendar(year, month):
     c = calendar.Calendar(firstweekday=6)
     for date in c.itermonthdates(int(year), int(month)):result.append(date)
     return result
+
+def getLastDatOfTheMonth(year, month):
+    lastdays = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    if month == 2:
+        if year % 400 == 0:
+            return lastdays[month] + 1
+        elif year % 100 == 0:
+            return lastdays[month]
+        elif year % 4 == 0:
+            return lastdays[month] + 1
+
+    else:
+        return lastdays[month]

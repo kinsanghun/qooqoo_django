@@ -49,10 +49,10 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div><label>시작</label><input type="date" name="start" value="{{ filter_start }}" required></div>
-                    <div><label>종료</label><input type="date" name="end" value="{{ filter_end }}" required></div>
+                    <div><label>시작</label><input type="month" name="start" value="{{ filter_start|date:'Y-m' }}" required></div>
+                    <div><label>종료</label><input type="month" name="end" value="{{ filter_end|date:'Y-m' }}" required></div>
                     <input type="submit" value="검색" id="search">
-                <span style="float:right">선택된 금액 : {{ select_total|intcomma }}원 | 선택된 거래처 미수금 : {{ misu|intcomma }}원 </span>
+                <span style="float:right">조회 날짜 금액 : {{ select_total|intcomma }}원 | 총 미수금 : {{ misu|intcomma }}원 </span>
                 </div>
             </form>
         </div>
@@ -81,8 +81,7 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div><label>시작</label><input type="date" id="startdate"></div>
-                    <div><label>종료</label><input type="date" id="enddate"></div><button id="search-button">검색</button></div>
+                    <div><label>선택월</label><input type="month" id="inputmonth"></div><button id="search-button">검색</button></div>
                 <div class="search-header"><div>거래일자</div><div>거래금액</div><div>비고</div></div>
                 <form method="post">
                     {% csrf_token %}
@@ -94,7 +93,7 @@
         </div>
     </div>
     <script type="text/javascript">
-        var dataHeader = ["No.", "거래일자", "상호명", "금액", "상태", "비고", "납부방법"];
+        var dataHeader = ["거래일자", "상호명", "금액", "상태", "비고", "납부방법"];
         var datas = [];
         var filterdatas = [];
         var dataId = "#data-fields";
@@ -106,7 +105,7 @@
             line.push("{{ data.id }}");
             line.push("{{ data.date|date:"Y-m-d" }}");
             line.push("{{ data.client }}");
-            line.push("{{ data.price|output_pay:data.pay|intcomma }}");
+            line.push("{{ data.price|output_pay:data.pay|intcomma }} 원");
             line.push("{{ data.price|output_type }}");
             line.push("{{ data.content }}");
             line.push("{{ data.card|is_card }}");
@@ -129,10 +128,7 @@
         });
 
         $(document).on("click", ".input-button", function(){
-            var d = "{{ today }}";
-
-            $("#startdate").val(d);
-            $("#enddate").val(d);
+            $("#inputmonth").val("{{ today|date:'Y-m' }}");
             $("#data-fields .data-header").css("z-index", "0");
             $("#modal.modal-overlay").css("visibility", "visible");
         });
@@ -144,12 +140,23 @@
         });
 
         $(document).on("click", "#search-button", function(){
-            var client = $("#search-client").val();
-            var start = $("#startdate").val();
-            var end = $("#enddate").val();
+            let lastdays = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
+            var client = $("#search-client").val();
+            var m = $("#inputmonth").val();
+            var x = m.split("-")
+            var start = m + "-01";
+            if(x[1] == 2) {
+                if(x[0] % 400 == 0) var end = m + "-" + lastdays[parseInt(x[1])] + 1;
+                else if(x[0] % 100 == 0) var end = m + "-" + lastdays[parseInt(x[1])];
+                else if(x[0] % 4 == 0) var end = m + "-" + lastdays[parseInt(x[1])];
+            }
+            else {
+                var end = m + "-" + lastdays[parseInt(x[1])];
+            }
+            console.log(start, end);
             var dateList = getDatesStartToLast(start, end);
-            var dateValue = getTradeValue(client, start, end, "{% url 'trade:getTrade' %}");
+            var dateValue = getTradeValue(client, m, "{% url 'trade:getTrade' %}");
             $("#iclient").val(client);
             $(".search-data").empty();
             for (date of dateList) {
