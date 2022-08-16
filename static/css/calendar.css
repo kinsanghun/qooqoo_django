@@ -1,66 +1,209 @@
-.employee-list input, .employee-list select {
+*{
     box-sizing: border-box;
-    border-radius : 5px;
-    border : 0.5px solid rgba(31, 29, 29, 0.63);
-    padding : 0.75rem;
 }
-button, input[type=submit], input[type=button] {
-    padding : 0.75rem;
-    background: var(--primary-color);
-    border-radius: 5px;
-    color : white;
+main {
+}
+section {
+    position : relative;
+    display : flex;
+    flex-direction: column;
+    width : 100%;
+    min-height : 100%;
+    padding-top : 50px;
+}
+section header {
+    position : absolute;
+    padding : 15px 30px;
+    top : 0;
+    left : 0;
+    width : 100%;
+    display: flex;
+    border:0 !important;
+}
+section header h2 {
+    font-size : 1.2rem;
+    font-weight: 600;
+}
+section .search-fields {
+    position : relative;
+    width : 100%;
+    display: flex;
+}
+section .search-fields form {
+    position: relative;
+    display: flex;
+}
+section .search-fields form div {
+    padding : 0.25rem;
+    margin-right : 0.5rem;
+    border : 0.5px solid gray;
+    border-radius : 5px;
+    display: flex;
+    justify-content: center;
+
+}
+section .search-fields form div select,
+section .search-fields form div input
+{
+    background: none;
+    padding : 0 5px;
     border : 0;
 }
-.calendar {
-    display: grid;
+section .search-fields form div label
+{
+    padding : 0 5px;
+    border-right : 1px solid var(--primary-color);
+}
+
+section .search-fields form .submit-button{
+    color : white;
+    background: var(--primary-color);
+    border : 0;
+}
+
+section .search-fields form .submit-button input[type=submit]{
+    color : white;
+}
+
+section .calendar-fields {
+    position : relative;
+    width : 100%;
+    display: flex;
+    margin-top : 1rem;
+}
+section .calendar-fields .dates {
+    position : relative;
+    width : 100%;
+    display : grid;
     grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: 1fr;
-    overflow-y: scroll !important;
 }
-.header {
+section .calendar-fields .dates .date {
+    position: relative;
+    padding : 5px;
+    border : 0.5px solid gray;
+    min-height : 7rem;
+}
+
+section .calendar-fields .dates .date div{
+    position: relative;
+    display: flex;
+    width : 100%;
+    justify-content: flex-start;
+}
+
+section .calendar-fields .dates .date .status {
+    padding : 6px;
+    color : white;
     text-align : center;
-    padding : 0.8rem;
-}
-.calendar-body {
-    border : 0.2px solid rgba(87, 86, 86, 0.32);
-    padding : 0.5rem;
-    min-height: calc((100vh - 10rem)/7);
-}
-.calendar-body > div {
-    background: rgba(128, 128, 128, 0.26);
-    padding : 0.2rem;
-    margin-bottom : 0.2rem;
+    background: rgba(180, 117, 1, 0.78);
     border-radius: 5px;
 }
-.date-title {
-    background: white !important;
-    text-align : center;
-    width : 18px;
-    padding : 8px 8px 10px 8px!important;
-    border-radius: 50% !important;
+section .calendar-fields .dates .date .day{
+    width : 30px;
+    height : 30px;
+
+    margin-right : 5px;
+    padding-bottom : 2px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-sizing: border-box;
+    border-radius : 30px;
 }
-.active:hover .date-title {
-    color : white!important;
-    background: #eb4e39 !important;
+section .calendar-fields .dates .date:hover .day{
+    background: #eb4e39;
+    color : white;
 }
-.holidays {
-    position :relative;
+section .calendar-fields .dates .date:nth-child(7n+1) {
+    color : rgba(255, 0, 0, 0.76);
+}
+
+section .calendar-fields .dates .date:nth-child(7n) {
+    color : rgba(0, 0, 255, 0.73);
+}
+
+/* Calendar Modal */
+.calendar-modal {
+    position :absolute;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    top : 0;
+    left : 0;
     width : 100%;
-    height : 2rem;
-    margin : 1.5rem 0;
+    height : 100%;
+    filter : blur();
+    background: rgba(128, 128, 128, 0.32);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    z-index : 1000;
+}
+.calendar-modal .data-main {
+    position: relative;
+    width : 40%;
+    min-height : 60%;
+    background: white;
+    z-index : 1000;
+    padding-top : 80px;
     box-sizing: border-box;
 }
-.holidays .days {
-    padding : 0.5rem;
-    border : 0.5px solid black;
-}
-.nowmonth {
-    width : 100%;
-    font-size : 1.2em;
-    text-align :center;
-}
-.red {color : red;}
-.blue {color : blue;}
-.gray {color:gray;}
 
-월
+.calendar-modal .data-main header{
+    position : absolute;
+    top : 0;
+    left : 0;
+    padding : 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size : 1.2rem;
+    border : 0;
+    font-weight: 600;
+}
+
+.calendar-modal .data-main header h2{
+}
+.calendar-modal .content {
+    padding : 30px;
+    box-sizing: border-box;
+}
+.calendar-modal .content .data-fields {
+    display : flex;
+    align-items: center;
+    border-bottom : 1px solid var(--primary-color);
+}
+.calendar-modal .content .data-fields label {
+    display: inline-block;
+    width : 150px;
+    padding : 15px 5px;
+    background: rgba(128, 128, 128, 0.47);
+    border-right : 0.5px solid gray;
+    margin-right : 10px;
+}
+.calendar-modal .content .data-fields input{
+    border : 0;
+}
+
+.calendar-modal .content .submit {
+    position: absolute;
+    bottom : 20px;
+    display : flex;
+    width : calc(100% - 60px);
+    justify-content: center;
+    background: none;
+    border : 0;
+}
+.calendar-modal .content .data-fields.submit input[type=submit],
+.calendar-modal .content .data-fields.submit input[type=button]
+{
+    background : var(--primary-color);
+    color : white;
+    width : 50px;
+    height : 30px;
+    border-radius: 5px;
+    margin : 0 1px;
+}

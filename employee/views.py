@@ -159,58 +159,40 @@ def retired(request):
     return render(request, "employee/retired.html", context)
 
 def workemployee(request):
-    url = "employee/workemployee.html"
-    if request.method == "POST":
-        data = getPOSTValue(request.POST)
-        model = WorkEmployee.objects.filter(name=data[1], date=data[2])
 
-        if len(model) == 0:
-            model = WorkEmployee()
-        else:
-            model = WorkEmployee.objects.get(name=data[1], date=data[2])
+    error = ""
 
-        model.name = data[1]
-        model.date = data[2]
-        model.working = data[3]
-        model.start = data[4]
-        model.end = data[5]
-
-        if len(data[7]) > 0:
-            model.extra_type = data[6]
-            model.extra = data[7]
-
-        model.dayoff = data[8]
-        model.annual = data[9]
-
-        model.content = data[10]
-
-        model.save()
-
+    # Create Employee Data
     employees = Employee.objects.all()
-    name = request.GET.get("name", employees[0].name)
-    d = request.GET.get("month", False)
 
-    if d:
-        year = d.split("-")[0]
-        month = d.split("-")[1]
-    else:
-        year = datetime.now().year
-        month = datetime.now().month
+    # If Don't have Employee data
+    if not employees:
+        return render(request, "employee/employee.html", {'error': "직원을 먼저 생성해주세요."})
 
-    dates = getCalendar(year, month)
-    #employee work table 불러오기
-    work = WorkEmployee.objects.filter(name=name, date__year=year, date__month=month).all()
+    # Get Request
+    requestGetEmployee = request.GET.get("employee", employees[0].name)
+    requestGetDate = request.GET.get("date", datetime.now().strftime("%Y-%m"))
 
+    year = requestGetDate.split("-")[0]
+    month = requestGetDate.split("-")[1]
+
+    # Create Calendar
+    calendar = getCalendar(year, month)
+    workDatas = WorkEmployee.objects.filter(name=requestGetEmployee, date__year=year, date__month=month)
+
+    # Context
     context = {
-        'request':request.method,
-        'works': work,
-        'name': name,
-        'year': year,
-        'month': str(month).rjust(2, "0"),
-        'dates': dates,
         'employees': employees,
+        'calendar': calendar,
+        'workdatas': workDatas,
+
+        'selectedEmployee': requestGetEmployee,
+        'year': year,
+        'month': month,
+
+        'error': error,
     }
-    return render(request, url, context)
+    return render(request, "employee/workemployee.html", context)
 
 def getWorkEmployee(request):
     name = request.GET.get("name")

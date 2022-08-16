@@ -2,6 +2,9 @@
 {% load static %}
 {% load humanize %}
 {% block content %}
+    {% if error %}
+        <script>alert("{{ error }}");</script>
+    {% endif %}
     <div class="input-area">
         <form method="post">
             <div class="input-form">
