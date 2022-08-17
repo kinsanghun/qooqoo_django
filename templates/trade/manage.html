@@ -19,6 +19,7 @@
             </div>
             <div class="submit-form">
                 <div><input type="submit" value="저장"></div>
+                    <input type="button" value="삭제" id="delete">
                 <div><input type="button" value="초기화" onclick="location.href='';"></div>
             </div>
         </form>
@@ -27,7 +28,7 @@
     </div>
     <div class="view-area">
         <div class="view-header"><h1>관리비관리</h1></div>
-        <div style="height:400px; border:1px solid black;">
+        <div style="height:300px; border:1px solid black;">
             <div id="data-fields">
 
             </div>
@@ -47,6 +48,7 @@
         var dataId = "#data-fields";
         var sortfix = [0, 1];
         var ed = 0;
+        let db = "manage";
         {% for data in datas %}
             var line = []
             line.push("{{ data.id }}");

@@ -1,3 +1,7 @@
+body, html {
+    box-sizing: border-box;
+    overflow: hidden;
+}
 .null-box {
     font-size : 0;
 }
@@ -8,6 +12,7 @@
     border-bottom : 0.5px solid rgba(105, 104, 103, 0.53);
 }
 .dashboard-main {
+    overflow-x : hidden;
     overflow-y: auto;
     height : 80vh;
 }
@@ -98,8 +103,13 @@
     font-size : 1.2rem;
     font-weight : 600;
 }
+.misu-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
 .misu-list {
-    margin-top : 2rem;
+    margin : 2rem 5px 0 5px;
+    box-sizing: border-box;
 }
 .misu-list h3 {
     color : var(--primary-color);
@@ -117,6 +127,11 @@
 .column-8 { grid-template-columns: repeat(8, 1fr); }
 .column-9 { grid-template-columns: repeat(9, 1fr); }
 
+.misu-list .datas {
+    min-height: 5rem;
+    max-height : 7rem;
+    overflow-y: auto;
+}
 .misu .data-column, .misu .datas > div {
     display: grid;
     text-align : center;

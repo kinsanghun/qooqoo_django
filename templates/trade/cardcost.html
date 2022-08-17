@@ -15,6 +15,7 @@
                 </div>
                 <div class="submit-form">
                     <input type="submit" value="저장">
+                    <input type="button" value="삭제" id="delete">
                 <div><input type="button" value="초기화" onclick="location.href='';"></div>
                 </div>
             </form>
@@ -37,6 +38,7 @@
         var dataHeader = ["날짜", "카드사", "금액", "비고"];
         var datas = []
         var dataId = "#data-fields";
+        let db = "cardcost";
 
         {% for data in datas %}
             var line = [];
@@ -55,11 +57,10 @@
         $(document).on("click", ".data-body", function () {
             var findkey = $(this).children("div:eq(0)");
             var key = findkey.get()[0].innerText;
-            console.log(key);
             var getValue = getData(key, "{% url 'trade:getcardcost' %}");
-            console.log(getValue);
             getValue["date"] = getValue["date"].slice(0, 7)
             formSetData(getValue, key);
         });
+
     </script>
 {% endblock %}

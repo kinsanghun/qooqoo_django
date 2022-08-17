@@ -27,5 +27,11 @@
 {% block content %}
 {% endblock %}
 </main>
+<script>
+        $(document).on("click", "#delete", function () {
+            let id = $("#id").val();
+            if(id > 0) delete_data(id, db, "{% url 'main:delete' %}");
+        })
+</script>
 </body>
 </html>

@@ -24,6 +24,7 @@
             </div>
             <div class="submit-form">
                 <div><input type="submit" value="저장"></div>
+                    <input type="button" value="삭제" id="delete">
                 <div><input type="button" value="초기화" onclick="location.href='';"></div>
             </div>
         </form>
@@ -44,7 +45,7 @@
         var datas = [];
         var dataId = "#data-fields";
         var sortfix = [0, 1];
-
+        let db = "etcpay";
         {% for data in datas %}
             var line = []
             line.push("{{ data.id }}");

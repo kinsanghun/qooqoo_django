@@ -3,26 +3,37 @@
 {% load humanize %}
 {% block content %}
     <div>
-    <div class="div-header">파트타이머 근태관리</div>
-    <form method="get" class="form-workparttimer">
-        <select name="parttimer" id="parttimers">
-    {% for parttimer in parttimers %}
-            <option value="{{ parttimer.name }}">{{ parttimer.name }}</option>
-    {% endfor %}
-        </select>
-    <input type="month" name="month" value="{{ year }}-{{ month }}">
-    <input type="submit" class="submit" value="검색">
-    </form>
+        <div class="div-header">파트타이머 근태관리</div>
+        <form method="get" class="form-workparttimer">
+            <select name="parttimer" id="parttimers">
+                {% for parttimer in parttimers %}
+                    <option value="{{ parttimer.name }}">{{ parttimer.name }}</option>
+                {% endfor %}
+            </select>
+            <input type="month" name="month" value="{{ year }}-{{ month }}">
+            <input type="submit" class="submit" value="검색">
+        </form>
     </div>
+
     <form method="post">
-    <input type="hidden" name="name" value="{{ name }}">
-    <div id="workparttimers">
-        <div class="items header"><div>날짜</div><div>시간</div><div>비고</div></div>
-    {% csrf_token %}
-    {% for date in dates %}
-        <div class="items"><div><input type="date" name="dates[]" value="{{ date.date|date:'Y-m-d' }}" tabindex="-1" readonly></div><div><input type="text" name="times[]" placeholder="근무시간" value="{{ date.time }}"></div><div><input type="text" name="contents[]" value="{{ date.content }}" tabindex="-1"></div></div>
-    {% endfor %}
-    </div>
-    <input type="submit" value="저장" class="submit" style="margin-top : 1rem;">
+        <input type="hidden" name="name" value="{{ name }}">
+        <input type="hidden" name="month" value="{{ year }}-{{ month }}">
+
+        <div id="workparttimers">
+            <div class="items header">
+                <div>날짜</div>
+                <div>시간</div>
+                <div>비고</div>
+            </div>
+            {% csrf_token %}
+            {% for date in dates %}
+                <div class="items">
+                    <div><input type="date" name="dates[]" value="{{ date.date|date:'Y-m-d' }}" tabindex="-1" readonly></div>
+                    <div><input type="text" name="times[]" placeholder="근무시간" value="{{ date.time }}"></div>
+                    <div><input type="text" name="contents[]" value="{{ date.content }}" tabindex="-1"></div>
+                </div>
+            {% endfor %}
+        </div>
+        <input type="submit" value="저장" class="submit" style="margin-top : 1rem;">
     </form>
 {% endblock %}

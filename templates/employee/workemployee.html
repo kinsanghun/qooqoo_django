@@ -52,34 +52,35 @@
 
     <div class="calendar-modal">
         <div class="data-main">
-            <header><h2>근태입력</h2><ion-icon name="close-outline"></ion-icon></header>
+            <header><h2>근태입력</h2><span class="close-button"><ion-icon name="close-outline"></ion-icon></span></header>
             <div class="content">
                 <form>
                     {% csrf_token %}
                     <div class="data-fields"><label>날짜</label><input type="text" value="2022-03-04"></div>
                     <div class="data-fields"><label>이름</label><input type="text"></div>
                     <div class="data-fields"><label>근무타입</label><input type="text"></div>
-                    <div class="data-fields"><label>근무시간</label><input type="text"></div>
+                    <div class="data-fields two-input"><label>출근시간</label><input type="text"><label>퇴근시간</label><input type="text"></div>
+                    <div class="data-fields"><label>휴게시간</label><input type="text"></div>
                     <div class="data-fields">
                         <label>체크박스제목</label>
                         <span class="checkboxs">
-                        <input type="radio" name="worktype">
-                        <input type="radio" name="worktype">
-                        <input type="radio" name="worktype">
-                        <input type="radio" name="worktype">
-                        <input type="radio" name="worktype">
-                        <input type="radio" name="worktype">
+                        <span>출근<input type="radio" name="worktype" value="출근"></span>
+                        <span>주휴일<input type="radio" name="worktype" value="주휴일"></span>
+                        <span>반주휴<input type="radio" name="worktype" value="반주휴"></span>
+                        <span>연차<input type="radio" name="worktype" value="연차"></span>
+                        <span>반차<input type="radio" name="worktype" value="반차"></span>
+                        <span>추가근로<input type="radio" name="worktype" value="추가근로"></span>
+                        <span>결근<input type="radio" name="worktype" value="결근"></span>
                         </span>
                     </div>
                     <div class="data-fields">
                         <label>특이사항</label>
-                        <textarea>
-                        </textarea>
+                        <textarea></textarea>
                     </div>
                     <div class="data-fields submit">
                         <input type="submit" value="저장">
                         <input type="button" value="초기화">
-                        <input type="button" value="취소">
+                        <input class="close-button" type="button" value="취소">
                     </div>
                 </form>
             </div>
@@ -94,6 +95,9 @@
         if($(e.target).hasClass("calendar-modal")){
             $(".calendar-modal").css("display", "none");
         }
+    })
+    $(document).on("click", ".close-button", function(e){
+            $(".calendar-modal").css("display", "none");
     })
     </script>
 

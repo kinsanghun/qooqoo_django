@@ -8,13 +8,14 @@ from .models import *
 
 import pandas as pd
 
-
 try:
     from io import BytesIO as IO  # for modern python
 except ImportError:
     from io import StringIO as IO  # for legacy python
 
 from trade.models import *
+from employee.models import *
+
 def get_exceldownload(df):
     excel_file = IO()
     xlwriter = pd.ExcelWriter(excel_file, engine='xlsxwriter')
@@ -280,6 +281,41 @@ def misu_download(request):
     df = model_to_cecel(misu)
     response = get_exceldownload(df)
     return response
+
+def delete_func(request):
+
+    # Default Data
+    DATABASES = {
+        # Employee
+        'employee': [Employee, redirect("employee:employee")],
+        'parttimer': [Parttimer, redirect("employee:parttimer")],
+        'oneday': [Oneday, redirect("employee:oneday")],
+        'laborcost': [LaborCost, redirect("employee:laborCost")],
+        'workoneday': [WorkOneday, redirect("employee:workoneday")],
+
+        # Trade
+        'client': [Client, redirect("trade:client")],
+        'clienttrade': [ClientTrade, redirect("trade:clientTrade")],
+        'fix': [Fix, redirect("trade:fix")],
+        'fixcost': [FixCost, redirect("trade:fixCost")],
+        'manage': [Manage, redirect("trade:manage")],
+        'royalty': [Royalty, redirect("trade:royalty")],
+        'rant': [Rant, redirect("trade:rant")],
+        'rantpay': [RantPay, redirect("trade:rantPay")],
+        'etc': [Etc, redirect("trade:etc")],
+        'etcpay': [EtcPay, redirect("trade:etcPay")],
+        'cardinfo': [CardInfo, redirect("trade:cardinfo")],
+        'cardcost': [CardCost, redirect("trade:cardcost")],
+    }
+
+    # Reqeust GET
+    id = request.GET.get("id")
+    db = request.GET.get("database")
+
+    target = DATABASES[db]
+    target[0].objects.get(id=id).delete()
+
+    return target[1]
 
 def tmp(request):
     return render(request, "main/tmp..html")

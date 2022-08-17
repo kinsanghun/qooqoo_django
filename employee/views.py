@@ -18,6 +18,7 @@ def employee(request):
         model.name = data[1]
         model.reg_num = data[2]
         model.contact = data[3]
+
         if data[2].split("-")[1][0] == "1" or data[2].split("-")[1][0] == "3":model.gender = "남"
         else:model.gender = "여"
 
@@ -136,8 +137,11 @@ def manageAnnual(request):
     annuals = []
 
     for l in employee_list:
-        annuals.append({"name":l.get_name(), "annual":l.get_annual(),
-                        "used":len(WorkEmployee.objects.filter(name=l.get_name(), annual=1))})
+        annuals.append({
+            "name": l.get_name(),
+            "annual": l.get_annual(),
+            "used": len(WorkEmployee.objects.filter(name=l.get_name(), annual=1))
+        })
 
     context = {
         'annuals':annuals,
@@ -212,48 +216,54 @@ def del_workemployee(request):
         return redirect("employee:workEmployee")
 
 def workparttimer(request):
-    if request.method == "POST":
-        name = request.POST.get("name")
 
+    if request.method == "POST":
+
+        # Base Data
+        name = request.POST.get("name")
+        month = list(map(int, request.POST.get("month").split("-")))
+
+        # Input Data
         dates = request.POST.getlist("dates[]")
         times = request.POST.getlist("times[]")
         contents = request.POST.getlist("contents[]")
 
-        for i, date in enumerate(dates):
-            if times[i]:
-                works = WorkParttimer.objects.filter(name=name, date=date)
-                if works:
-                    model = WorkParttimer.objects.get(name=name, date=date)
-                else:
-                    model = WorkParttimer()
+        # target Month Data Clear
+        WorkParttimer.objects.filter(name=name, date__year=month[0], date__month=month[1]).delete()
 
+        # Input Work Data
+        for i in range(len(dates)):
+            if times[i]:
+                model = WorkParttimer()
                 model.name = name
-                model.date = date
+                model.date = dates[i]
                 model.time = times[i]
                 model.content = contents[i]
-
                 model.save()
 
         return redirect("employee:workParttimer")
 
-    parttimers = Parttimer.objects.all()
-
-    if len(parttimers):
-        name = request.GET.get("parttimer", parttimers[0].name)
-    else:
-        name = ""
-
-    date = request.GET.get("month", datetime.now().strftime("%Y-%m"))
-    year, month = date.split("-")
+    # Get Parttimer List
 
     dates = list()
+    name = ""
+    parttimers = Parttimer.objects.all()
+
+    if parttimers:
+        name = request.GET.get("parttimer", parttimers[0].name)
+
+    # Month Setting
+    date = request.GET.get("month", datetime.now().strftime("%Y-%m"))
+    year, month = date.split("-")
 
     for date in getCalendar(year, month):
         if int(month) == date.month:
             dates.append({'date':date, 'time':'', 'content':''})
 
+    # Get Parttimer work
     works = WorkParttimer.objects.filter(name=name, date__year=year, date__month=month)
 
+    # Mapping Work and Date
     for work in works:
         for i in range(len(dates)):
             if work.date.strftime("%Y-%m-%d") == dates[i]['date'].strftime("%Y-%m-%d"):
@@ -261,14 +271,17 @@ def workparttimer(request):
                 dates[i]['content'] = work.content
                 break
 
+    # Context
     context = {
         'works': works,
         'name': name,
         'dates': dates,
+
         'year': year,
         'month': str(month).rjust(2, "0"),
         'parttimers': parttimers,
     }
+
     return render(request, "employee/workparttimer.html", context)
 
 def workoneday(request):
@@ -294,6 +307,7 @@ def workoneday(request):
 
     oneday = Oneday.objects.all()
     datas = WorkOneday.objects.all()
+
     context = {
         'onedays':oneday,
         'datas':datas,
@@ -306,16 +320,6 @@ def getWorkOneday(request):
     data = WorkOneday.objects.filter(id=key)
     post_list = serializers.serialize('json', data)
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
-
-def managePay(request):
-    return
-
-def schedule(request):
-    return
-
-def turnover(request):
-    return
-
 
 #인건비 
 def laborCost(request):

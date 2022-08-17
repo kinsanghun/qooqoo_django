@@ -144,8 +144,8 @@ section .calendar-fields .dates .date:nth-child(7n) {
 }
 .calendar-modal .data-main {
     position: relative;
-    width : 40%;
-    min-height : 60%;
+    width : 60%;
+    min-height : 55%;
     background: white;
     z-index : 1000;
     padding-top : 80px;
@@ -168,26 +168,48 @@ section .calendar-fields .dates .date:nth-child(7n) {
 .calendar-modal .data-main header h2{
 }
 .calendar-modal .content {
-    padding : 30px;
+    margin : 30px;
+    border : 1px solid #707070;
+    border-bottom : 0;
     box-sizing: border-box;
 }
 .calendar-modal .content .data-fields {
     display : flex;
     align-items: center;
-    border-bottom : 1px solid var(--primary-color);
+    border-bottom : 1px solid  var(--sub-color);
 }
 .calendar-modal .content .data-fields label {
     display: inline-block;
-    width : 150px;
-    padding : 15px 5px;
+    min-width : 180px;
+    padding : 15px 10px;
     background: rgba(128, 128, 128, 0.47);
     border-right : 0.5px solid gray;
     margin-right : 10px;
 }
 .calendar-modal .content .data-fields input{
     border : 0;
+    min-width : auto;
 }
-
+.calendar-modal .content .two-input {
+}
+.calendar-modal .content .two-input label {
+    width : 180px;
+}
+.calendar-modal .content .two-input input{
+    width : calc((100% - 360px) / 2 - 1px) !important;
+}
+.calendar-modal .content .data-fields .checkboxs {
+    margin : 0 auto;
+}
+.calendar-modal .content .data-fields .checkboxs > span {
+    margin-right : 3rem!important;
+}
+.calendar-modal .content .data-fields textarea {
+    width : 80%;
+    min-height : 2rem;
+    border : 0;
+    padding : 5px;
+}
 .calendar-modal .content .submit {
     position: absolute;
     bottom : 20px;
@@ -197,10 +219,10 @@ section .calendar-fields .dates .date:nth-child(7n) {
     background: none;
     border : 0;
 }
-.calendar-modal .content .data-fields.submit input[type=submit],
-.calendar-modal .content .data-fields.submit input[type=button]
+.calendar-modal .content .data-fields.submit > input[type=submit],
+.calendar-modal .content .data-fields.submit > input[type=button]
 {
-    background : var(--primary-color);
+    background : var(--sub-color);
     color : white;
     width : 50px;
     height : 30px;
