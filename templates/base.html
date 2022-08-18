@@ -18,9 +18,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
     <script src="{% static 'js/data.js' %}"></script>
     <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
     <script src="{% static 'js/treeview.js' %}"></script>
+    <script src="{% static 'js/jquery.cookie.min.js' %}"></script>
 </head>
 <body>
 {% include 'navigation.html' %}
@@ -28,10 +31,10 @@
 {% endblock %}
 </main>
 <script>
-        $(document).on("click", "#delete", function () {
-            let id = $("#id").val();
-            if(id > 0) delete_data(id, db, "{% url 'main:delete' %}");
-        })
+    $(document).on("click", "#delete", function () {
+        let id = $("#id").val();
+        if (id > 0) delete_data(id, db, "{% url 'main:delete' %}");
+    })
 </script>
 </body>
 </html>
