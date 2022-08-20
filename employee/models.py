@@ -40,17 +40,15 @@ class Oneday(models.Model):
     reg_num = models.CharField(max_length=30)
     contact = models.CharField(max_length=30)
 
-class WorkEmployee(models.Model):
-    name = models.CharField(max_length=30)
+class WorkStaff(models.Model):
+    name = models.CharField(max_length=20)
     date = models.DateField()
-    working = models.CharField(max_length=15)
-    start = models.CharField(max_length=15)
-    end = models.CharField(max_length=15)
-    extra_type = models.CharField(max_length=10, blank=True, null=True)
-    extra = models.IntegerField(blank=True, null=True)
-    dayoff = models.IntegerField()
-    annual = models.IntegerField()
+    worktype = models.CharField(max_length=10)
+    workstart = models.IntegerField()
+    workend = models.IntegerField()
+    breaktime = models.IntegerField(null=True, blank=True)
     content = models.TextField()
+
 
 class WorkParttimer(models.Model):
     name = models.CharField(max_length=30)
@@ -73,4 +71,17 @@ class LaborCost(models.Model):
     department = models.CharField(max_length=10)
     rank = models.CharField(max_length=10)
     cost = models.IntegerField()
-    
+
+
+
+class WorkEmployee(models.Model):
+    name = models.CharField(max_length=30)
+    date = models.DateField()
+    working = models.CharField(max_length=15)
+    start = models.CharField(max_length=15)
+    end = models.CharField(max_length=15)
+    extra_type = models.CharField(max_length=10, blank=True, null=True)
+    extra = models.IntegerField(blank=True, null=True)
+    dayoff = models.IntegerField()
+    annual = models.IntegerField()
+    content = models.TextField()

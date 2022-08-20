@@ -52,7 +52,7 @@ $(document).ready(function (event) {
     $('.first-view').on('click', function (e) {
         var idx = $(this).index(); // click시 idx 정보 가져오기
         nodeUpdate(fvList, idx);
-        localStorage["fvList"] = fvList;ㅈ
+        localStorage["fvList"] = fvList;
 
         //클릭 시 슬라이드 및 아이콘 변경
         if ($('.second-view', this).is(':visible')) {

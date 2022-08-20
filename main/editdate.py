@@ -19,3 +19,13 @@ def getLastDatOfTheMonth(year, month):
 
     else:
         return lastdays[month]
+
+def convertTimeToMinute(time, isFloat=False):
+    if not isFloat:
+        year, month = map(int, time.split(":"))
+        return (year * 60) + month
+    else:
+        if "." in time:
+            return (int(float(time)) * 60) + 30
+        else:
+            return int(time) * 60

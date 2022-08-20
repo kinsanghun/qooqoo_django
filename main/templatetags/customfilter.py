@@ -1,5 +1,6 @@
 from django import template
 from trade.models import *
+from employee.models import *
 
 register = template.Library()
 
@@ -99,3 +100,15 @@ def print_pay(pay):
             return f"{is_uk(pay)}억 {str(int(pay % 100_000_000) // 10000)}"
         else:
             return f"{str(int(pay % 100_000_000) // 10000)}"
+
+@register.filter
+def isWork(date, employee):
+    try:
+        target = WorkStaff.objects.get(date=date, name=employee)
+        return True
+    except:
+        return False
+
+@register.filter
+def getWork(date, employee):
+    return WorkStaff.objects.get(date=date, name=employee)

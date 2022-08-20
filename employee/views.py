@@ -163,6 +163,45 @@ def retired(request):
     return render(request, "employee/retired.html", context)
 
 def workemployee(request):
+    if request.method == "POST":
+
+        datas = list()
+
+        inputName = ["workDate",
+                      "workName",
+                      "workType",
+                      "workStart",
+                      "workEnd",
+                      "breakTime",
+                      "workContent"]
+
+        for name in inputName:
+            datas.append(request.POST.get(name))
+
+        if WorkStaff.objects.filter(date=datas[0], name=datas[1]):
+            model = WorkStaff.objects.get(date=datas[0], name=datas[1])
+        else:
+            model = WorkStaff()
+
+        model.date = datas[0]
+        model.name = datas[1]
+        model.worktype = datas[2]
+        model.workstart = convertTimeToMinute(datas[3])
+        model.workend = convertTimeToMinute(datas[4])
+
+        if datas[5]:
+            model.breaktime = convertTimeToMinute(time=datas[5], isFloat=True)
+        else:
+            model.breaktime = 0
+
+        if datas[6]:
+            model.content = datas[6]
+        else:
+            model.content = ""
+
+        model.save()
+
+        return redirect("employee:workEmployee")
 
     error = ""
 
@@ -182,7 +221,7 @@ def workemployee(request):
 
     # Create Calendar
     calendar = getCalendar(year, month)
-    workDatas = WorkEmployee.objects.filter(name=requestGetEmployee, date__year=year, date__month=month)
+    workDatas = WorkStaff.objects.filter(name=requestGetEmployee, date__year=year, date__month=month)
 
     # Context
     context = {
