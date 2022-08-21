@@ -4,13 +4,15 @@ from employee.models import *
 
 register = template.Library()
 
-#calendar
+
+# calendar
 @register.filter
 def is_true(a, b):
     if int(a) == int(b):
         return 1
     else:
         return 0
+
 
 @register.filter
 def is_false(a, b):
@@ -19,12 +21,14 @@ def is_false(a, b):
     else:
         return 0
 
+
 @register.filter
 def is_card(data):
     if data:
         return "카드결제"
     else:
         return ""
+
 
 @register.filter
 def hello(client):
@@ -38,6 +42,7 @@ def hello(client):
 
     return totalprice - totalpay
 
+
 @register.filter
 def output_pay(p1, p2):
     if p1 == 0:
@@ -45,12 +50,14 @@ def output_pay(p1, p2):
     else:
         return p1
 
+
 @register.filter
 def output_type(p1):
     if p1 != 0:
         return "매입"
     else:
         return "입금"
+
 
 @register.filter
 def misu_client(client):
@@ -65,18 +72,24 @@ def misu_client(client):
         return "N"
     return "Y"
 
+
 @register.filter
 def royalty_status(p1, p2):
-    if p1 == p2: return "완납"
-    elif p1 > 0 : return "부분납부"
-    else : return "미납"
+    if p1 == p2:
+        return "완납"
+    elif p1 > 0:
+        return "부분납부"
+    else:
+        return "미납"
+
 
 @register.filter
 def convert_pay(pay):
     if pay < 0:
-        return str((int((pay*-1) % 100_000_000) * -1) // 10000)
+        return str((int((pay * -1) % 100_000_000) * -1) // 10000)
     else:
         return str(int(pay % 100_000_000) // 10000)
+
 
 @register.filter
 def is_uk(pay):
@@ -86,6 +99,7 @@ def is_uk(pay):
     if pay // 100_000_000:
         uk = str(pay // 100_000_000)
     return uk
+
 
 @register.filter
 def print_pay(pay):
@@ -101,6 +115,7 @@ def print_pay(pay):
         else:
             return f"{str(int(pay % 100_000_000) // 10000)}"
 
+
 @register.filter
 def isWork(date, employee):
     try:
@@ -109,6 +124,25 @@ def isWork(date, employee):
     except:
         return False
 
+
 @register.filter
 def getWork(date, employee):
     return WorkStaff.objects.get(date=date, name=employee)
+
+@register.filter
+def getWorkColor(worktype):
+    color = {
+        "출근": "#FFBA00",
+        "조퇴": "#38C7D9ee",
+        "연차": "#EB6772cc",
+        "반차": "#EB6772cc",
+        "주휴일": "#4174A0bb",
+        "반주휴": "#4174A0bb",
+        "결근": "#50505099",
+        "추가근로": "#5AB769"
+    }
+    return color[worktype]
+
+@register.filter
+def convertMinuteToTime(m):
+    return f"{m // 60}:{str(m % 60).rjust(2, '0')}"

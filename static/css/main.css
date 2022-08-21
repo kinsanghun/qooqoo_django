@@ -1,271 +1,420 @@
-.bg-gray {background: rgba(189, 189, 189, 0.5);}
-.bg-red {background: rgba(255, 96, 96, 0.43);}
+.bg-gray {
+    background: rgba(189, 189, 189, 0.5);
+}
+
+.bg-red {
+    background: rgba(255, 96, 96, 0.43);
+}
+
 body {
     overflow-y: hidden;
 }
+
 main {
     display: inline-block;
-    width : 84%;
-    float : right;
-    padding : var(--default-padding);
+    width: 84%;
+    float: right;
+    padding: var(--default-padding);
     box-sizing: border-box;
 }
+
 .input-area, .null-area, .view-area {
-    width : 100%;
+    width: 100%;
 }
+
 .input-area {
 
 }
+
 .input-area .input-form {
     display: inline-block;
     vertical-align: top;
-    width : 80%;
+    width: 80%;
 }
+
 .input-area .input-form div {
-    display : inline-block;
-    padding : 0.5rem;
-    margin-right : 0.5rem;
-    margin-bottom : 0.5rem;
-    border : 0.5px solid var(--sub-color);
+    display: inline-block;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 0.5px solid var(--sub-color);
     border-radius: 5px;
 }
 
-.input-area .input-form div label{
-    padding : 0 0.5rem 0 0.5rem;
-    border-right : 1px solid var(--primary-color);
+.input-area .input-form div label {
+    padding: 0 0.5rem 0 0.5rem;
+    border-right: 1px solid var(--primary-color);
 }
 
-.input-area .input-form div input, .input-area .input-form div select{
-    padding : 0 0.5rem 0 0.5rem;
-    border : 0;
+.input-area .input-form div input, .input-area .input-form div select {
+    padding: 0 0.5rem 0 0.5rem;
+    border: 0;
 }
+
 .input-area .input-form input[type=submit] {
-    border : 0;
-    padding : 0.5rem;
-    color : white;
+    border: 0;
+    padding: 0.5rem;
+    color: white;
     background: var(--primary-color);
     border-radius: 10px;
 }
 
 .input-area .input-form input[type=button] {
-    border : 0;
-    padding : 0.5rem;
-    color : white;
+    border: 0;
+    padding: 0.5rem;
+    color: white;
     background: var(--primary-color);
     border-radius: 10px;
 }
+
 .input-area .submit-form {
     display: inline-block;
-    width : calc(20% - 1rem);
+    width: calc(20% - 1rem);
 }
+
 .input-area .submit-form input {
-    margin : 0 auto;
-    float : right;
+    margin: 0 auto;
+    float: right;
 }
+
 .input-area .submit-form input[type=submit], .input-area .submit-form input[type=button] {
-    width : 10rem;
-    color : white;
-    font-size : 1rem;
-    padding : 0.5rem 1rem 0.5rem 1rem;
+    width: 10rem;
+    color: white;
+    font-size: 1rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
     box-sizing: border-box;
-    border : 0;
+    border: 0;
 }
+
 .input-area .submit-form input[type=submit] {
     border-radius: var(--default-padding);
     background: var(--primary-color);
 }
+
 .input-area .submit-form input[type=button] {
-    margin-top : 0.5rem;
+    margin-top: 0.5rem;
     border-radius: var(--default-padding);
     background: var(--sub-color);
 }
+
 .null-area {
     display: block;
-    padding-top : 2rem;
-    margin-bottom : 2rem;
-    border-bottom : 1px solid var(--sub-color);
+    padding-top: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--sub-color);
 }
 
-input, select{
-    outline-width:0;
+input, select {
+    outline-width: 0;
 }
 
 
 .view-area {
 }
+
 .view-area .view-header {
     display: inline-block;
-    width : 100%;
+    width: 100%;
 }
+
 .view-area .view-header h1 {
     display: inline-block;
     font-weight: 600;
-    font-size : var(--h2-fontsize);
-    padding : 1rem;
+    font-size: var(--h2-fontsize);
+    padding: 1rem;
 }
 
-#data-fields{
+#data-fields {
     text-align: center;
-    max-height : 35rem;
+    max-height: 35rem;
     overflow-y: auto;
-    overflow-x : auto;
+    overflow-x: auto;
 }
 
-#data-fields::-webkit-scrollbar{
-    display : none;
+#data-fields::-webkit-scrollbar {
+    display: none;
 }
+
 #data-fields .data-header {
-    position : sticky;
-    top : 0;
-    z-index : 1;
-    border-bottom : 1px solid black;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    border-bottom: 1px solid black;
     background: #fff;
 }
 
 #data-fields .data-header .datas {
-    border-right : 0.5px solid rgba(128, 128, 128, 0.47);
+    border-right: 0.5px solid rgba(128, 128, 128, 0.47);
 }
+
 #data-fields .data-header .datas:last-child {
-    border-right : 0;
+    border-right: 0;
 }
+
 #data-fields .data-body {
-    position : relative;
-    border-bottom : 0.5px solid rgba(0, 0, 0, 0.5);
+    position: relative;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.5);
 }
+
 #data-fields div {
     font-size: 14px;
-    padding : 0.25rem;
+    padding: 0.25rem;
 }
+
 #data-fields .data-body:hover {
-    background : rgba(231, 168, 73, 0.35);
+    background: rgba(231, 168, 73, 0.35);
 }
+
 #data-fields .data-body .datas {
-    min-width : 120px;
-    border-right : 0.5px solid rgba(128, 128, 128, 0.47);
+    min-width: 120px;
+    border-right: 0.5px solid rgba(128, 128, 128, 0.47);
     white-space: nowrap;
 }
+
 #data-fields .data-body .datas:first-child {
     display: none;
 }
 
 #data-fields .data-body .datas:last-child {
-    border-right : 0;
+    border-right: 0;
 }
+
 .input-button, .batch-button {
     float: right;
-    width : 8rem;
+    width: 8rem;
     display: inline-block;
-    padding : 0.5rem;
-    color : white;
+    padding: 0.5rem;
+    color: white;
     background: var(--primary-color);
-    border : 0;
+    border: 0;
     border-radius: 1rem;
 }
+
 #filter-list {
-    width : 14%;
+    width: 14%;
     display: inline-block;
 }
-#filter-client,#filter-status {
-    width : 100%;
-    border : 1px solid black;
+
+#filter-client, #filter-status {
+    width: 100%;
+    border: 1px solid black;
 }
+
 #filter-status {
-    margin-top : 1rem;
+    margin-top: 1rem;
 }
-.filter{
+
+.filter {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
 }
+
 .filter .header {
-    border-bottom : 1px solid black !important;
+    border-bottom: 1px solid black !important;
 }
+
 .filter div {
-    padding : 0.45em;
+    padding: 0.45em;
     box-sizing: border-box;
-    text-align : center;
+    text-align: center;
 }
 
 .filter-data {
-    width : 85%;
+    width: 85%;
     display: inline-block;
-    float : right;
+    float: right;
 }
+
 #workparttimers {
-    clear : both;
-    max-height : 45rem;
+    clear: both;
+    max-height: 45rem;
     overflow-y: scroll;
-    margin-top : 1rem;
-    border : 1px solid rgba(128, 128, 128, 0.34);
+    margin-top: 1rem;
+    border: 1px solid rgba(128, 128, 128, 0.34);
 }
+
 #workparttimers .header {
-    position : sticky;
-    top : 0;
-    border-bottom : 1px solid black;
+    position: sticky;
+    top: 0;
+    border-bottom: 1px solid black;
     background: white;
-    color : black;
+    color: black;
 }
-#workparttimers .items
-{
-    padding : 0.5rem;
-    text-align : center;
-    display : grid;
+
+#workparttimers .items {
+    padding: 0.5rem;
+    text-align: center;
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr;
-    border-bottom : 0.5px solid rgba(17, 7, 7, 0.35);
+    border-bottom: 0.5px solid rgba(17, 7, 7, 0.35);
 }
+
 #workparttimers .items input {
-    text-align :center;
-    border : 0;
+    text-align: center;
+    border: 0;
 }
+
 #filter-client {
-    height : 27.8rem;
+    height: 27.8rem;
     overflow-y: auto;
 }
-#filter-client .filter div{
-    border-bottom : 0.5px solid gray;
+
+#filter-client .filter div {
+    border-bottom: 0.5px solid gray;
 }
+
 .div-header {
-    font-size : 1.2rem;
+    font-size: 1.2rem;
     font-weight: 600;
 
-    margin-bottom : 1rem;
+    margin-bottom: 1rem;
 }
+
 .form-workparttimer {
     display: inline-block;
-    float : right;
-    margin-bottom : 1rem;
+    float: right;
+    margin-bottom: 1rem;
 }
+
 .form-workparttimer input[type=month], .form-workparttimer select {
-    width : 10rem;
-    padding : 0.25rem;
+    width: 10rem;
+    padding: 0.25rem;
     border-radius: 5px;
-    border : 0.5px solid rgba(47, 47, 47, 0.78);
+    border: 0.5px solid rgba(47, 47, 47, 0.78);
 }
+
 .submit {
     border: 0.5px solid var(--primary-color);
     border-radius: 5px;
     background: var(--primary-color);
-    color : white;
-    padding : 0.3rem;
-    width : 3rem;
+    color: white;
+    padding: 0.3rem;
+    width: 3rem;
 }
+
 .annuals .annuals-header {
     position: sticky;
-    top : 0;
+    top: 0;
     background: #696969;
-    color : white;
+    color: white;
 }
-.annuals > div{
-    width : 100%;
+
+.annuals > div {
+    width: 100%;
     display: grid;
-    margin : 0 auto;
+    margin: 0 auto;
     grid-template-columns: repeat(4, 1fr);
-    text-align : center;
-    padding : 0.5rem;
+    text-align: center;
+    padding: 0.5rem;
     box-sizing: border-box;
-    border-bottom : 0.5px solid rgba(0, 0, 0, 0.6);
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.6);
 }
+
 #delete {
     background: #414040;
+}
+.io {
+    width : 100%;
+    display :flex!important;
+    justify-content: space-between;
+    align-items: center;
+}
+.io button {
+    background: none;
+    padding : 0.25rem 0.5rem;
+    border : 2px solid var(--primary-color);
+    border-radius: 5px;
+}
+.io button:hover {
+    background: rgba(255, 157, 25, 0.35);
+}
+.employeeIO {
+    position: relative;
+    width: 100%;
+    height: 80vh !important;
+    margin: 0 10px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+    box-sizing: border-box;
+}
+
+.employeeIO h2 {
+    width: 100%;
+    display: flex;
+    font-size: 1.2em;
+    justify-content: flex-start !important;
+    margin: 0.5rem;
+}
+
+.employeeIO .employeeI,
+.employeeIO .employeeO {
+    position: relative;
+    width: 100%;
+    height: 40vh;
+    background: white;
+    padding: 0 !important;
+    overflow-y: auto;
+    margin-top: 1rem;
+}
+
+.employeeIO .employeeI > div,
+.employeeIO .employeeO > div {
+    width: 95%;
+    border: 0.1px solid black;
+    padding: 0 !important;
+}
+
+.employeeIO .header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    border: 0.2px solid black;
+    display: grid;
+    padding: 0 !important;
+    grid-template-columns: repeat(9, 1fr);
+}
+
+.employeeIO .header span {
+    padding: 0;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid black;
+}
+
+.employeeIO .header span:last-child {
+    border-right: 0;
+}
+
+.employeeIO .datas {
+    padding: 0 !important;
+}
+
+.employeeIO .datas .data {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    border-bottom: 0.1px solid black;
+    box-sizing: border-box;
+    padding : 0!important;
+    margin: 0 !important;
+}
+
+.employeeIO .datas .data span {
+    padding: 0.3rem;
+    border-right: 0.5px solid black;
+    box-sizing: border-box;
+}
+
+.employeeIO .datas .data span:last-child {
+    border: 0;
+}
+
+.employeeIO .datas .data:last-child {
+    border: 0;
 }

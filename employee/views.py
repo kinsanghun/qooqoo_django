@@ -1,9 +1,17 @@
 from django.shortcuts import render, redirect
 from django.core import serializers
 from django.http import HttpResponse
+from django.db import connection
 from main.editdate import *
 from main.utils import *
 from .annual import *
+import pandas as pd
+
+
+try:
+    from io import BytesIO as IO  # for modern python
+except ImportError:
+    from io import StringIO as IO  # for legacy python
 
 def employee(request):
     if request.method == "POST":
@@ -19,8 +27,10 @@ def employee(request):
         model.reg_num = data[2]
         model.contact = data[3]
 
-        if data[2].split("-")[1][0] == "1" or data[2].split("-")[1][0] == "3":model.gender = "남"
-        else:model.gender = "여"
+        if data[2].split("-")[1][0] == "1" or data[2].split("-")[1][0] == "3":
+            model.gender = "남"
+        else:
+            model.gender = "여"
 
         model.bank = data[5]
         model.bank_num = data[6]
@@ -47,6 +57,7 @@ def employee(request):
     }
     return render(request, "employee/employee.html", context)
 
+
 def getemployee(request):
     key = request.GET.get("key")
     data = Employee.objects.filter(id=key)
@@ -68,8 +79,10 @@ def parttimer(request):
         model.reg_num = data[2]
         model.contact = data[3]
 
-        if data[2].split("-")[1][0] == "1" or data[2].split("-")[1][0] == "3":model.gender = "남"
-        else:model.gender = "여"
+        if data[2].split("-")[1][0] == "1" or data[2].split("-")[1][0] == "3":
+            model.gender = "남"
+        else:
+            model.gender = "여"
 
         model.pay = data[5]
         model.bank = data[6]
@@ -92,11 +105,13 @@ def parttimer(request):
     }
     return render(request, "employee/parttimer.html", context)
 
+
 def getparttimer(request):
     key = request.GET.get("key")
     data = Parttimer.objects.filter(id=key)
     post_list = serializers.serialize('json', data)
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
+
 
 def oneday(request):
     if request.method == "POST":
@@ -128,6 +143,7 @@ def getOneday(request):
     post_list = serializers.serialize('json', data)
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
 
+
 def manageAnnual(request):
     employee_list = list()
     employees = Employee.objects.all()
@@ -144,9 +160,10 @@ def manageAnnual(request):
         })
 
     context = {
-        'annuals':annuals,
+        'annuals': annuals,
     }
     return render(request, "employee/manageAnnual.html", context)
+
 
 def retired(request):
     target = request.GET.get("target", "employee")
@@ -162,18 +179,34 @@ def retired(request):
     }
     return render(request, "employee/retired.html", context)
 
-def workemployee(request):
-    if request.method == "POST":
 
+def workemployee(request):
+    error = ""
+
+    # Create Employee Data
+    employees = Employee.objects.all()
+
+    # If Don't have Employee data
+    if not employees:
+        return render(request, "employee/employee.html", {'error': "직원을 먼저 생성해주세요."})
+
+    # Get Request
+    requestGetEmployee = request.GET.get("employee", employees[0].name)
+    requestGetDate = request.GET.get("date", datetime.now().strftime("%Y-%m"))
+
+    year = requestGetDate.split("-")[0]
+    month = requestGetDate.split("-")[1]
+
+    if request.method == "POST":
         datas = list()
 
         inputName = ["workDate",
-                      "workName",
-                      "workType",
-                      "workStart",
-                      "workEnd",
-                      "breakTime",
-                      "workContent"]
+                     "workName",
+                     "workType",
+                     "workStart",
+                     "workEnd",
+                     "breakTime",
+                     "workContent"]
 
         for name in inputName:
             datas.append(request.POST.get(name))
@@ -201,24 +234,6 @@ def workemployee(request):
 
         model.save()
 
-        return redirect("employee:workEmployee")
-
-    error = ""
-
-    # Create Employee Data
-    employees = Employee.objects.all()
-
-    # If Don't have Employee data
-    if not employees:
-        return render(request, "employee/employee.html", {'error': "직원을 먼저 생성해주세요."})
-
-    # Get Request
-    requestGetEmployee = request.GET.get("employee", employees[0].name)
-    requestGetDate = request.GET.get("date", datetime.now().strftime("%Y-%m"))
-
-    year = requestGetDate.split("-")[0]
-    month = requestGetDate.split("-")[1]
-
     # Create Calendar
     calendar = getCalendar(year, month)
     workDatas = WorkStaff.objects.filter(name=requestGetEmployee, date__year=year, date__month=month)
@@ -237,25 +252,16 @@ def workemployee(request):
     }
     return render(request, "employee/workemployee.html", context)
 
+
 def getWorkEmployee(request):
     name = request.GET.get("name")
     date = request.GET.get("date")
-    data = WorkEmployee.objects.filter(name=name, date=date)
+    data = WorkStaff.objects.filter(name=name, date=date)
     post_list = serializers.serialize('json', data)
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
 
-def del_workemployee(request):
-    name = request.GET.get("name")
-    date = request.GET.get("date")
-    try:
-        target = WorkEmployee.objects.get(name=name, date=date)
-        target.delete()
-
-    finally:
-        return redirect("employee:workEmployee")
 
 def workparttimer(request):
-
     if request.method == "POST":
 
         # Base Data
@@ -297,7 +303,7 @@ def workparttimer(request):
 
     for date in getCalendar(year, month):
         if int(month) == date.month:
-            dates.append({'date':date, 'time':'', 'content':''})
+            dates.append({'date': date, 'time': '', 'content': ''})
 
     # Get Parttimer work
     works = WorkParttimer.objects.filter(name=name, date__year=year, date__month=month)
@@ -322,6 +328,7 @@ def workparttimer(request):
     }
 
     return render(request, "employee/workparttimer.html", context)
+
 
 def workoneday(request):
     if request.method == "POST":
@@ -348,10 +355,10 @@ def workoneday(request):
     datas = WorkOneday.objects.all()
 
     context = {
-        'onedays':oneday,
-        'datas':datas,
+        'onedays': oneday,
+        'datas': datas,
     }
-    return render(request, "employee/workOneday.html",context)
+    return render(request, "employee/workOneday.html", context)
 
 
 def getWorkOneday(request):
@@ -360,7 +367,8 @@ def getWorkOneday(request):
     post_list = serializers.serialize('json', data)
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
 
-#인건비 
+
+# 인건비
 def laborCost(request):
     if request.method == "POST":
         data = getPOSTValue(request.POST)
@@ -382,13 +390,82 @@ def laborCost(request):
     employees = Employee.objects.filter(outwork__isnull=True)
     datas = LaborCost.objects.all()
     context = {
-        'employees':employees,
-        'datas' : datas,
+        'employees': employees,
+        'datas': datas,
     }
     return render(request, "employee/laborcost.html", context)
+
 
 def getLaborCost(request):
     key = request.GET.get("key")
     data = LaborCost.objects.filter(id=key)
     post_list = serializers.serialize('json', data)
     return HttpResponse(post_list, content_type="text/json-comment-filtered")
+
+
+def employeeIO(request):
+    # Data Setting
+    date = request.GET.get("date", datetime.today().strftime("%Y-%m"))
+    year = date.split("-")[0]
+    month = date.split("-")[1]
+
+    inworkEmployee = Employee.objects.filter(inwork__year=year, inwork__month=month, outwork__isnull=True).all()
+    outworkEmployee = Employee.objects.filter(outwork__year=year, outwork__month=month).all()
+    context = {
+        'inworks': inworkEmployee,
+        'outworks': outworkEmployee,
+    }
+    return render(request, "employee/employeeIO.html", context)
+
+
+def IOdownload(request):
+    # Data Setting
+    params = None
+
+    date = request.GET.get("date", datetime.today().strftime("%Y-%m"))
+    year = date.split("-")[0]
+    month = date.split("-")[1]
+
+    inwork = ("select name as '이름',"
+              " reg_num as '주민등록번호',"
+              " department as '직급',"
+              " rank as '파트',"
+              " worksystem as '근무제',"
+              " inwork as '입사일',"
+              " outwork as '퇴사일',"
+              " pay as '계약임금',"
+              " content as '비고' from employee_Employee"
+              " where outwork is null"
+              " and strftime('%Y', inwork)='" + year + "'"
+              " and strftime('%m', inwork)='" + month + "'"
+              " order by inwork DESC")
+
+    outwork = ("select name as '이름',"
+              " reg_num as '주민등록번호',"
+              " department as '직급',"
+              " rank as '파트',"
+              " worksystem as '근무제',"
+              " inwork as '입사일',"
+              " outwork as '퇴사일',"
+              " pay as '계약임금',"
+              " content as '비고' from employee_Employee"
+              " where strftime('%Y', outwork)='" + year + "'"
+              " and strftime('%m', outwork)='" + month + "'"
+              " order by outwork DESC")
+
+    inwork_df = pd.read_sql_query(inwork, connection, params=params)
+    outwork_df = pd.read_sql_query(outwork, connection, params=params)
+
+    excel_file = IO()
+    xlwriter = pd.ExcelWriter(excel_file, engine='xlsxwriter')
+
+    inwork_df.to_excel(xlwriter, '입사자현황')
+    outwork_df.to_excel(xlwriter, '퇴사자현황')
+
+    xlwriter.save()
+    xlwriter.close()
+    excel_file.seek(0)
+
+    response = HttpResponse(excel_file.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = f'attachment; filename ="employee_status_{year}-{month}.xlsx"'
+    return response

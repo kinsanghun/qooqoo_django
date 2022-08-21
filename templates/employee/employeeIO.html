@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+    {% if error %}
+        <script>alert("{{ error }}");</script>
+    {% endif %}
+    <div class="view-area">
+        <div class="view-header io"><h1>입퇴사현황</h1><button onclick="location.href='{% url "employee:IOdownload" %}';">내보내기</button></div>
+        <div id="data-fields" class="employeeIO">
+            <h2>입사자 현황</h2>
+            <div class="employeeI">
+                <div>
+                    <div class="header">
+                        <span>이름</span>
+                        <span>주민번호</span>
+                        <span>직급</span>
+                        <span>파트</span>
+                        <span>근무제</span>
+                        <span>입사일</span>
+                        <span>퇴사일</span>
+                        <span>계약임금</span>
+                        <span>비고</span>
+                    </div>
+
+                    {% if inworks %}
+                        <div class="datas">
+                            {% for inwork in inworks %}
+                                <div class="data">
+                                    <span>{{ inwork.name }}</span>
+                                    <span>{{ inwork.reg_num }}</span>
+                                    <span>{{ inwork.department }}</span>
+                                    <span>{{ inwork.rank }}</span>
+                                    <span>{{ inwork.worksystem }}</span>
+                                    <span>{{ inwork.inwork }}</span>
+                                    <span>{{ inwork.outwork|default_if_none:"-" }}</span>
+                                    <span>{{ inwork.pay }}</span>
+                                    <span>{{ inwork.content }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div>이 달의 입사자가 없습니다.</div>
+                    {% endif %}
+                </div>
+            </div>
+            <h2>퇴사자 현황</h2>
+            <div class="employeeO">
+                <div>
+                    <div class="header">
+                        <span>이름</span>
+                        <span>주민번호</span>
+                        <span>직급</span>
+                        <span>파트</span>
+                        <span>근무제</span>
+                        <span>입사일</span>
+                        <span>퇴사일</span>
+                        <span>계약임금</span>
+                        <span>비고</span>
+                    </div>
+                    {% if outworks %}
+                        <div class="datas">
+                            {% for outwork in outworks %}
+                                <div class="data">
+                                    <span>{{ outwork.name }}</span>
+                                    <span>{{ outwork.reg_num }}</span>
+                                    <span>{{ outwork.department }}</span>
+                                    <span>{{ outwork.rank }}</span>
+                                    <span>{{ outwork.worksystem }}</span>
+                                    <span>{{ outwork.inwork }}</span>
+                                    <span>{{ outwork.outwork }}</span>
+                                    <span>{{ outwork.pay }}</span>
+                                    <span>{{ outwork.content }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div>이 달의 퇴사자가 없습니다.</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            const header = ["이름", "주민번호", "직급", "파트", "근무제", "입사일", "퇴사일", "계약임금", "비고"];
+        });
+    </script>
+{% endblock %}

@@ -28,7 +28,7 @@
                     </select>
                 </div>
                 <div><label>선택년월</label><input type="month" name="date" value="{{ year }}-{{ month }}"></div>
-                <div class="submit-button"><input type="submit"></div>
+                <div class="submit-button"><input type="submit" value="검색"></div>
             </form>
         </div>
         <div class="calendar-fields">
@@ -38,30 +38,41 @@
             <div class="dates">
                 {% if calendar %}
                     {% for date in calendar %}
-                        {% if date|isWork:selectedEmployee %}
-                            {% with target=date|getWork:selectedEmployee %}
-                        <div class="date">
-                            <div>
-                                <span class="day">{{ date|date:"j" }}</span>
-                                <span class="status">{{ target.worktype }}</span>
-                                <!--
-                                    출근 : #FFBA00
-                                    조퇴 : #98DDE6
-                                    연차 : #FFD0D4
-                                    휴무 : #FFFF52
-                                    결근 : #9A9A9A
-                                    추가 : #86FF99
-                                -->
-                            </div>
-                        </div>
-                            {% endwith %}
+                        {% if date|date:'m' == month %}
+                            {% if date|isWork:selectedEmployee %}
+                                {% with target=date|getWork:selectedEmployee %}
+                                    <div class="date" style="--work-color:{{ target.worktype|getWorkColor }}">
+                                        <div>
+                                            <div>
+                                                <span class="day">{{ date|date:"j" }}</span>
+                                                <span class="status">{{ target.worktype }}</span>
+                                            </div>
+                                            <div class="worktime">출근시간 : {{ target.workstart|convertMinuteToTime }}</div>
+                                            <div class="worktime">퇴근시간 : {{ target.workend|convertMinuteToTime }}</div>
+                                            {% if target.content %}
+                                                <div class="workcontent">{{ target.content }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endwith %}
+                            {% else %}
+                                <div class="date" style="--work-color:#FFBA00">
+                                    <div>
+                                        <div>
+                                            <span class="day">{{ date|date:"j" }}</span>
+                                            <span class="status">출근</span>
+                                        </div>
+                                        <div class="worktime">출근시간 : 10:00</div>
+                                        <div class="worktime">퇴근시간 : 10:00</div>
+                                    </div>
+                                </div>
+                            {% endif %}
                         {% else %}
-                        <div class="date">
-                            <div>
-                                <span class="day">{{ date|date:"j" }}</span>
-                                <span class="status">출근</span>
-                            </div>
-                        </div>
+                                <div class="other-month" style="background : rgba(192,192,192,0.47);">
+                                    <div>
+                                        <span class="day" style="color : gray;">{{ date|date:"j" }}</span>
+                                    </div>
+                                </div>
                         {% endif %}
                     {% endfor %}
                 {% endif %}
@@ -76,15 +87,15 @@
                 <form method="post">
                     {% csrf_token %}
                     <div class="data-fields">
-                        <label>날짜</label><input type="text" value="2022-08-15" name="workDate" id="workDate" readonly>
+                        <label>날짜</label><input type="text" value="" name="workDate" id="workDate" readonly>
                     </div>
                     <div class="data-fields">
-                        <label>이름</label><input type="text" value="김상훈" name="workName" id="workName" readonly>
+                        <label>이름</label><input type="text" value="" name="workName" id="workName" readonly>
                     </div>
                     <div class="data-fields">
                         <label>근무타입</label>
                         <span class="checkboxs">
-                            <span>출근<input type="radio" name="workType" value="출근" checked></span>
+                            <span>출근<input type="radio" name="workType" value="출근"></span>
                             <span>조퇴<input type="radio" name="workType" value="조퇴"></span>
                             <span>결근<input type="radio" name="workType" value="결근"></span>
                             <span>주휴일<input type="radio" name="workType" value="주휴일"></span>
@@ -95,11 +106,13 @@
                         </span>
                     </div>
                     <div class="data-fields two-input">
-                        <label>출근시간</label><input class="workstart" type="time" name="workStart" id="workStart" readonly>
+                        <label>출근시간</label><input class="workstart" type="time" name="workStart" id="workStart"
+                                                  readonly>
                         <label>퇴근시간</label><input class="workend" type="time" name="workEnd" id="workEnd" readonly>
                     </div>
                     <div class="data-fields"><label>휴게시간</label>
-                        <input type="number" step="0.5" min="0" name="breakTime">시간</div>
+                        <input type="number" step="0.5" min="0" name="breakTime">시간
+                    </div>
 
                     <div class="data-fields">
                         <label>특이사항</label>
@@ -107,15 +120,17 @@
                     </div>
                     <div class="data-fields submit">
                         <input type="submit" value="저장">
-                        <input type="button" value="초기화">
+                        <input type="button" value="초기화" onclick="resetInputData('{% url "employee:getWorkEmployee" %}');">
                         <input class="close-button" type="button" value="취소">
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <script src="{% static 'js/calendar.js' %}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+
             $('input.workstart').timepicker({
                 timeFormat: 'HH:mm',
                 interval: 30,
@@ -139,8 +154,9 @@
             });
 
             $(document).on("click", ".date", function (e) {
-                console.log(e.target);
                 $(".calendar-modal").css("display", "flex");
+                let date = {{ year }} + "-" + String({{ month }}).padStart(2, "0") + "-"+ $(".day", this).text().padStart(2, "0")
+                getWorkDate("{{ selectedEmployee }}", date, "{% url 'employee:getWorkEmployee' %}");
             })
             $(document).on("click", ".calendar-modal", function (e) {
                 if ($(e.target).hasClass("calendar-modal")) {
@@ -150,7 +166,6 @@
             $(document).on("click", ".close-button", function (e) {
                 $(".calendar-modal").css("display", "none");
             })
-
         })
     </script>
 

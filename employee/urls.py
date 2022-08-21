@@ -14,10 +14,8 @@ urlpatterns = [
 
                   path('oneday', views.oneday, name="oneday"),
                   path('oneday/getOneday', views.getOneday, name="getOneday"),
-                  path('retired', views.retired, name="retired"),
 
                   path('workemployee', views.workemployee, name="workEmployee"),
-                  path('workemployee/del', views.del_workemployee, name="delWorkEmployee"),
                   path('workemployee/getWork', views.getWorkEmployee, name="getWorkEmployee"),
 
                   path('workparttimer', views.workparttimer, name="workParttimer"),
@@ -28,5 +26,8 @@ urlpatterns = [
                   path('manageAnnual', views.manageAnnual, name="manageAnnual"),
 
                   path('laborCost', views.laborCost, name="laborCost"),
-                  path('laborCost/get', views.getLaborCost, name="getLaborCost")
+                  path('laborCost/get', views.getLaborCost, name="getLaborCost"),
+
+                  path('employeeIO', views.employeeIO, name="employeeIO"),
+                  path('IOdownload', views.IOdownload, name="IOdownload"),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

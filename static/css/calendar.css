@@ -55,49 +55,78 @@ section .search-fields form div label
     border-right : 1px solid var(--primary-color);
 }
 
-section .search-fields form .submit-button{
+section .search-fields form .submit-button
+{
     color : white;
     background: var(--primary-color);
     border : 0;
 }
 
-section .search-fields form .submit-button input[type=submit]{
+section .search-fields form .submit-button input[type=submit]
+{
     color : white;
 }
 
-section .calendar-fields {
+section .calendar-fields
+{
     position : relative;
     width : 100%;
     display: flex;
     margin-top : 1rem;
 }
-section .calendar-fields .dates {
+section .calendar-fields .dates
+{
     position : relative;
     width : 100%;
     display : grid;
     grid-template-columns: repeat(7, 1fr);
 }
-section .calendar-fields .dates .date {
+section .calendar-fields .dates .date,
+section .calendar-fields .dates .other-month
+{
     position: relative;
     padding : 5px;
     border : 0.5px solid gray;
-    min-height : 7rem;
+    min-height : 7.5rem;
 }
 
-section .calendar-fields .dates .date div{
+section .calendar-fields .dates .date div
+{
     position: relative;
     display: flex;
+    flex-direction: column;
     width : 100%;
     justify-content: flex-start;
 }
 
-section .calendar-fields .dates .date .status {
-    padding : 6px;
+section .calendar-fields .dates .date div div:first-child{
+    display: flex;
+    flex-direction: row;
+}
+section .calendar-fields .dates .date .status,
+section .calendar-fields .dates .date .worktime,
+section .calendar-fields .dates .date .workcontent
+{
+    max-width : 180px;
+    max-height : 30px;
+    padding : 3px 6px;
     color : white;
     text-align : center;
-    background: rgba(180, 117, 1, 0.78);
+    background: var(--work-color);
     border-radius: 5px;
+    margin-bottom : 2px;
 }
+
+section .calendar-fields .dates .date .worktime,
+section .calendar-fields .dates .date .workcontent { margin : 1px auto; }
+
+section .calendar-fields .dates .date .workcontent {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 section .calendar-fields .dates .date .day{
     width : 30px;
     height : 30px;
@@ -128,7 +157,7 @@ section .calendar-fields .dates .date:nth-child(7n) {
 .calendar-modal {
     position :absolute;
 
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
 
