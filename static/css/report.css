@@ -1,3 +1,29 @@
+.search-form {
+    display: flex;
+}
+
+.search-form > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border : 1px solid black;
+    padding : 0.5rem;
+    border-radius: 5px;
+}
+.search-form label {
+    padding : 0 0.5rem;
+    border-right : 2px solid var(--primary-color);
+}
+.search-form input {
+    padding : 0 0.5rem;
+    border : 0;
+}
+.search-form input[type=submit] {
+    border-radius: 5px;
+    margin-left : 1rem;
+    color : white;
+    background: var(--primary-color);
+}
 .data-fields {
     position : relative;
     width : 100%;

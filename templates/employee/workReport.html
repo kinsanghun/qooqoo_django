@@ -4,6 +4,12 @@
 {% block content %}
     <link href="{% static 'css/report.css' %}" rel="stylesheet" type="text/css"/>
 
+    <div>
+    <form class="search-form">
+        <div><label>날짜</label><input type="month" name="month" value="{{ year }}-{{ month }}"></div>
+        <input type="submit" value="검색">
+    </form>
+    </div>
     <div class="data-fields">
         <div class="header">
             <h2>직원 근태현황</h2>
