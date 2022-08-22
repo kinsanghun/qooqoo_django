@@ -1,0 +1,56 @@
+.data-fields {
+    position : relative;
+    width : 100%;
+    height : 40vh;
+    padding : 100px;
+    box-sizing: border-box;
+}
+.data-fields .header {
+    position: absolute;
+    top : 0;
+    left : 0;
+    width : 100%;
+    display: flex;
+    justify-content: space-between;
+    padding : 30px 100px;
+    box-sizing: border-box;
+}
+
+.data-fields .header h2{
+    font-size : 1.2em;
+    font-weight: 700;
+}
+
+.data-fields .header button {
+    background: none;
+    border: 2px solid var(--primary-color);
+    border-radius: 5px;
+    padding : 0.25rem;
+}
+.data-fields .container {
+    font-size : 0.7rem;
+    width : 100%;
+    overflow-x: scroll;
+    overflow-y: auto;
+    border : 1px solid black;
+    max-height : 80vh;
+}
+.data-fields .container .datas{
+    width : 100%;
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+}
+.data-fields .container .datas span{
+    min-width : 127px;
+    height : 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right : 1px solid gray;
+    border-bottom : 1px solid gray;
+    white-space: nowrap;
+}
+
+.data-fields .container .datas span:last-child{
+    border-right : 0;
+}

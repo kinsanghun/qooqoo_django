@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+    <link href="{% static 'css/report.css' %}" rel="stylesheet" type="text/css"/>
+
+    <div class="data-fields">
+        <div class="header">
+            <h2>직원 근태현황</h2>
+            <button onclick="location.href='{% url "employee:downloadWorkReport" %}?year={{ year }}&month={{ month }}';">내보내기</button>
+        </div>
+        <div class="container">
+        <div class="datas">
+            <span>이름</span>
+            <span>부서</span>
+            <span>직급</span>
+            <span>주민등록번호</span>
+            <span>근무제</span>
+            <span>입사일</span>
+            <span>퇴사일</span>
+            <span>계약임금</span>
+            <span>월급여계산일수</span>
+            <span>공제(일)</span>
+            <span>공제(시간)</span>
+            <span>추가수당(시간)</span>
+            <span>은행</span>
+            <span>계좌번호</span>
+            <span>4대보험 가입여부</span>
+        </div>
+            {% if report_employee %}
+                {% for report in report_employee %}
+                    <div class="datas">
+                        <span>{{ report.name }}</span>
+                        <span>{{ report.depoartment }}</span>
+                        <span>{{ report.rank }}</span>
+                        <span>{{ report.reg_num }}</span>
+                        <span>{{ report.worksystem }}일제</span>
+                        <span>{{ report.inwork|date:"Y-m-d" }}</span>
+                        <span>{{ report.outwork|default_if_none:"" }}</span>
+                        <span>{{ report.pay|intcomma }}</span>
+                        <span>{{ report.daysofmonth }}</span>
+                        <span>{{ report.dedays }}</span>
+                        <span>{{ report.detime }}</span>
+                        <span>{{ report.plustime }}</span>
+                        <span>{{ report.bank }}</span>
+                        <span>{{ report.bank_num }}</span>
+                        <span>{{ report.insurance }}</span>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div>No data</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="data-fields">
+        <div class="header">
+            <h2>파트타이머 근태현황</h2>
+
+        </div>
+        <div class="container">
+        <div class="datas">
+            <span>이름</span>
+            <span>구분</span>
+            <span>계약임금</span>
+            <span>주민등록번호</span>
+            <span>입사일</span>
+            <span>퇴사일</span>
+            <span>지급액</span>
+            <span>은행</span>
+            <span>계좌번호</span>
+            <span>비고</span>
+        </div>
+            {% if report_parttimer %}
+                {% for report in report_parttimer %}
+                    <div class="datas">
+                        <span>{{ report.name }}</span>
+                        <span>{{ report.depoartment }}</span>
+                        <span>{{ report.pay|intcomma }}</span>
+                        <span>{{ report.reg_num }}</span>
+                        <span>{{ report.inwork|date:"Y-m-d" }}</span>
+                        <span>{{ report.outwork|default_if_none:"" }}</span>
+                        <span>{{ report.total|intcomma }}</span>
+                        <span>{{ report.bank }}</span>
+                        <span>{{ report.bank_num }}</span>
+                        <span>{{ report.content }}</span>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div>No data</div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

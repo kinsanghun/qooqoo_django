@@ -9,6 +9,10 @@ def getCalendar(year, month):
 
 def getLastDatOfTheMonth(year, month):
     lastdays = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+    year = int(year)
+    month = int(month)
+
     if month == 2:
         if year % 400 == 0:
             return lastdays[month] + 1

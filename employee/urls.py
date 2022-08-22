@@ -23,6 +23,9 @@ urlpatterns = [
                   path('workoneday', views.workoneday, name="workoneday"),
                   path('workoneday/getWork', views.getWorkOneday, name="getworkoneday"),
 
+                  path('workReport', views.workReport, name="workReport"),
+                  path('workReport/download', views.downloadWorkReport, name="downloadWorkReport"),
+
                   path('manageAnnual', views.manageAnnual, name="manageAnnual"),
 
                   path('laborCost', views.laborCost, name="laborCost"),

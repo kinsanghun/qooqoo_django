@@ -7,11 +7,11 @@ from main.utils import *
 from .annual import *
 import pandas as pd
 
-
 try:
     from io import BytesIO as IO  # for modern python
 except ImportError:
     from io import StringIO as IO  # for legacy python
+
 
 def employee(request):
     if request.method == "POST":
@@ -405,9 +405,7 @@ def getLaborCost(request):
 
 def employeeIO(request):
     # Data Setting
-    date = request.GET.get("date", datetime.today().strftime("%Y-%m"))
-    year = date.split("-")[0]
-    month = date.split("-")[1]
+    year, month = request.GET.get("date", datetime.today().strftime("%Y-%m")).split("-")
 
     inworkEmployee = Employee.objects.filter(inwork__year=year, inwork__month=month, outwork__isnull=True).all()
     outworkEmployee = Employee.objects.filter(outwork__year=year, outwork__month=month).all()
@@ -416,6 +414,174 @@ def employeeIO(request):
         'outworks': outworkEmployee,
     }
     return render(request, "employee/employeeIO.html", context)
+
+
+def employeeReportSetting(target, year, month):
+    _daysOfMonth = getLastDatOfTheMonth(year, month)
+
+    result = {
+        'name': target.name,
+        'depoartment': target.department,
+        'rank': target.rank,
+        'reg_num': target.reg_num,
+        'worksystem': target.worksystem,
+        'inwork': target.inwork,
+        'outwork': target.outwork,
+        'pay': target.pay,
+        'daysofmonth': _daysOfMonth,
+        'dedays': 0,
+        'detime': 0,
+        'plustime': 0,
+        'bank': target.bank,
+        'bank_num': target.bank_num,
+        'insurance': target.insurance,
+        'content': ""
+    }
+    works = WorkStaff.objects.filter(name=result["name"], date__year=year, date__month=month)
+
+    if result["worksystem"] == 5:
+        aveWorkTime = 9 * 60 + 30
+    else:
+        aveWorkTime = 9 * 60
+
+    for work in works:
+        if work.worktype == "출근" or work.worktype == "조퇴":
+            worktime = work.workend - work.workstart - work.breaktime
+            if aveWorkTime > worktime:
+                result["detime"] += (aveWorkTime - worktime) / 60
+
+        if work.worktype == "추가근로":
+            worktime = work.workend - work.workstart - work.breaktime
+            result["plustime"] += (worktime / 60)
+
+        if work.worktype == "결근":
+            result["daysofmonth"] -= 1
+            result["dedays"] += 1
+
+    return result
+
+
+def parttimerReportSetting(target, year, month):
+    _daysOfMonth = getLastDatOfTheMonth(year, month)
+
+    result = {
+        'name': target.name,
+        'depoartment': "파트",
+        'pay': target.pay,
+        'reg_num': target.reg_num,
+        'inwork': target.inwork,
+        'outwork': target.outwork,
+        'total': 0,
+        'bank': target.bank,
+        'bank_num': target.bank_num,
+        'content': ""
+    }
+    total = 0
+
+    # Exploring this month's work
+    for i in range(1, _daysOfMonth + 1):
+        date = f"{year}-{str(month).rjust(2, '0')}-{str(i).rjust(2, '0')}"
+        weekday = datetime.strptime(date, "%Y-%m-%d").weekday()
+
+        # Initialize variables after aggregation every Monday
+        if weekday == 0:
+            if total >= 15:
+                result["total"] += (total * result["pay"]) + (total * result["pay"] / 5)
+            else:
+                result["total"] += (total * result["pay"])
+
+            total = 0
+
+        # Get information for the day
+        target = WorkParttimer.objects.filter(date=date, name=result["name"])
+        if target:
+            total += target[0].time
+
+    # Last week's process
+    if total >= 15:
+        result["total"] += (total * result["pay"]) + (total * result["pay"] / 5)
+    else:
+        result["total"] += (total * result["pay"])
+
+    result["total"] = int(result["total"])
+
+    return result
+
+
+def workReport(request):
+    employee_datas = list()
+    parttimer_datas = list()
+
+    # get Data
+    date = request.GET.get("month", datetime.today().strftime("%Y-%m")).split("-")
+    year = date[0]
+    month = date[1]
+    employees = Employee.objects.all()
+
+    # Setting Work Data
+    for employee in employees:
+        employee_datas.append(employeeReportSetting(employee, year=year, month=month))
+
+    parttimers = Parttimer.objects.all()
+    for parttimer in parttimers:
+        parttimer_datas.append(parttimerReportSetting(parttimer, year=year, month=month))
+
+    # Context
+    context = {
+        'year': year,
+        'month': month,
+        'report_employee': employee_datas,
+        'report_parttimer': parttimer_datas,
+    }
+    return render(request, "employee/workReport.html", context)
+
+
+def downloadWorkReport(request):
+    employee_datas = list()
+    parttimer_datas = list()
+
+    year = request.GET.get("year")
+    month = request.GET.get("month")
+    employees = Employee.objects.all()
+    parttimers = Parttimer.objects.all()
+
+    # Setting Work Data
+    employee_columns = ["이름", "부서", "직급", "주민등록번호", "근무제", "입사일"
+        , "퇴사일", "계약임금", "월급여계산일수", "공제(일)", "공제(시간)",
+                        "추가수당(시간)", "은행", "계좌번호", "사대보험 가입여부", "비고"]
+
+    parttimer_columns = ["이름", "구분", "시급", "주민등록번호", "입사일", "퇴사일",
+                         "지급액", "은행", "계좌번호", "비고"]
+
+    # Create Data
+    for employee in employees:
+        employee_datas.append(employeeReportSetting(employee, year=year, month=month))
+
+    for parttimer in parttimers:
+        parttimer_datas.append(parttimerReportSetting(parttimer, year, month))
+
+    # Convert Dict To DataFrame
+    employee_df = pd.DataFrame(employee_datas)
+    employee_df.columns = employee_columns
+
+    parttimer_df = pd.DataFrame(parttimer_datas)
+    parttimer_df.columns = parttimer_columns
+
+    excel_file = IO()
+    xlwriter = pd.ExcelWriter(excel_file, engine='xlsxwriter')
+
+    employee_df.to_excel(xlwriter, f'직원근태인계{month}월')
+    parttimer_df.to_excel(xlwriter, f"파트타이머근태인계{month}월")
+
+    xlwriter.save()
+    xlwriter.close()
+    excel_file.seek(0)
+
+    # Export Setting
+    response = HttpResponse(excel_file.read(),
+                            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = f'attachment; filename ="work_report_{year}-{month}.xlsx"'
+    return response
 
 
 def IOdownload(request):
@@ -437,21 +603,21 @@ def IOdownload(request):
               " content as '비고' from employee_Employee"
               " where outwork is null"
               " and strftime('%Y', inwork)='" + year + "'"
-              " and strftime('%m', inwork)='" + month + "'"
-              " order by inwork DESC")
+                                                       " and strftime('%m', inwork)='" + month + "'"
+                                                                                                 " order by inwork DESC")
 
     outwork = ("select name as '이름',"
-              " reg_num as '주민등록번호',"
-              " department as '직급',"
-              " rank as '파트',"
-              " worksystem as '근무제',"
-              " inwork as '입사일',"
-              " outwork as '퇴사일',"
-              " pay as '계약임금',"
-              " content as '비고' from employee_Employee"
-              " where strftime('%Y', outwork)='" + year + "'"
-              " and strftime('%m', outwork)='" + month + "'"
-              " order by outwork DESC")
+               " reg_num as '주민등록번호',"
+               " department as '직급',"
+               " rank as '파트',"
+               " worksystem as '근무제',"
+               " inwork as '입사일',"
+               " outwork as '퇴사일',"
+               " pay as '계약임금',"
+               " content as '비고' from employee_Employee"
+               " where strftime('%Y', outwork)='" + year + "'"
+                                                           " and strftime('%m', outwork)='" + month + "'"
+                                                                                                      " order by outwork DESC")
 
     inwork_df = pd.read_sql_query(inwork, connection, params=params)
     outwork_df = pd.read_sql_query(outwork, connection, params=params)
@@ -466,6 +632,7 @@ def IOdownload(request):
     xlwriter.close()
     excel_file.seek(0)
 
-    response = HttpResponse(excel_file.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response = HttpResponse(excel_file.read(),
+                            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = f'attachment; filename ="employee_status_{year}-{month}.xlsx"'
     return response
