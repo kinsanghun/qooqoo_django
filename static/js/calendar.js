@@ -52,7 +52,7 @@ function getWorkDate(name, date, url) {
                 });
                 $("input[name=workStart]").val("10:00");
                 $("input[name=workEnd]").val("22:00");
-                $("input[name=breakTime]").val(0);
+                //$("input[name=breakTime]").val(0);
                 $("input[name=workContent]").val("");
                 return
             }

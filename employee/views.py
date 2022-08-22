@@ -245,6 +245,7 @@ def workemployee(request):
         'workdatas': workDatas,
 
         'selectedEmployee': requestGetEmployee,
+        'e':Employee.objects.filter(name=requestGetEmployee).all()[0],
         'year': year,
         'month': month,
 

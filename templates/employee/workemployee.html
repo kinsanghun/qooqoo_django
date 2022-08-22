@@ -155,8 +155,15 @@
 
             $(document).on("click", ".date", function (e) {
                 $(".calendar-modal").css("display", "flex");
-                let date = {{ year }} + "-" + String({{ month }}).padStart(2, "0") + "-"+ $(".day", this).text().padStart(2, "0")
+                let date = {{ year }} + "-" + String({{ month }}).padStart(2, "0") + "-"+ $(".day", this).text().padStart(2, "0");
                 getWorkDate("{{ selectedEmployee }}", date, "{% url 'employee:getWorkEmployee' %}");
+                let workdays = {{ e.worksystem }};
+                if(workdays == 6){
+                    $("input[name=breakTime]").val(2.5);
+                }
+                else if (workdays == 5){
+                    $("input[name=breakTime]").val(3);
+                }
             })
             $(document).on("click", ".calendar-modal", function (e) {
                 if ($(e.target).hasClass("calendar-modal")) {

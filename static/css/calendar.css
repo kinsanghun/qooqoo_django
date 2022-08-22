@@ -1,8 +1,7 @@
 *{
     box-sizing: border-box;
 }
-main {
-}
+
 section {
     position : relative;
     display : flex;
