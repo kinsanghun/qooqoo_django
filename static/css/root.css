@@ -9,3 +9,6 @@
     --minimum-height : calc(100vh - 3.5rem);
     --nav-hover-color : #f4f4f41F;
 }
+html, body {
+    min-width: 1800px;
+}

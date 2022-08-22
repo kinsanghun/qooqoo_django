@@ -172,7 +172,7 @@ section .calendar-fields .dates .date:nth-child(7n) {
 }
 .calendar-modal .data-main {
     position: relative;
-    width : 60%;
+    min-width : 1000px;
     min-height : 55%;
     background: white;
     z-index : 1000;
