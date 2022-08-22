@@ -32,8 +32,8 @@ $(document).ready(function (event) {
         for(var i=1; i <= fvList.length; i++){
             if(fvList[i-1] > 0) {
                 var target = $('.first-view:nth-child('+i+') .second-view');
-                target.addClass('ic-close');
-                target.addClass('ic-folder');
+            $('.first-view:nth-child('+i+') .ic16.ic-close').removeClass('ic-close').addClass('ic-open');
+            $('.first-view:nth-child('+i+') .ic16.ic-folder').removeClass('ic-folder').addClass('ic-folder-open');
                 target.show();
             }
         }
