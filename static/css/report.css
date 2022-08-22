@@ -64,17 +64,19 @@
 .data-fields .container .datas{
     width : 100%;
     display: grid;
-    grid-template-columns: repeat(16, 1fr);
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: 1fr;
+    white-space: nowrap;
 }
+
 .data-fields .container .datas span{
-    min-width : 127px;
+    min-width : 100px;
     height : 30px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-right : 1px solid gray;
     border-bottom : 1px solid gray;
-    white-space: nowrap;
 }
 
 .data-fields .container .datas span:last-child{

@@ -65,7 +65,7 @@
 
         </div>
         <div class="container">
-        <div class="datas">
+        <div class="datas" style="grid-template-columns: repeat(10, 1fr);">
             <span>이름</span>
             <span>구분</span>
             <span>계약임금</span>
@@ -79,7 +79,7 @@
         </div>
             {% if report_parttimer %}
                 {% for report in report_parttimer %}
-                    <div class="datas">
+                    <div class="datas" style="grid-template-columns: repeat(10, 1fr);">
                         <span>{{ report.name }}</span>
                         <span>{{ report.depoartment }}</span>
                         <span>{{ report.pay|intcomma }}</span>
