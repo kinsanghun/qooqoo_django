@@ -112,6 +112,30 @@
                 </li>
             </ul>
         </ul>
+
+        <ul class="first-view">
+            <div class="ml-1">
+                    <em class="ic16 ic-close"></em>
+                    <em class="ic16 ic-folder"></em>
+                    <span class="menu-name">카드관리</span>
+            </div>
+            <ul class="second-view">
+                <!-- 하위 카테고리 -->
+                <li>
+                    <div class="ml-1" onclick='location.href="{% url 'trade:cardinfo' %}";'>
+                        <em class="ic16 ic-star-on"></em>
+                        <span class="menu-name">카드정보관리</span>
+                    </div>
+                </li>
+                <!-- 하위 카테고리 -->
+                <li>
+                    <div class="ml-1" onclick='location.href="{% url 'trade:cardcost' %}";'>
+                        <em class="ic16 ic-star-on"></em>
+                        <span class="menu-name">카드내역관리</span>
+                    </div>
+                </li>
+            </ul>
+        </ul>
         <!-- 최상위 카테고리-->
         <ul class="first-view"> 
             <div class="ml-1">
@@ -207,29 +231,6 @@
                     <div class="ml-1" onclick='location.href="{% url 'employee:workReport' %}";'>
                         <em class="ic16 ic-star-on"></em>
                         <span class="menu-name">근태레포트</span>
-                    </div>
-                </li>
-            </ul>
-        </ul>
-        <ul class="first-view">
-            <div class="ml-1">
-                    <em class="ic16 ic-close"></em>
-                    <em class="ic16 ic-folder"></em>
-                    <span class="menu-name">카드관리</span>
-            </div>
-            <ul class="second-view">
-                <!-- 하위 카테고리 -->
-                <li>
-                    <div class="ml-1" onclick='location.href="{% url 'trade:cardinfo' %}";'>
-                        <em class="ic16 ic-star-on"></em>
-                        <span class="menu-name">카드정보관리</span>
-                    </div>
-                </li>
-                <!-- 하위 카테고리 -->
-                <li>
-                    <div class="ml-1" onclick='location.href="{% url 'trade:cardcost' %}";'>
-                        <em class="ic16 ic-star-on"></em>
-                        <span class="menu-name">카드내역관리</span>
                     </div>
                 </li>
             </ul>
