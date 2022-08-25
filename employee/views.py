@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.db.models import Count
 from django.core import serializers
 from django.http import HttpResponse
 from django.db import connection
@@ -145,22 +146,50 @@ def getOneday(request):
 
 
 def manageAnnual(request):
-    employee_list = list()
-    employees = Employee.objects.all()
+    datas = list()
+    year = request.GET.get("year", str(datetime.today().year))
+    months = [f"{year}-{str(i).rjust(2, '0')}" for i in range(1, 13)]
+    now = datetime.today().strftime("%Y-%m")
+    employees = Employee.objects.all().order_by("name")
+
     for employee in employees:
-        employee_list.append(Annual(employee.id))
+        total = 0
+        form = {
+            'name': "",
+            "department": "",
+            "inwork": "",
+            "month_1": 0,
+            "month_2": 0,
+            "month_3": 0,
+            "month_4": 0,
+            "month_5": 0,
+            "month_6": 0,
+            "month_7": 0,
+            "month_8": 0,
+            "month_9": 0,
+            "month_10": 0,
+            "month_11": 0,
+            "month_12": 0,
+            "total": 0,
+        }
+        form["name"] = employee.name
+        form["department"] = employee.department
+        form["inwork"] = employee.inwork
 
-    annuals = []
+        for i in range(1, 13):
+            a = (len(WorkStaff.objects.filter(name=employee.name, date__year=year, date__month=i, worktype="연차")) * 1)
+            b = (len(WorkStaff.objects.filter(name=employee.name, date__year=year, date__month=i, worktype="반차")) * 0.5)
+            total += a + b
+            form["month_" + str(i)] = a + b if (a + b) > 0.0 else int(a + b)
 
-    for l in employee_list:
-        annuals.append({
-            "name": l.get_name(),
-            "annual": l.get_annual(),
-            "used": len(WorkEmployee.objects.filter(name=l.get_name(), annual=1))
-        })
+        form["total"] = total
+        datas.append(form)
 
     context = {
-        'annuals': annuals,
+        'months': months,
+        'year': year,
+        'now': now,
+        'datas': datas,
     }
     return render(request, "employee/manageAnnual.html", context)
 
@@ -245,7 +274,7 @@ def workemployee(request):
         'workdatas': workDatas,
 
         'selectedEmployee': requestGetEmployee,
-        'e':Employee.objects.filter(name=requestGetEmployee).all()[0],
+        'e': Employee.objects.filter(name=requestGetEmployee).all()[0],
         'year': year,
         'month': month,
 

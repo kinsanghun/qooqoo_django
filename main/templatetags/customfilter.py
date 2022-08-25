@@ -1,3 +1,5 @@
+import datetime
+
 from django import template
 from trade.models import *
 from employee.models import *
@@ -146,3 +148,25 @@ def getWorkColor(worktype):
 @register.filter
 def convertMinuteToTime(m):
     return f"{m // 60}:{str(m % 60).rjust(2, '0')}"
+
+@register.filter
+def isBefore(now, month):
+    if now == "today":
+        today = datetime.date.today()
+        inwork = month
+        if (today - inwork).days >= 365:
+            return False
+        return True
+
+    now_year = int(now.split("-")[0])
+    now_month = int(now.split("-")[1])
+    target_year = int(month.split("-")[0])
+    target_month = int(month.split("-")[1])
+
+    if now_year >= target_year:
+        if now_month > target_month:
+            return True
+        else:
+            return False
+    else:
+        return False

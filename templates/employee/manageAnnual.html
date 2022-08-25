@@ -2,16 +2,58 @@
 {% load static %}
 {% load humanize %}
 {% load mathfilters %}
+{% load customfilter %}
 {% block content %}
-    <div class="view-area">
-    <div class="view-header"><h1>연차관리대장 (직원용)</h1></div>
-    <div>
-        <div class="data-fields annuals">
-            <div class="annuals-header"><span>직원명</span><span>총 연차</span><span>사용 연차</span><span>잔여 연차</span></div>
-            {% for annual in annuals %}
-                <div><span>{{ annual.name }}</span> <span>{{ annual.annual }}</span> <span>{{ annual.used }}</span> <span>{{ annual.annual|sub:annual.used }}</span></div>
-            {% endfor %}
+    <div class="annuals-data">
+        <div class="annuals-head">
+            <h2>연차기록</h2>
+            <form>
+                <div>
+                <label>년도검색</label><input type="number" name="year" min="1999" max="3000" value="{{ year }}">
+                </div>
+                <input type="submit" value="검색">
+            </form>
         </div>
-    </div>
+        <div>
+            <span>이름</span>
+            <span>부서</span>
+            <span>입사일</span>
+            <span>1월</span>
+            <span>2월</span>
+            <span>3월</span>
+            <span>4월</span>
+            <span>5월</span>
+            <span>6월</span>
+            <span>7월</span>
+            <span>8월</span>
+            <span>9월</span>
+            <span>10월</span>
+            <span>11월</span>
+            <span>12월</span>
+            <span>총계(년)</span>
+
+        </div>
+        {% if datas %}
+            {% for data in datas %}
+                <div>
+                    <span>{{ data.name }}</span>
+                    <span>{{ data.department }}</span>
+                    <span {% if "today"|isBefore:data.inwork %}class="bg-warning"{% endif %}>{{ data.inwork|date:"Y-m-d" }}</span>
+                    <span {% if now|isBefore:months.0 %}class="bg-before"{% endif %}>{{ data.month_1 }}</span>
+                    <span {% if now|isBefore:months.1 %}class="bg-before"{% endif %}>{{ data.month_2 }}</span>
+                    <span {% if now|isBefore:months.2 %}class="bg-before"{% endif %}>{{ data.month_3 }}</span>
+                    <span {% if now|isBefore:months.3 %}class="bg-before"{% endif %}>{{ data.month_4 }}</span>
+                    <span {% if now|isBefore:months.4 %}class="bg-before"{% endif %}>{{ data.month_5 }}</span>
+                    <span {% if now|isBefore:months.5 %}class="bg-before"{% endif %}>{{ data.month_6 }}</span>
+                    <span {% if now|isBefore:months.6 %}class="bg-before"{% endif %}>{{ data.month_7 }}</span>
+                    <span {% if now|isBefore:months.7 %}class="bg-before"{% endif %}>{{ data.month_8 }}</span>
+                    <span {% if now|isBefore:months.8 %}class="bg-before"{% endif %}>{{ data.month_9 }}</span>
+                    <span {% if now|isBefore:months.9 %}class="bg-before"{% endif %}>{{ data.month_10 }}</span>
+                    <span {% if now|isBefore:months.10 %}class="bg-before"{% endif %}>{{ data.month_11 }}</span>
+                    <span {% if now|isBefore:months.11 %}class="bg-before"{% endif %}>{{ data.month_12 }}</span>
+                    <span class="bg-success">{{ data.total }}</span>
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}

@@ -5,7 +5,18 @@
 .bg-red {
     background: rgba(255, 96, 96, 0.43);
 }
-
+.bg-lightgray {
+    background : rgba(255, 166, 0, 0.25);
+}
+.bg-success {
+    background : rgba(181, 243, 125, 0.74);
+}
+.bg-before {
+    background : rgba(171, 171, 171, 0.25);
+}
+.bg-warning {
+    background : rgba(239, 65, 0, 0.53);
+}
 body {
     overflow-y: hidden;
 }
@@ -417,4 +428,64 @@ input, select {
 
 .employeeIO .datas .data:last-child {
     border: 0;
+}
+.annuals-data {
+    width : 100%;
+    height : 80vh;
+    overflow-y: auto;
+}
+.annuals-data .annuals-head{
+    position: relative;
+    display: flex;
+    width : 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom : 2.5rem;
+    border-bottom : 0;
+}
+.annuals-data .annuals-head h2{
+    font-size : 1.2em;
+    font-weight : 600;
+    padding : 1rem;
+}
+.annuals-data .annuals-head form {
+    display: flex;
+}
+
+.annuals-data .annuals-head form div {
+    display: flex;
+    align-items: center;
+    padding : 0.5rem;
+    border : 0.5px solid gray;
+    border-radius: 5px;
+    text-align : center;
+}
+
+.annuals-data .annuals-head form div label{
+    padding : 0 0.5rem;
+    border-right : 1px solid var(--primary-color);
+}
+.annuals-data .annuals-head form div input{
+    margin : 0 0.5rem;
+    width : 80px;
+    border: 0;
+}
+.annuals-data .annuals-head form input[type=submit] {
+    border : 0;
+    border-radius: 5px;
+    color : white;
+    width : 50px;
+    background: var(--primary-color);
+    margin-left : 5px;
+}
+
+.annuals-data > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr repeat(13, 1fr);
+    text-align : center;
+    border-bottom : 0.5px solid gray;
+}
+
+.annuals-data > div span{
+    padding : 0.5rem;
 }
