@@ -148,10 +148,38 @@ def getOneday(request):
 def manageAnnual(request):
     datas = list()
     year = request.GET.get("year", str(datetime.today().year))
+    sorted = request.GET.get("sorted", "name")
+    reverse = request.GET.get("reversed", 0)
     months = [f"{year}-{str(i).rjust(2, '0')}" for i in range(1, 13)]
     now = datetime.today().strftime("%Y-%m")
-    employees = Employee.objects.all().order_by("name")
 
+    #홀 - 스시 - 핫 / 즉 / 샐 - 세척
+    if reverse == "1":
+        if sorted == "department":
+            employees = list()
+            tmps = list()
+            tmps.append(Employee.objects.filter(department="홀").all())
+            tmps.append(Employee.objects.filter(department="스시").all())
+            tmps.append(Employee.objects.filter(department="핫/즉/샐").all())
+            tmps.append(Employee.objects.filter(department="세척").all())
+            for tmp in tmps:
+                employees.extend(tmp)
+        else:
+            employees = Employee.objects.all().order_by("-"+sorted)
+    else:
+        if sorted == "department":
+            employees = list()
+            tmps = list()
+            tmps.append(Employee.objects.filter(department="세척").all())
+            tmps.append(Employee.objects.filter(department="핫/즉/샐").all())
+            tmps.append(Employee.objects.filter(department="스시").all())
+            tmps.append(Employee.objects.filter(department="홀").all())
+            for tmp in tmps:
+                employees.extend(tmp)
+        else:
+            employees = Employee.objects.all().order_by(sorted)
+
+    print(employees)
     for employee in employees:
         total = 0
         form = {
@@ -190,6 +218,8 @@ def manageAnnual(request):
         'year': year,
         'now': now,
         'datas': datas,
+        'sorted': sorted,
+        'reversed': reverse,
     }
     return render(request, "employee/manageAnnual.html", context)
 

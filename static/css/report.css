@@ -69,6 +69,9 @@
     white-space: nowrap;
 }
 
+.data-fields .container .datas:last-child{
+    border-bottom : 0px;
+}
 .data-fields .container .datas span{
     min-width : 100px;
     height : 30px;

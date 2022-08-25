@@ -15,9 +15,9 @@
             </form>
         </div>
         <div>
-            <span>이름</span>
-            <span>부서</span>
-            <span>입사일</span>
+            <span onclick="location.href='{% url "employee:manageAnnual" %}?year={{ year }}&sorted=name&reversed={% if sorted == 'name' and reversed == '1' %}0{% elif sorted == 'name' %}1{% else %}0{% endif %}'">이름</span>
+            <span onclick="location.href='{% url "employee:manageAnnual" %}?year={{ year }}&sorted=department&reversed={% if sorted == 'department' and reversed == '1' %}0{% elif sorted == 'department' %}1{% else %}0{% endif %}'">부서</span>
+            <span onclick="location.href='{% url "employee:manageAnnual" %}?year={{ year }}&sorted=inwork&reversed={% if sorted == 'inwork' and reversed == '1' %}0{% elif sorted == 'inwork' %}1{% else %}0{% endif %}'">입사일</span>
             <span>1월</span>
             <span>2월</span>
             <span>3월</span>
@@ -55,4 +55,7 @@
             {% endfor %}
         {% endif %}
     </div>
+    <script>
+
+    </script>
 {% endblock %}
