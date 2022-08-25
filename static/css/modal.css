@@ -102,13 +102,13 @@
     text-align: center;
 }
 #modal .search-header div{
-    border : 1px solid rgba(0, 0, 0, 0.55);
+    border : 0.5px solid rgba(0, 0, 0, 0.55);
     padding : 0.5rem;
 }
 #modal .search-data {
     height : 600px;
-    border : 1px solid rgba(0, 0, 0, 0.49);
-    overflow-y: auto;
+    border : 0.5px solid rgba(0, 0, 0, 0.49);
+    overflow-y: overlay;
 }
 #modal .search-data div {
     border : 0.3px solid rgba(0, 0, 0, 0.5);

@@ -139,10 +139,9 @@ input, select {
     max-height: 35rem;
     overflow-y: auto;
     overflow-x: auto;
-}
-
-#data-fields::-webkit-scrollbar {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    scrollbar-width : thin;
 }
 
 #data-fields .data-header {
