@@ -163,10 +163,9 @@ def isBefore(now, month):
     target_year = int(month.split("-")[0])
     target_month = int(month.split("-")[1])
 
-    if now_year >= target_year:
+    if now_year > target_year:
+        return True
+    elif now_month == target_month:
         if now_month > target_month:
             return True
-        else:
-            return False
-    else:
-        return False
+    return False
