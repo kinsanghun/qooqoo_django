@@ -14,7 +14,7 @@ class Employee(models.Model):
     rank = models.CharField(max_length=30)
     worksystem = models.IntegerField()
     pay = models.IntegerField()
-    insurance = models.CharField(max_length=20)
+    insurance = models.CharField(max_length=20, null=True, blank=True)
     health = models.CharField(max_length=30)
     content = models.TextField()
     notreport = models.IntegerField()
