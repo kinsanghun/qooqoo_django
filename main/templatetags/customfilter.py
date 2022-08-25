@@ -165,7 +165,7 @@ def isBefore(now, month):
 
     if now_year > target_year:
         return True
-    elif now_month == target_month:
+    elif now_year == target_year:
         if now_month > target_month:
             return True
     return False
