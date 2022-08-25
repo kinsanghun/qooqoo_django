@@ -155,7 +155,6 @@
             else {
                 var end = m + "-" + lastdays[parseInt(x[1])];
             }
-            console.log(start, end);
             var dateList = getDatesStartToLast(start, end);
             var dateValue = getTradeValue(client, m, "{% url 'trade:getTrade' %}");
             $("#iclient").val(client);
@@ -177,17 +176,17 @@
         });
         $(document).on("click", ".data-header .datas", function() {
             var sortkey = $(".data-header .datas").index(this);
-
             if(sortkey == sortfix[0]){
                 if(sortfix[1] == 1){
-                    datas.sort(function(a, b) { return a[sortfix[0]] > b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0; });
+                    datas = sorting(datas, sortkey);
                     sortfix[1] = 0;
 
                     clearlist();
                     gridSetting(dataId, 1);
                     printData(0, dataId, dataHeader, datas);
                 } else {
-                    datas.sort(function(a, b) { return a[sortfix[0]] < b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0; });
+                    datas = sorting(datas, sortkey);
+                    datas.reverse();
                     sortfix[1] = 1;
 
                     clearlist();
@@ -195,7 +194,8 @@
                     printData(0, dataId, dataHeader, datas);
                 }
             }else {
-                datas.sort(function(a, b) { return a[sortfix[0]] < b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0; });
+                datas = sorting(datas, sortkey);
+                datas.reverse();
                 sortfix[0] = sortkey;
                 sortfix[1] = 0;
 

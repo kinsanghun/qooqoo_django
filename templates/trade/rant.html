@@ -60,16 +60,16 @@
             if(sortkey == sortfix[0]){
                 console.log("eq");
                 if(sortfix[1] == 1){
-                    console.log("desc");
-                    datas.sort(function(a, b) { return a[sortfix[0]] > b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0; });
+
+                    datas = sorting(datas, sortkey);
                     sortfix[1] = 0;
 
                     clearlist();
                     gridSetting(dataId, 1);
                     printData(0, dataId, dataHeader, datas);
                 } else {
-                    console.log("aec");
-                    datas.sort(function(a, b) { return a[sortfix[0]] < b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0; });
+                    datas = sorting(datas, sortkey);
+                    datas.reverse();
                     sortfix[1] = 1;
 
                     clearlist();
@@ -77,7 +77,9 @@
                     printData(0, dataId, dataHeader, datas);
                 }
             }else {
-                datas.sort(function(a, b) { return a[sortfix[0]] < b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0; });
+
+                datas = sorting(datas, sortkey);
+                datas.reverse();
                 sortfix[0] = sortkey;
                 sortfix[1] = 0;
 
@@ -87,7 +89,7 @@
             }
         });
 
-        $(".data-body").click(function () {
+        $(document).on("click", ".data-body", function () {
             var findkey = $(this).children("div:eq(0)");
             var key = findkey.get()[0].innerText;
             console.log(key);

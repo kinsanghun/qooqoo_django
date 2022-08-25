@@ -106,19 +106,23 @@
         clearlist();
         gridSetting(dataId, 1);
         printData(1, dataId, dataHeader, filterdatas);
+
         $(document).on("click", ".data-header .datas", function() {
             var sortkey = $(".data-header .datas").index(this);
-
             if(sortkey == sortfix[0]){
                 if(sortfix[1] == 1){
-                    filterdatas.sort(function(a, b) { return a[sortfix[0]] > b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0; });
+                    //filterdatas.sort(function(a, b) { return a[sortfix[0]] > b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0; });
+                    filterdatas = sorting(filterdatas, sortkey);
+
                     sortfix[1] = 0;
 
                     clearlist();
                     gridSetting(dataId, 1);
                     printData(0, dataId, dataHeader, filterdatas);
                 } else {
-                    filterdatas.sort(function(a, b) { return a[sortfix[0]] < b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0; });
+                    //filterdatas.sort(function(a, b) { return a[sortfix[0]] < b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0; });
+                    filterdatas = sorting(filterdatas, sortkey);
+                    filterdatas.reverse();
                     sortfix[1] = 1;
 
                     clearlist();
@@ -127,9 +131,11 @@
                 }
             }
             else {
-                filterdatas.sort(function(a, b) { return a[sortfix[0]] < b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0; });
+                //filterdatas.sort(function(a, b) { return a[sortfix[0]] < b[sortfix[0]] ? -1 : a[sortfix[0]] > b[sortfix[0]] ? 1 : 0; });
+                filterdatas = sorting(filterdatas, sortkey);
+                filterdatas.reverse();
                 sortfix[0] = sortkey;
-                sortfix[1] = 0;
+                sortfix[1] = 1;
 
                 clearlist();
                 gridSetting(dataId, 1);
@@ -138,7 +144,6 @@
         });
 
         $(document).on("click", ".data-body", function () {
-            console.log("!1");
             var findkey = $(this).children("div:eq(0)");
             var key = findkey.get()[0].innerText;
             console.log(key);

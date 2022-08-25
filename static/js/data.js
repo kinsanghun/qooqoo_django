@@ -144,3 +144,16 @@ function filter_data(datas, filter, index) {
 function delete_data(id, db, url) {
     if (id > 0) location.href = url + "?id=" + id + "&database=" + db;
 }
+function sorting(list, index) {
+    index++;
+    for(var i=list.length-1; i > 0 ; i--){
+        for(var j=0; j < i; j++){
+            if(list[j][index][0] < list[j+1][index][0]) {
+                var tmp = list[j+1];
+                list[j+1] = list[j];
+                list[j] = tmp;
+            }
+        }
+    }
+    return list;
+}
